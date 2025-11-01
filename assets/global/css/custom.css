@@ -1,9 +1,261 @@
+/* custom-flexbox.css */
+
+/* Display Utilities */
 .d-flex {
   display: flex;
 }
+
+.d-inline-flex {
+  display: inline-flex;
+}
+
+/* Flex Direction */
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+/* Justify Content */
+.justify-content-start {
+  justify-content: flex-start;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
 .justify-content-center {
   justify-content: center;
 }
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.justify-content-around {
+  justify-content: space-around;
+}
+
+/* Align Items */
+.align-items-start {
+  align-items: flex-start;
+}
+
+.align-items-end {
+  align-items: flex-end;
+}
+
 .align-items-center {
   align-items: center;
+}
+.text-align-center{
+  text-align: center;
+}
+
+.align-items-baseline {
+  align-items: baseline;
+}
+
+.align-items-stretch {
+  align-items: stretch;
+}
+
+/* Align Self */
+.align-self-start {
+  align-self: flex-start;
+}
+
+.align-self-end {
+  align-self: flex-end;
+}
+
+.align-self-center {
+  align-self: center;
+}
+
+.align-self-baseline {
+  align-self: baseline;
+}
+
+.align-self-stretch {
+  align-self: stretch;
+}
+
+/* Align Content */
+.align-content-start {
+  align-content: flex-start;
+}
+
+.align-content-end {
+  align-content: flex-end;
+}
+
+.align-content-center {
+  align-content: center;
+}
+
+.align-content-between {
+  align-content: space-between;
+}
+
+.align-content-around {
+  align-content: space-around;
+}
+
+.align-content-stretch {
+  align-content: stretch;
+}
+
+@media screen and (max-width: 991px) {
+  form.header-search-bar{
+    display:none;
+  }
+  .add-section-product-listing{
+    flex-direction: column;
+  }
+}
+@media screen and (min-width: 1440px){
+.input.small.search-header#header-search{
+ width: 100%;
+}
+}
+.input.small.search-header#header-search{
+  max-width:none;
+}
+#desktop-search-bar{
+  width:49vw;
+  position:relative;
+}
+.line-rounded-icon.header-search-bar-icon.desktop-search-icon{
+  position: absolute;
+    left: 16px;
+    top: 7px;
+}
+.header-wrapper.w-nav{
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .06);
+}
+.h-300vh{
+ height: 100%; 
+ position: relative;
+}
+
+
+
+.no-padding-top {
+    padding-top: 0 !important;
+    padding-bottom: 100px;
+}
+.categories-badges-wrapper-new {
+  justify-content: flex-start !important;
+  display: flex;
+}
+
+.categories-badges-wrapper-new.right-categories {
+  grid-row-gap: 8px;
+  flex-wrap: wrap;
+  margin-right: -20px;
+}
+
+.categories-badges-wrapper-new.center-categories {
+  grid-row-gap: 8px;
+  justify-content: center;
+  margin-right: -20px;
+}
+.related-wrapper {
+  border-top: 4px solid #689F38;
+  background-color: var(--neutral--100);
+}
+.blog-post-content {
+  padding-top: 70px !important;
+}
+.padding-l-r{
+  padding: 0px 100px !important;
+}
+.bg-accent-gray{
+  background-color: gray;
+}
+.mg-bottom-50px-text-center {
+  margin-bottom: 50px;
+  text-align: center;
+}
+.mg-bottom-50px{
+  margin-bottom: 50px;
+}
+.bg-color-gray {
+  background-color: #efefef !important;
+}
+.width-50 {
+  width: 50%;
+}
+.margin-top-20px{
+  margin-top: 20px;
+}
+.font-size-35 {
+  font-size: 35px !important;
+}
+.border-left-green{
+  border-left: 2px solid #689F38 !important;
+}
+.divider-green{
+  height: 2px !important;
+  background-color: #689F38 !important;
+}
+.add-section-product-listing{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap:10rem;
+}
+.padding-top-20 {
+  padding-top: 20px !important;
+}
+.margin-auto{
+  margin: auto;
+}
+/* .grid-2-columns {
+  grid-column-gap: 35px;
+  grid-row-gap: 35px;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: 1fr;
+  display: grid;
+} */
+ 
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.grid-item {
+  width: calc(50% - 10px); /* 2 columns for large screens */
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) { /* Medium screens */
+  .grid-item {
+    width: calc(100% - 10px); /* 1 column per row for medium screens */
+  }
+}
+
+@media (max-width: 576px) { /* Small screens */
+  .grid-item {
+    width: calc(100% - 10px); /* 1 column per row for small screens */
+  }
+}
+
+.display-5 {
+  font-size: 24px;
+}
+.padding-20px{
+  padding: 20px 20px;
+}
+.width-50{
+  width: 50%;
 }

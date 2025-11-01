@@ -631,4 +631,58 @@ class SiteController extends Controller
             }
         }
     }
+
+    public function blogPage()
+    {
+        $pageTitle = "Blog";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'user.blog.blog',compact('pageTitle','activeTemplate'));
+    }
+    public function blogPostPage()
+    {
+        $pageTitle = "Blog Post";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'user.blog.blog_post',compact('pageTitle','activeTemplate'));
+    }
+    public function becomeContributorForm()
+    {
+        $pageTitle = "Become A Contributor";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'user.become_acontributor',compact('pageTitle','activeTemplate'));
+    }
+    public function About()
+    {
+        $pageTitle = "About";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'user.about',compact('pageTitle','activeTemplate'));
+    }
+    public function Login()
+    {
+        $pageTitle = "Login";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'login',compact('pageTitle','activeTemplate'));
+    }
+    public function Signup()
+    {
+        $pageTitle = "Sign Up";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'signup',compact('pageTitle','activeTemplate'));
+    }
+    public function UploadFiles()
+    {
+        $pageTitle = "Upload Files";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'upload_files',compact('pageTitle','activeTemplate'));
+    }
+    public function ProductDetails()
+    {
+        $pageTitle = "Product Details";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'product_details',compact('pageTitle','activeTemplate'));
+    }
+    public function Price(){
+        $pageTitle = "Price";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'price_list',compact('pageTitle','activeTemplate'));
+    }
 }

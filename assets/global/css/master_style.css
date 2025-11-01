@@ -5677,9 +5677,6 @@ figcaption {
     z-index: 1;
     color: var(--neutral--800);
     font-weight: 500;
-    line-height: 1em;
-    position: absolute;
-    left: 432px;
 }
 
 .style---line-icons-grid {

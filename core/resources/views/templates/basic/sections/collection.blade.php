@@ -1,4 +1,4 @@
-@php
+{{-- @php
     $content = getContent('collection.content', true);
     $collections = App\Models\Collection::public()
         ->where('is_featured', Status::ENABLE)
@@ -28,4 +28,4 @@
             </div>
         </div>
     </div>
-@endif
+@endif --}}

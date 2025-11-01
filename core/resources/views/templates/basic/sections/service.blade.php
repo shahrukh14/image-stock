@@ -1,4 +1,4 @@
-@php
+{{-- @php
 $content  = getContent('service.content', true);
 $elements = getContent('service.element', false, 4, true);
 @endphp
@@ -40,4 +40,4 @@ $elements = getContent('service.element', false, 4, true);
             </div>
         </div>
     </div>
-</div>
+</div> --}}

@@ -1,4 +1,4 @@
-@if (count($images))
+{{-- @if (count($images))
     <div class="section--sm section--bottom">
         <div class="container custom--container">
             <div class="row g-4">
@@ -40,4 +40,4 @@
         }
     </script>
     <script src="{{ asset($activeTemplateTrue . 'js/like.js') }}"></script>
-@endpush
+@endpush --}}

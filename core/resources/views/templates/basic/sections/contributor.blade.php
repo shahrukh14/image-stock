@@ -1,4 +1,4 @@
-@php
+{{-- @php
     $content = getContent('contributor.content', true);
     $members = App\Models\User::whereHas('images')
         ->where('is_featured', Status::ENABLE)
@@ -44,4 +44,4 @@
             </div>
         </div>
     </div>
-@endif
+@endif --}}

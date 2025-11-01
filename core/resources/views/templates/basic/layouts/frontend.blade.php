@@ -1,7 +1,8 @@
 @extends($activeTemplate . 'layouts.app')
 @section('panel')
     @if (request()->routeIs('search*'))
-        @include($activeTemplate . 'partials.search_header')
+        {{-- @include($activeTemplate . 'partials.search_header') --}}
+        @include($activeTemplate . 'partials.header')
     @else
         @include($activeTemplate . 'partials.header')
     @endif

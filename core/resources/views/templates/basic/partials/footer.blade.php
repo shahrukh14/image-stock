@@ -6,7 +6,7 @@
         ->limit(5)
         ->get();
 @endphp
-@include($activeTemplate . 'partials.cookie')
+{{-- @include($activeTemplate . 'partials.cookie') --}}
 
 @if (!request()->routeIs(['search', 'user*']))
     <section>
@@ -34,17 +34,17 @@
                             <div class="social-icon-font"></div>
                         </a><a href="https://twitter.com/" target="_blank" class="social-icon w-inline-block">
                             <div class="social-icon-font"></div>
-                        </a><a href="https://www.instagram.com/" target="_blank"
+                        </a><a href="https://instagram.com/" target="_blank"
                             class="social-icon w-inline-block">
                             <div class="social-icon-font"></div>
-                        </a><a href="https://in.pinterest.com/" target="_blank" class="">
-                            <i class="fas fa-pinterest"></i>
+                        </a><a href="https://pinterest.com/" target="_blank" class="social-icon w-inline-block">
+                            <div class="social-icon-font"></div>
                         </a>
-                        </a><a href="https://www.youtube.com/" target="_blank" class="social-icon w-inline-block">
-                            <i class="fa fa-youtube"></i>
+                        <a href="https://linkedin.com/" target="_blank" class="social-icon w-inline-block">
+                            <div class="social-icon-font"></div>
                         </a>
-                        </a><a href="https://in.linkedin.com/" target="_blank" class="social-icon w-inline-block">
-                            <i class="fas fa-linkedin"></i>
+                        <a href="https://youtube.com/" target="_blank" class="social-icon w-inline-block">
+                            <div class="social-icon-font"></div>
                         </a>
                     </div>
                 </div>

@@ -15,9 +15,8 @@
                         <span class="text-no-wrap">your project</span>
                     </h1>
                     <p class="color-neutral-200 mg-bottom-32px keep">
-                        Lorem ipsum dolor sit amet consectetur vitae maecenas feugiat
-                        aliquam accumsan velit in at pharetra commodo eget nisl est
-                        leo <span class="text-no-wrap">nisl enim sit.</span>
+                        Find royality-free photos and videos for your projects
+                        and <br><span class="text-no-wrap">social media content</span>
                     </p>
                     <div class="buttons-row center">
                         <a href="https://stocktemplate.webflow.io/resources"

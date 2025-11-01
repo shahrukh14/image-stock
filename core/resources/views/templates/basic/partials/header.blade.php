@@ -27,13 +27,22 @@ style="opacity: 1">
                     </li>
                     <li class="header-nav-list-item">
                         <a href="https://stocktemplate.webflow.io/about" class="header-nav-link w-nav-link"
-                            style="max-width: 1364px">About</a>
+                            style="max-width: 1364px">Log In /Sign up</a>
                     </li>
                     <li class="header-nav-list-item">
                         <a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
-                            style="max-width: 1364px">Blog</a>
+                            style="max-width: 1364px">Search</a>
                     </li>
                     <li class="header-nav-list-item">
+                        <a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
+                        style="max-width: 1364px">Photos</a></li>
+                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
+                        style="max-width: 1364px">Vectors</a></li>
+                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
+                        style="max-width: 1364px">Videos</a></li>
+                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
+                        style="max-width: 1364px">Pricing</a></li>
+                    {{-- <li class="header-nav-list-item">
                         <div data-hover="true" data-delay="0"
                             data-w-id="0f04fa47-b280-a98d-cbb1-756575b03618"
                             class="dropdown-wrapper w-dropdown" style="max-width: 1364px">
@@ -202,7 +211,7 @@ style="opacity: 1">
                                 </div>
                             </nav>
                         </div>
-                    </li>
+                    </li> --}}
                     <li class="header-nav-list-item show-in-mbl header-button">
                         <a href="https://stocktemplate.webflow.io/apply-as-author"
                             class="btn-primary small width-100 w-button">Become an author</a>
@@ -513,11 +522,13 @@ quickCheckoutEnabled
 </div>
 <div>
     <form action="https://stocktemplate.webflow.io/search" class="header-search-bar d-flex justify-content-center align-items-center" style="margin: 23px 0px 0px 0px;">
-        <div class="line-rounded-icon header-search-bar-icon"></div>
+        <div id="desktop-search-bar">
+        <div class="line-rounded-icon header-search-bar-icon desktop-search-icon" ></div>
         <label for="search-2" class="hidden-on-desktop">Search</label><input type="search"
             class="input small search-header w-input" maxlength="256" name="query"
             placeholder="Search for resources…" id="header-search" required="" /><input
             type="submit" value="Search" class="hidden-on-desktop w-button" />
+        </div>
     </form>
 </div>
 <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>

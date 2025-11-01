@@ -1,4 +1,4 @@
-@php
+{{-- @php
 $content = getContent('cta.content', true);
 @endphp
 <div class="section--sm">
@@ -27,4 +27,4 @@ $content = getContent('cta.content', true);
             </div>
         </div>
     </div>
-</div>
+</div> --}}
