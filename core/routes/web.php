@@ -66,12 +66,11 @@ Route::controller('SiteController')->group(function () {
     Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
     
     //Blog Page
-    Route::get('/login', 'Login')->name('login');
+    // Route::get('/login', 'Login')->name('login');
     Route::get('/signup', 'Signup')->name('signup');
     Route::get('/upload-files', 'UploadFiles')->name('upload.files');
     Route::get('/blog', 'blogPage')->name('blog');
     Route::get('/blog-post', 'blogPostPage')->name('blog.post');
-    Route::get('/become-contributor-form', 'becomeContributorForm')->name('become.contributor.form');
     Route::get('/about', 'About')->name('about');
     Route::get('/product-details', 'ProductDetails')->name('product.details');
     Route::get('/price', 'Price')->name('product.details');

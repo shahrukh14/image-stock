@@ -31,7 +31,8 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         $pageTitle = "Login";
-        return view($this->activeTemplate . 'user.auth.login', compact('pageTitle'));
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'login',compact('pageTitle','activeTemplate'));
     }
 
     public function login(Request $request)
@@ -41,10 +42,10 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        if (!verifyCaptcha()) {
-            $notify[] = ['error', 'Invalid captcha provided'];
-            return back()->withNotify($notify);
-        }
+        // if (!verifyCaptcha()) {
+        //     $notify[] = ['error', 'Invalid captcha provided'];
+        //     return back()->withNotify($notify);
+        // }
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and

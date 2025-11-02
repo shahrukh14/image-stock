@@ -83,6 +83,10 @@ Route::middleware('auth')->name('user.')->group(function () {
 
                 //Download history
                 Route::get('download/history', 'downloadHistory')->name('download.history');
+
+                //Become a Contributor
+                Route::get('become/contributor', 'becomeContributorPage')->name('become.contributor.page');
+                Route::post('become/contributor/{id}', 'becomeContributor')->name('become.contributor');
                 
 
             });

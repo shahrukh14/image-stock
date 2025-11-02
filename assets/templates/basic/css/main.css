@@ -59,9 +59,9 @@
     --h4: clamp(1.125rem, 1.05vw + 1rem, 1.25rem);
     --h5: clamp(1.0125rem, .95vw + 1rem, 1.125rem);
     --h6: 1rem;
-    --base-h: 250;
-    --base-s: 60%;
-    --base-l: 45%;
+    --base-h: 98;
+    --base-s: 42%;
+    --base-l: 48%;
     --base: var(--base-h) var(--base-s) var(--base-l);
     --base-dark: var(--base-h) var(--base-s) calc(var(--base-l) - 10%);
     --accent-h: 266;

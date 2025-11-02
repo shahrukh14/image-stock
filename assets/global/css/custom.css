@@ -259,3 +259,16 @@
 .width-50{
   width: 50%;
 }
+
+.divider_card.contact-form-center-divider {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.divider_card {
+  height: 1px;
+  background-color: var(--neutral--300);
+}
+.image-price-icon{
+  width: 15%;
+  height: auto;
+}

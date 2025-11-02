@@ -50,6 +50,17 @@
                     </a>
                 </li>
 
+                @if(auth()->user()->role == 1)
+                <li>
+                    <a class="dashboard-menu__link {{ menuActive('user.become.contributor.page') }}" href="{{ route('user.become.contributor.page') }}">
+                        <span class="dashboard-menu__icon">
+                            <i class="las la-cloud-upload-alt"></i>
+                        </span>
+                        <span class="dashboard-menu__text"> @lang('Become a contributor') </span>
+                    </a>
+                </li>
+                @endif
+
                 <li>
                     <div class="accordion" id="images">
                         <div class="accordion-item">

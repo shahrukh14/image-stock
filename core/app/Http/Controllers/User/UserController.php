@@ -327,4 +327,25 @@ class UserController extends Controller
         $donations = Donation::where('receiver_id', auth()->user()->id)->where('status', 1)->orderBy('id', 'desc')->paginate(getPaginate());
         return view($this->activeTemplate . 'user.donation_log', compact('donations', 'pageTitle'));
     }
+
+    public function becomeContributorPage(){
+        $pageTitle = "Become A Contributor";
+        $activeTemplate = $this->activeTemplate;
+        $user = auth()->user();
+        return view($this->activeTemplate .'user.become_acontributor',compact('pageTitle','activeTemplate','user'));
+    }
+
+    public function becomeContributor(Request $request,$id){
+        $data = [
+            'firstname' => $request->firstname,
+            'mobile' => $request->mobile,
+            'address' => $request->location,
+            'website' => $request->website,
+            'description' => $request->description,
+            'user_status' => 0,
+        ];
+        User::where('id', $id)->update($data);
+        $notify[] = ['success', 'Application Submitted'];
+        return back()->withNotify($notify);
+    }
 }

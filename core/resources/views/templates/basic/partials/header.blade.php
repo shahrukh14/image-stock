@@ -22,26 +22,24 @@ style="opacity: 1">
                 </form>
                 <ul role="list" class="header-nav-menu-list">
                     <li class="header-nav-list-item">
-                        <a href="https://stocktemplate.webflow.io/home" aria-current="page"
+                        <a href="{{ route('home') }}" aria-current="page"
                             class="header-nav-link w-nav-link w--current" style="max-width: 1364px">Home</a>
-                    </li>
-                    <li class="header-nav-list-item">
-                        <a href="https://stocktemplate.webflow.io/about" class="header-nav-link w-nav-link"
-                            style="max-width: 1364px">Log In /Sign up</a>
                     </li>
                     <li class="header-nav-list-item">
                         <a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
                             style="max-width: 1364px">Search</a>
                     </li>
                     <li class="header-nav-list-item">
-                        <a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
-                        style="max-width: 1364px">Photos</a></li>
-                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
-                        style="max-width: 1364px">Vectors</a></li>
-                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
-                        style="max-width: 1364px">Videos</a></li>
-                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
-                        style="max-width: 1364px">Pricing</a></li>
+                        <a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Photos</a></li>
+                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Vectors</a></li>
+                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Videos</a></li>
+                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Pricing</a></li>
+
+                    @if(!auth()->user())
+                    <li class="header-nav-list-item"> <a href="{{ route('user.login') }}" class="header-nav-link w-nav-link" style="max-width: 1364px">Log In /Sign up</a> </li>
+                    @else
+                    <li class="header-nav-list-item"> <a href="{{ route('user.logout') }}" class="header-nav-link w-nav-link" style="max-width: 1364px">Log Out</a> </li>
+                    @endif
                     {{-- <li class="header-nav-list-item">
                         <div data-hover="true" data-delay="0"
                             data-w-id="0f04fa47-b280-a98d-cbb1-756575b03618"

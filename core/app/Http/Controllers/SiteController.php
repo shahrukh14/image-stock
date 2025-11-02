@@ -644,12 +644,7 @@ class SiteController extends Controller
         $activeTemplate = $this->activeTemplate;
         return view($this->activeTemplate .'user.blog.blog_post',compact('pageTitle','activeTemplate'));
     }
-    public function becomeContributorForm()
-    {
-        $pageTitle = "Become A Contributor";
-        $activeTemplate = $this->activeTemplate;
-        return view($this->activeTemplate .'user.become_acontributor',compact('pageTitle','activeTemplate'));
-    }
+   
     public function About()
     {
         $pageTitle = "About";

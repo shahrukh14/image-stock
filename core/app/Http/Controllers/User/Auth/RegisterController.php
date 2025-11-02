@@ -43,35 +43,28 @@ class RegisterController extends Controller
     {
       
         $general = gs();
-        $passwordValidation = Password::min(6);
-        if ($general->secure_password) {
-            $passwordValidation = $passwordValidation->mixedCase()->numbers()->symbols()->uncompromised();
-        }
-        $agree = 'nullable';
-        if ($general->agree) {
-            $agree = 'required';
-        }
-        $countryData = (array)json_decode(file_get_contents(resource_path('views/partials/country.json')));
-        $countryCodes = implode(',', array_keys($countryData));
-        $mobileCodes = implode(',', array_column($countryData, 'dial_code'));
-        $countries = implode(',', array_column($countryData, 'country'));
+        // $passwordValidation = Password::min(6);
+        // if ($general->secure_password) {
+        //     $passwordValidation = $passwordValidation->mixedCase()->numbers()->symbols()->uncompromised();
+        // }
+        // $agree = 'nullable';
+        // if ($general->agree) {
+        //     $agree = 'required';
+        // }
+        // $countryData = (array)json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        // $countryCodes = implode(',', array_keys($countryData));
+        // $mobileCodes = implode(',', array_column($countryData, 'dial_code'));
+        // $countries = implode(',', array_column($countryData, 'country'));
         $validate = Validator::make($data, [
             'email' => 'required|string|email|unique:users',
-            'mobile' => 'required|regex:/^([0-9]*)$/',
-            'password' => ['required', 'confirmed', $passwordValidation],
+            'password' => ['required'],
             'username' => 'required|unique:users|min:6',
-            'captcha' => 'sometimes|required',
-            'mobile_code' => 'required|in:' . $mobileCodes,
-            'country_code' => 'required|in:' . $countryCodes,
-            'country' => 'required|in:' . $countries,
-            'agree' => $agree
         ]);
         return $validate;
     }
 
     public function register(Request $request)
     {
-       
         $this->validator($request->all())->validate();
 
         $request->session()->regenerateToken();
@@ -82,17 +75,17 @@ class RegisterController extends Controller
             return back()->withNotify($notify)->withInput($request->all());
         }
 
-        if (!verifyCaptcha()) {
-            $notify[] = ['error', 'Invalid captcha provided'];
-            return back()->withNotify($notify);
-        }
+        // if (!verifyCaptcha()) {
+        //     $notify[] = ['error', 'Invalid captcha provided'];
+        //     return back()->withNotify($notify);
+        // }
 
 
-        $exist = User::where('mobile', $request->mobile_code . $request->mobile)->first();
-        if ($exist) {
-            $notify[] = ['error', 'The mobile number already exists'];
-            return back()->withNotify($notify)->withInput();
-        }
+        // $exist = User::where('mobile', $request->mobile_code . $request->mobile)->first();
+        // if ($exist) {
+        //     $notify[] = ['error', 'The mobile number already exists'];
+        //     return back()->withNotify($notify)->withInput();
+        // }
 
         event(new Registered($user = $this->create($request->all())));
 
@@ -119,16 +112,6 @@ class RegisterController extends Controller
         $user->email = strtolower($data['email']);
         $user->password = Hash::make($data['password']);
         $user->username = $data['username'];
-        $user->ref_by = $referUser ? $referUser->id : 0;
-        $user->country_code = $data['mobile_code'];
-        $user->mobile = $data['mobile_code'] . $data['mobile'];
-        $user->address = [
-            'address' => '',
-            'state' => '',
-            'zip' => '',
-            'country' => isset($data['country']) ? $data['country'] : null,
-            'city' => ''
-        ];
         $user->status = 1;
         $user->kv = $general->kv ? Status::NO : Status::YES;
         $user->ev = $general->ev ? Status::NO : Status::YES;

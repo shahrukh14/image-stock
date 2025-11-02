@@ -11,7 +11,7 @@
     <link href="{{ asset('assets/global/css/custom.css') }}" rel="stylesheet">
   
     {{--  BEGIN: fontawesome css --}}
-    <link rel="stylesheet" type="text/css" href=".\assets\global\css\all.min.css">
+    <link href="{{ asset('assets/global/css/all.min.css') }}" rel="stylesheet" type="text/css">
     {{--  END: fontawesome css --}}
     @stack('style-lib')
     @stack('style')

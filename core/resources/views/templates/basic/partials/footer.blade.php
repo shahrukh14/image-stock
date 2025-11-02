@@ -23,11 +23,9 @@
                 <div id="w-node-_3f6661a9-88e7-47bc-76df-590fa2612b6b-a2612b67"
                     class="inner-container _400px---tablet">
                     <div class="mg-bottom-24px">
-                        <a href="#"
-                            class="footer-logo-wrapper w-inline-block">
-                            <img
-                                src=".\assets\images\app_images\stock_x_icon.svg"
-                                alt="Logo - Stock X Webflow Template" class="footer-logo" /></a>
+                        <a href="#" class="footer-logo-wrapper w-inline-block">
+                            <img src="{{ asset('assets\images\app_images\stock_x_icon.svg') }}" alt="Logo - Stock X Webflow Template" class="footer-logo" />
+                        </a>
                     </div>
                     <div class="w-layout-grid social-media-grid-top">
                         <a href="https://facebook.com/" target="_blank" class="social-icon w-inline-block">
@@ -101,7 +99,7 @@
                                 <div class="flex-horizontal space-between gap-16px">
                                     <div class="flex-horizontal start gap-12px">
                                         <div class="image-wrapper footer-collection-icon">
-                                            <img src=".\assets\images\app_images\photography-image-stock-x-webflow-template.svg"
+                                            <img src="{{ asset('assets\images\app_images\photography-image-stock-x-webflow-template.svg') }}"
                                                 alt="Photography Icon - Stock X Webflow Template"
                                                 class="image" />
                                         </div>
@@ -122,7 +120,7 @@
                                 <div class="flex-horizontal space-between gap-16px">
                                     <div class="flex-horizontal start gap-12px">
                                         <div class="image-wrapper footer-collection-icon">
-                                            <img src=".\assets\images\app_images\vectors-and-graphics-image-stock-x-webflow-template.svg"
+                                            <img src="{{ asset('assets\images\app_images\vectors-and-graphics-image-stock-x-webflow-template.svg') }}"
                                                 alt="Vectors And Graphics Icon - Stock X Webflow Template"
                                                 class="image" />
                                         </div>
@@ -143,7 +141,7 @@
                                 <div class="flex-horizontal space-between gap-16px">
                                     <div class="flex-horizontal start gap-12px">
                                         <div class="image-wrapper footer-collection-icon">
-                                            <img src=".\assets\images\app_images\fvideos-image-stock-x-webflow-template.svg"
+                                            <img src="{{ asset('assets\images\app_images\fvideos-image-stock-x-webflow-template.svg') }}"
                                                 alt="Videos Icon - Stock X Webflow Template" class="image" />
                                         </div>
                                         <div>
@@ -167,7 +165,7 @@
             <div class="w-layout-grid grid-footer-2-column---form---icon">
                 <div class="flex-horizontal start flex-vertical---mbp">
                     <div class="footer-cta-icon">
-                        <img src=".\assets\images\app_images\newsletter-icon-stock-x-webflow-template.svg"
+                        <img src="{{ asset('assets\images\app_images\newsletter-icon-stock-x-webflow-template.svg') }}"
                             alt="Subscribe To Our Newsletter Icon - Stock X Webflow Template" /> 
                     </div>
                     <div>
