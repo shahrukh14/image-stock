@@ -1,1 +1,1 @@
-<?php $timezone = 'Etc/GMT+6' ?>
+<?php $timezone = 'EST' ?>

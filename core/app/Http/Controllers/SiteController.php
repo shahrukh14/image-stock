@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Carbon\Carbon;
 use App\Models\Page;
 use App\Models\Plan;
@@ -11,7 +12,10 @@ use App\Models\Follow;
 use App\Models\Frontend;
 use App\Models\Language;
 use App\Constants\Status;
+use App\Mail\ConatctUsMail;
 use App\Models\AdminNotification;
+use App\Models\Blog;
+use App\Models\BlogCategory;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\GatewayCurrency;
@@ -70,7 +74,6 @@ class SiteController extends Controller
     public function contactSubmit(Request $request)
     {
 
-
         if (!gs('contact_system')) {
             abort(404);
         }
@@ -120,6 +123,39 @@ class SiteController extends Controller
         return to_route('ticket.view', [$ticket->ticket])->withNotify($notify);
     }
 
+    public function contactSubmitData(Request $request){
+        $random = getNumber();
+        $ticket = new SupportTicket();
+        $ticket->user_id = auth()->id() ?? 0;
+        $ticket->name = $request->name;
+        $ticket->email = $request->email;
+        $ticket->phone = $request->phone;
+        $ticket->priority = Status::PRIORITY_MEDIUM;
+
+        $ticket->ticket = $random;
+        $ticket->subject = $request->subject;
+        $ticket->last_reply = Carbon::now();
+        $ticket->status = Status::TICKET_OPEN;
+        $ticket->save();
+
+
+        // $staff =  SchoolStaff::where(['email'=> $request->email, 'school_code'=> $request->school_code])->first();
+        // $otp = rand(100000, 999999);
+        if ($request->email) {
+            $mailData = [
+                'title' => 'Enquiry Request Send',
+                'body' => 'Massage sent'
+            ];
+            $notify[] = ['success', 'Ticket created successfully!'];
+            Mail::to($request->email)->send(new ConatctUsMail($mailData));
+            return redirect()->back();
+        } else {
+            $notify[] = ['danger', 'Some thing went wrong successfully!'];
+            return redirect()->back();
+        }
+        $notify[] = ['success', 'Ticket created successfully!'];
+        return redirect()->back()->withNotify($notify);
+    }
 
     public function policyPages($slug, $id)
     {
@@ -632,17 +668,41 @@ class SiteController extends Controller
         }
     }
 
-    public function blogPage()
+    public function blogPage(Request $request)
     {
         $pageTitle = "Blog";
         $activeTemplate = $this->activeTemplate;
-        return view($this->activeTemplate .'user.blog.blog',compact('pageTitle','activeTemplate'));
+        // $blogs = Blog::orderby('id', 'DESC')->paginate(10);
+        $search = $request['search_blog'] ? $request['search_blog'] : "";
+        if ($search !== "") {
+            $blogs = Blog::where('title', 'LIKE', "%$search%")->orderby('id', 'DESC')->paginate(10);
+        } else {
+            $blogs = Blog::orderby('id', 'DESC')->paginate(10);
+        }
+        $blogCategory = BlogCategory::all();
+        return view($this->activeTemplate .'user.blog.blog',compact('pageTitle','activeTemplate','blogs','blogCategory'));
     }
-    public function blogPostPage()
+    public function blogPageCategory($slug,Request $request){
+        $pageTitle = "Blog";
+        $activeTemplate = $this->activeTemplate;
+        $blogCategoryId = BlogCategory::where('slug',$slug)->first()->id;
+        $blogCategory = BlogCategory::all();
+        $search = $request['search_blog'] ? $request['search_blog'] : "";
+        
+        if ($search !== "") {
+            $blogs = Blog::where('category', $blogCategoryId)->where('title', 'LIKE', "%$search%")->orderby('id', 'DESC')->paginate(10);
+        } else {
+            $blogs = Blog::where('category', $blogCategoryId)->orderby('id', 'DESC')->paginate(10);
+        }
+
+        return view($this->activeTemplate .'user.blog.blog',compact('pageTitle','activeTemplate','blogs','blogCategory'));
+    }
+    public function blogDetailsPage($slug)
     {
         $pageTitle = "Blog Post";
+        $blog = Blog::where('slug',$slug)->with('Category')->first();
         $activeTemplate = $this->activeTemplate;
-        return view($this->activeTemplate .'user.blog.blog_post',compact('pageTitle','activeTemplate'));
+        return view($this->activeTemplate .'user.blog.blog_detail',compact('pageTitle','activeTemplate','blog'));
     }
    
     public function About()

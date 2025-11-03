@@ -30,6 +30,7 @@ Route::controller('SiteController')->group(function () {
     Route::get('invoice/{type}/{trx}/{id}', 'getInvoice')->name('invoice');
     //contact
     Route::get('/contact', 'contact')->name('contact');
+    Route::post('/contact_from', 'contactSubmitData')->name('contact.form');
     Route::post('/contact', 'contactSubmit');
     //plans
     Route::get('/plans', 'plans')->name('plans');
@@ -69,13 +70,18 @@ Route::controller('SiteController')->group(function () {
     // Route::get('/login', 'Login')->name('login');
     Route::get('/signup', 'Signup')->name('signup');
     Route::get('/upload-files', 'UploadFiles')->name('upload.files');
-    Route::get('/blog', 'blogPage')->name('blog');
-    Route::get('/blog-post', 'blogPostPage')->name('blog.post');
+    
+    
     Route::get('/about', 'About')->name('about');
     Route::get('/product-details', 'ProductDetails')->name('product.details');
-    Route::get('/price', 'Price')->name('product.details');
+    Route::get('/price', 'Price')->name('price.details');
     Route::get('/{slug}', 'pages')->name('pages');
     Route::get('/', 'index')->name('home');
+    Route::prefix('blog')->name('blog.')->group(function () {
+        Route::get('category/all', 'blogPage')->name('all');
+        Route::get('category/{slug}', 'blogPageCategory')->name('specific.category');
+        Route::get('/{slug}', 'blogDetailsPage')->name('details');
+    });
 });
 
 Route::prefix('donation')->name('donation.')->group(function () {

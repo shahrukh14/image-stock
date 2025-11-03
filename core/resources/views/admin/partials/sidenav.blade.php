@@ -1,4 +1,4 @@
-<div class="sidebar bg--dark">
+<div class="sidebar bg--green-new">
     <button class="res-sidebar-close-btn"><i class="las la-times"></i></button>
     <div class="sidebar__inner">
         <div class="sidebar__logo">
@@ -14,12 +14,19 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.reviewers.*') }}">
+                <li class="sidebar-menu-item {{ menuActive('admin.contributors.*') }}">
+                    <a class="nav-link" href="{{ route('admin.contributors.all') }}">
+                        <i class="menu-icon las la-user-cog"></i>
+                        <span class="menu-title">@lang('Manage Contributor')</span>
+                    </a>
+                </li>
+
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.reviewers.*') }}">
                     <a class="nav-link" href="{{ route('admin.reviewers.all') }}">
                         <i class="menu-icon las la-user-cog"></i>
                         <span class="menu-title">@lang('Manage Reviewer')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item {{ menuActive('admin.ads.all') }}">
                     <a class="nav-link" href="{{ route('admin.ads.all') }}">
@@ -33,6 +40,30 @@
                         <i class="menu-icon las la-list"></i>
                         <span class="menu-title">@lang('Category')</span>
                     </a>
+                </li>
+
+                
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a class="{{ menuActive('admin.system*', 3) }}" href="javascript:void(0)">
+                        <i class="menu-icon la la-server"></i>
+                        <span class="menu-title">@lang('Blog')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.blog*', 2) }}">
+                        <ul>
+                            <li class="sidebar-menu-item {{ menuActive('admin.blog.category') }}">
+                                <a class="nav-link" href="{{ route('admin.blog.category') }}">
+                                    <i class="menu-icon las la-list"></i>
+                                    <span class="menu-title">@lang('Blog Category')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item {{ menuActive('admin.blog.all.blog') }}">
+                                <a class="nav-link" href="{{ route('admin.blog.all.blog') }}">
+                                    <i class="menu-icon las la-list"></i>
+                                    <span class="menu-title">@lang('Blogs')</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="sidebar-menu-item {{ menuActive('admin.color.all') }}">
@@ -344,7 +375,7 @@
                 </li>
 
 
-                <li class="sidebar-menu-item sidebar-dropdown">
+                {{-- <li class="sidebar-menu-item sidebar-dropdown">
                     <a class="{{ menuActive('admin.donation*', 3) }}" href="javascript:void(0)">
                         <i class="menu-icon la la-hand-holding-usd"></i>
                         <span class="menu-title">@lang('Donations') </span>
@@ -391,7 +422,7 @@
 
                         </ul>
                     </div>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a class="{{ menuActive('admin.ticket*', 3) }}" href="javascript:void(0)">
@@ -517,12 +548,12 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.donation.setting.index') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.donation.setting.index') }}">
                     <a class="nav-link" href="{{ route('admin.donation.setting.index') }}">
                         <i class="menu-icon las la-donate"></i>
                         <span class="menu-title">@lang('Donation Setting')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item {{ menuActive('admin.setting.logo.icon') }}">
                     <a class="nav-link" href="{{ route('admin.setting.logo.icon') }}">
@@ -546,12 +577,12 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive(['admin.language.manage', 'admin.language.key']) }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive(['admin.language.manage', 'admin.language.key']) }}">
                     <a class="nav-link" data-default-url="{{ route('admin.language.manage') }}" href="{{ route('admin.language.manage') }}">
                         <i class="menu-icon las la-language"></i>
                         <span class="menu-title">@lang('Language') </span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item {{ menuActive('admin.seo') }}">
                     <a class="nav-link" href="{{ route('admin.seo') }}">
@@ -612,12 +643,12 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.frontend.manage.*') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.frontend.manage.*') }}">
                     <a class="nav-link" href="{{ route('admin.frontend.manage.pages') }}">
                         <i class="menu-icon la la-list"></i>
                         <span class="menu-title">@lang('Manage Pages')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a class="{{ menuActive('admin.frontend.sections*', 3) }}" href="javascript:void(0)">
@@ -673,7 +704,7 @@
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.system*', 2) }}">
                         <ul>
-                            <li class="sidebar-menu-item {{ menuActive('admin.system.info') }}">
+                            {{-- <li class="sidebar-menu-item {{ menuActive('admin.system.info') }}">
                                 <a class="nav-link" href="{{ route('admin.system.info') }}">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Application')</span>
@@ -684,19 +715,19 @@
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Server')</span>
                                 </a>
-                            </li>
+                            </li> --}}
                             <li class="sidebar-menu-item {{ menuActive('admin.system.optimize') }}">
                                 <a class="nav-link" href="{{ route('admin.system.optimize') }}">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Cache')</span>
                                 </a>
                             </li>
-                            <li class="sidebar-menu-item {{ menuActive('admin.system.update') }}">
+                            {{-- <li class="sidebar-menu-item {{ menuActive('admin.system.update') }}">
                                 <a class="nav-link" href="{{ route('admin.system.update') }}">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Update')</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>
@@ -715,10 +746,10 @@
                     </a>
                 </li>
             </ul>
-            <div class="text-uppercase mb-3 text-center">
+            {{-- <div class="text-uppercase mb-3 text-center display-none">
                 <span class="text--primary">{{ __(systemDetails()['name']) }}</span>
                 <span class="text--success">@lang('V'){{ systemDetails()['version'] }} </span>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

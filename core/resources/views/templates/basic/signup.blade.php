@@ -20,7 +20,7 @@
                     <div class="text-align-center margin-top-20px">
                         <input type="submit" value="Sign up" data-wait="Please wait..." id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-50 mg-top-16px w-button">
                     </div>
-                    <div  class="margin-top-20px text-align-center">Already have an account? <a href="{{ route('login') }}" class="text-link text-medium color-neutral-800">Log in</a></div>
+                    <div  class="margin-top-20px text-align-center">Already have an account? <a href="{{ route('user.login') }}" class="text-link text-medium color-neutral-800">Log in</a></div>
                 </div>
             </form>
         </div>

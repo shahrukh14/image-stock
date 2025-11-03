@@ -1,5 +1,5 @@
 <!-- navbar-wrapper start -->
-<nav class="navbar-wrapper bg--dark">
+<nav class="navbar-wrapper bg--green-new">
     <div class="navbar__left">
         <button type="button" class="res-sidebar-open-btn me-3"><i class="las la-bars"></i></button>
         <form class="navbar-search">

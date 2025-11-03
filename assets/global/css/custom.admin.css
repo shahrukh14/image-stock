@@ -1,0 +1,6 @@
+.bg--green-new {
+    background-color: #63a544 !important;
+}
+#title::after {
+    border-color: #63a544 transparent transparent transparent !important;
+}

@@ -1,4 +1,4 @@
-@extends($activeTemplate . 'layouts.frontend')
+@extends($activeTemplate . 'layouts.master')
 @section('content')
     <div class="section--xl">
         <div class="container custom--container">

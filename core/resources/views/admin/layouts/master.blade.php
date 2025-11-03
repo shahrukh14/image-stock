@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="{{ asset('assets/admin_reviewer/css/vendor/bootstrap-toggle.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/global/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/global/css/line-awesome.min.css') }}">
-
+    {{-- custom admin css file  --}}
+    <link rel="stylesheet" href="{{ asset('assets/global/css/custom.admin.css') }}">
+    {{-- custom admin css file  --}}
     @stack('style-lib')
 
     <link rel="stylesheet" href="{{ asset('assets/global/css/select2.min.css') }}">
@@ -40,8 +42,7 @@
     <script src="{{ asset('assets/global/js/select2.min.js') }}"></script>
     <script src="{{ asset('assets/admin_reviewer/js/cuModal.js') }}"></script>
     <script src="{{ asset('assets/admin_reviewer/js/app.js') }}"></script>
-
-    {{-- LOAD NIC EDIT --}}
+    {{-- LOAD NIC EDIT --}} 
     <script>
         "use strict";
         bkLib.onDomLoaded(function() {

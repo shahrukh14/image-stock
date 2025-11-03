@@ -1,4 +1,4 @@
-@extends($activeTemplate . 'layouts.frontend')
+@extends($activeTemplate . 'layouts.master')
 @section('content')
     @include($activeTemplate . 'partials.member_nav')
     <div class="user-gallery d-flex align-items-center">

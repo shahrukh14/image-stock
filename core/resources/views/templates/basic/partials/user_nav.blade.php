@@ -61,6 +61,7 @@
                 </li>
                 @endif
 
+                @if(auth()->user()->role == 2)
                 <li>
                     <div class="accordion" id="images">
                         <div class="accordion-item">
@@ -75,6 +76,11 @@
                             <div class="accordion-collapse collapse" id="imageCollapse" data-bs-parent="#images">
                                 <div class="accordion-body">
                                     <ul class="list dashboard-menu__inner">
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.image.add') }}" href="{{ route('user.image.add') }}">
+                                                @lang('Upload images')
+                                            </a>
+                                        </li>
                                         <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.pending') }}" href="{{ route('user.image.pending') }}">
                                                 @lang('Pending images')
@@ -157,6 +163,7 @@
                         </div>
                     </div>
                 </li>
+                @endif
 
                 @if ($general->referral_system)
                     <li>

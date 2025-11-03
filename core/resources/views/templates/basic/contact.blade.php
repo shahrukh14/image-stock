@@ -2,7 +2,6 @@
 @section('content')
     @php
         $content = getContent('contact.content', true);
-        
     @endphp
     <section class="section section-hero---v3">
         <div class="container-default w-container">
@@ -11,27 +10,29 @@
               <div id="w-node-_8c1563e2-8c31-9390-4fcb-8ac70f2bf395-c050df8a" class="contact-form-left-side">
                 <div data-w-id="01fd488e-8379-bd50-6551-292d4daf86af" style="opacity: 1;"
                   class="inner-container _480px _100-tablet">
-                  <div class="contact-form-block w-form">
-                    <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" data-name="Contact Form" method="get"
+                  <div class="contact-form-block">
+                    {{-- {{ route('contact.form') }} --}}
+                    <form id="wf-form-Contact-Form" name="wf-form-Contact-Form" action="" data-name="Contact Form" method="post" class="verify-gcaptcha"  
                       data-wf-page-id="64358b7d9abc70e5c050df8a" data-wf-element-id="8c1563e2-8c31-9390-4fcb-8ac70f2bf397"
                       aria-label="Contact Form">
+                      @csrf
                       <div class="w-layout-grid grid-2-columns form">
-                        <div><label for="name" class="label small">Name</label><input type="text"
-                            class="input small w-input" maxlength="256" name="Name" data-name="Name"
+                        <div><label for="name" class="label small">Name</label><input type="text" value="{{ old('name', @$user->fullname) }}"
+                            class="input small w-input" maxlength="256" name="name" data-name="Name"
                             placeholder="John Carter" id="name" required=""></div>
                         <div><label for="email" class="label small">Email address</label><input type="email"
-                            class="input small w-input" maxlength="256" name="Email" data-name="Email"
+                            class="input small w-input" maxlength="256" name="email" data-name="Email" value="{{ old('email', @$user->email) }}"
                             placeholder="example@email.com" id="email" required=""></div>
                         <div><label for="phone" class="label small">Phone number</label><input type="tel"
-                            class="input small w-input" maxlength="256" name="Phone" data-name="Phone"
-                            placeholder="(123) 456 - 7890" id="phone" required=""></div>
-                        <div><label for="subject" class="label small">Subject</label><input type="text"
-                            class="input small w-input" maxlength="256" name="Subject" data-name="Subject"
+                            class="input small w-input" maxlength="256" name="phone" data-name="phone_no"
+                            placeholder="(123) 456 - 7890" id="phone_no" required=""></div>
+                        <div><label for="subject" class="label small">Subject</label><input type="text" value="{{ old('subject') }}"
+                            class="input small w-input" maxlength="256" name="subject" data-name="Subject"
                             placeholder="ex. Advertising" id="subject" required=""></div>
                         <div id="w-node-_8c1563e2-8c31-9390-4fcb-8ac70f2bf3a9-c050df8a" class="text-area-wrapper"><label
-                            for="message" class="label small">Message</label><textarea id="message" name="Message"
+                            for="message" class="label small">Message</label><textarea id="message" name="message"
                             maxlength="5000" data-name="Message" placeholder="Type your message here..." required=""
-                            class="text-area small w-input"></textarea></div><input type="submit" value="Send Message"
+                            class="text-area small w-input">{{ old('message') }}</textarea></div><input type="submit" value="Send Message"
                           data-wait="Please wait..." id="w-node-_8c1563e2-8c31-9390-4fcb-8ac70f2bf3ad-c050df8a"
                           class="btn-primary small w-button">
                       </div>

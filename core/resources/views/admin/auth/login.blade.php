@@ -6,7 +6,7 @@
                 <div class="col-xxl-5 col-xl-5 col-lg-6 col-md-8 col-sm-11">
                     <div class="login-area">
                         <div class="login-wrapper">
-                            <div class="login-wrapper__top">
+                            <div class="login-wrapper__top bg--green-new" id="title">
                                 <h3 class="title text-white">@lang('Welcome to') <strong>{{ __($general->site_name) }}</strong></h3>
                                 <p class="text-white">{{ __($pageTitle) }} @lang('to') {{ __($general->site_name) }}
                                     @lang('Dashboard')</p>
@@ -30,7 +30,7 @@
                                         </div>
                                         <a href="{{ route('admin.password.reset') }}" class="forget-text">@lang('Forgot Password?')</a>
                                     </div>
-                                    <button type="submit" class="btn cmn-btn w-100">@lang('LOGIN')</button>
+                                    <button type="submit" class="btn cmn-btn w-100 bg--green-new">@lang('LOGIN')</button>
                                 </form>
                             </div>
                         </div>

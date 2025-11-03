@@ -4,11 +4,9 @@ style="opacity: 1">
 <div class="container-default w-container">
     <div class="header-content-wrapper">
         <div class="header-left-side header-v1">
-            <a href="https://stocktemplate.webflow.io/" class="header-logo-link w-nav-brand"
-                aria-label="home"><img
-                    src="{{ asset('assets/images/app_images/header-logo-stock-x-webflow-template.svg') }}"
-                    alt="Logo - Stock X Webflow Template" class="header-logo" /></a>
-      
+            <a href="{{ route('home') }}" class="header-logo-link w-nav-brand" aria-label="home">
+                <img src="{{ getImage(getFilePath('logoIcon') . '/logo.png') }}" alt="Logo - green Stock" class="header-logo" />
+            </a>
         </div>
         <div class="header-right-side">
             <nav role="navigation" class="header-nav-menu-wrapper w-nav-menu">
@@ -21,25 +19,82 @@ style="opacity: 1">
                         class="hidden-on-desktop w-button" />
                 </form>
                 <ul role="list" class="header-nav-menu-list">
-                    <li class="header-nav-list-item">
-                        <a href="{{ route('home') }}" aria-current="page"
-                            class="header-nav-link w-nav-link w--current" style="max-width: 1364px">Home</a>
-                    </li>
-                    <li class="header-nav-list-item">
-                        <a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link"
-                            style="max-width: 1364px">Search</a>
-                    </li>
-                    <li class="header-nav-list-item">
-                        <a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Photos</a></li>
-                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Vectors</a></li>
-                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Videos</a></li>
-                    <li class="header-nav-list-item"><a href="https://stocktemplate.webflow.io/blog" class="header-nav-link w-nav-link" style="max-width: 1364px">Pricing</a></li>
+                    <li class="header-nav-list-item"><a href="{{ route('home') }}" aria-current="page" class="header-nav-link w-nav-link w--current" style="max-width: 1364px">Home</a></li>
+                    <li class="header-nav-list-item"><a href="#" class="header-nav-link w-nav-link"  style="max-width: 1364px">Search</a></li>
+                    <li class="header-nav-list-item"><a href="{{ route('search')}}?type=image" class="header-nav-link w-nav-link" style="max-width: 1364px">Photos</a></li>
+                    <li class="header-nav-list-item"><a href="#" class="header-nav-link w-nav-link" style="max-width: 1364px">Vectors</a></li>
+                    <li class="header-nav-list-item"><a href="#" class="header-nav-link w-nav-link" style="max-width: 1364px">Videos</a></li>
+                    <li class="header-nav-list-item"><a href="{{route('price.details')}}" class="header-nav-link w-nav-link" style="max-width: 1364px">Pricing</a></li>
 
                     @if(!auth()->user())
                     <li class="header-nav-list-item"> <a href="{{ route('user.login') }}" class="header-nav-link w-nav-link" style="max-width: 1364px">Log In /Sign up</a> </li>
                     @else
-                    <li class="header-nav-list-item"> <a href="{{ route('user.logout') }}" class="header-nav-link w-nav-link" style="max-width: 1364px">Log Out</a> </li>
+                    
+                    <li class="header-nav-list-item nav-item has-sub user-dropdown">
+                        <a href="javascript:void(0)" class="primary-menu__link p-0">
+                            <span class="custom-dropdown__user">
+                                <img src="{{ getImage(getFilePath('userProfile') . '/' . auth()->user()->image, null, 'user') }}" alt="" class="custom-dropdown__user-img">
+                            </span>
+                            <span class="ps-3 d-lg-none">{{auth()->user()->firstname}} {{auth()->user()->lastname}}</span>
+                        </a>
+                        <ul class="primary-menu__sub">
+                            <li>
+                                <a href="{{ route('user.home') }}" class="t-link primary-menu__sub-link d-flex gap-2">
+                                    <span class="d-inline-block xl-text lh-1">
+                                        <i class="las la-home"></i>
+                                    </span>
+                                    <span class="d-block flex-grow-1">
+                                        @lang('Dashboard')
+                                    </span>
+                                </a>
+                            </li>
+                        
+                            <li>
+                                <a href="{{ route('user.image.all') }}" class="t-link primary-menu__sub-link d-flex gap-2">
+                                    <span class="d-inline-block xl-text lh-1">
+                                        <i class="las la-image"></i>
+                                    </span>
+                                    <span class="d-block flex-grow-1">
+                                        @lang('My Images')
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user.collection.all') }}" class="t-link primary-menu__sub-link d-flex gap-2">
+                                    <span class="d-inline-block xl-text lh-1">
+                                        <i class="las la-folder-plus"></i>
+                                    </span>
+                                    <span class="d-block flex-grow-1">
+                                        @lang('My Collections')
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href=" " class="t-link primary-menu__sub-link d-flex gap-2">
+                                    <span class="d-inline-block xl-text lh-1">
+                                        <i class="las la-user-circle"></i>
+                                    </span>
+                                    <span class="d-block flex-grow-1">
+                                        @lang('My Profile')
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user.logout') }}" class="t-link primary-menu__sub-link d-flex gap-2">
+                                    <span class="d-inline-block xl-text lh-1">
+                                        <i class="las la-sign-out-alt"></i>
+                                    </span>
+                                    <span class="d-block flex-grow-1">
+                                        @lang('Logout')
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     @endif
+
+                    
+                    
                     {{-- <li class="header-nav-list-item">
                         <div data-hover="true" data-delay="0"
                             data-w-id="0f04fa47-b280-a98d-cbb1-756575b03618"
@@ -348,7 +403,7 @@ quickCheckoutEnabled
 "
                 data-wf-page-link-href-prefix=""
                 class="w-commerce-commercecartwrapper cart-button-wrapper">
-                <a href="https://stocktemplate.webflow.io/home#" data-node-type="commerce-cart-open-link"
+                <a href="#" data-node-type="commerce-cart-open-link"
                     class="w-commerce-commercecartopenlink cart-button w-inline-block" role="button"
                     aria-haspopup="dialog" aria-label="Open empty cart">
                     <div data-wf-bindings="%5B%7B%22innerHTML%22%3A%7B%22type%22%3A%22Number%22%2C%22filter%22%3A%7B%22type%22%3A%22numberPrecision%22%2C%22params%22%3A%5B%220%22%2C%22numberPrecision%22%5D%7D%2C%22dataPath%22%3A%22database.commerceOrder.userItemsCount%22%7D%7D%5D"
@@ -519,13 +574,13 @@ quickCheckoutEnabled
     </div>
 </div>
 <div>
-    <form action="https://stocktemplate.webflow.io/search" class="header-search-bar d-flex justify-content-center align-items-center" style="margin: 23px 0px 0px 0px;">
+    <form action="javascript:void(0)" class="header-search-bar d-flex justify-content-center align-items-center" style="margin: 23px 0px 0px 0px;">
         <div id="desktop-search-bar">
         <div class="line-rounded-icon header-search-bar-icon desktop-search-icon" ></div>
         <label for="search-2" class="hidden-on-desktop">Search</label><input type="search"
             class="input small search-header w-input" maxlength="256" name="query"
-            placeholder="Search for resources…" id="header-search" required="" /><input
-            type="submit" value="Search" class="hidden-on-desktop w-button" />
+            placeholder="Search for resources…" id="header-search" required="" />
+            <input type="submit" value="Search" class="hidden-on-desktop w-button" />
         </div>
     </form>
 </div>

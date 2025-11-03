@@ -307,6 +307,12 @@ class ImageController extends Controller
                     $constraint->upsize();
                 });
 
+                if ($general->watermark == Status::ENABLE) {
+                    $watermark = ImageFacade::make('assets/images/watermark.png')->opacity(45)->rotate(45)->greyscale()->fit($photo->width(), $photo->height());
+                    $thumb->insert($watermark, 'center');
+                }
+
+
                 $image->image_width = $thumb->width();
                 $image->image_height = $thumb->height();
 

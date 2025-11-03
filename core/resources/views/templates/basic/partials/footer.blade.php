@@ -24,7 +24,7 @@
                     class="inner-container _400px---tablet">
                     <div class="mg-bottom-24px">
                         <a href="#" class="footer-logo-wrapper w-inline-block">
-                            <img src="{{ asset('assets\images\app_images\stock_x_icon.svg') }}" alt="Logo - Stock X Webflow Template" class="footer-logo" />
+                            <img src="{{ getImage(getFilePath('logoIcon') . '/logo.png') }}" alt="Logo - Stock X Webflow Template" class="footer-logo" />
                         </a>
                     </div>
                     <div class="w-layout-grid social-media-grid-top">
@@ -50,22 +50,19 @@
                     <div class="">
                         <ul role="list" class="pages-list-wrapper">
                             <li class="footer-list-item">
-                                <a href="#" class="pages-menu-link">About</a>
+                                <a href="{{route('about')}}" class="pages-menu-link">About</a>
                             </li>
                             <li class="footer-list-item">
-                                <a href="#" class="pages-menu-link">Contact</a>
+                                <a href="{{route('contact')}}" class="pages-menu-link">Contact</a>
                             </li>
                             <li class="footer-list-item">
-                                <a href="#"
-                                    class="pages-menu-link">Blog</a>
+                                <a href="{{route('blog.all')}}" class="pages-menu-link">Blog</a>
                             </li>
                             <li class="footer-list-item">
-                                <a href="#"
-                                    class="pages-menu-link">Become a contributor</a>
+                                <a href="{{route('user.become.contributor.page')}}" class="pages-menu-link">Become a contributor</a>
                             </li>
                             <li class="footer-list-item">
-                                <a href="#"
-                                    class="pages-menu-link">Upload files</a>
+                                <a href="{{route('upload.files')}}" class="pages-menu-link">Upload files</a>
                             </li>
                         </ul>
                     </div>
@@ -73,12 +70,10 @@
                 <div>
                     <ul role="list" class="pages-list-wrapper">
                         <li class="footer-list-item">
-                            <a href="#"
-                                class="pages-menu-link">Terms & Conditions</a>
+                            <a href="#" class="pages-menu-link">Terms & Conditions</a>
                         </li>
                         <li class="footer-list-item">
-                            <a href="#"
-                                class="pages-menu-link">Privacy Policy</a>
+                            <a href="#" class="pages-menu-link">Privacy Policy</a>
                         </li>
                         <li class="footer-list-item">
                             <a href="#" class="pages-menu-link">Cookie Policy</a>
@@ -210,10 +205,8 @@
         <div class="footer-bottom">
             <p class="mg-bottom-0">
                 Copyright © 2023. 
-                <a href="#" target="_blank"
-                    class="text-link text-decoration-none">All Rights reserved .</a>
-                <a href="#" target="_blank"
-                    class="text-link text-decoration-none">Greenstockpro.com</a>
+                <a href="#" target="_blank" class="text-link text-decoration-none">All Rights reserved .</a>
+                <a href="#" target="_blank" class="text-link text-decoration-none">Greenstock.com</a>
             </p>
         </div>
     </div>

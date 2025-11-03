@@ -59,6 +59,14 @@ Route::middleware('admin')->group(function () {
         Route::get('login/{id}', 'login')->name('login');
     });
 
+    Route::controller('ManageContributorController')->name('contributors.')->prefix('contributors')->group(function () {
+        Route::get('all', 'all')->name('all');
+        Route::post('status/{id}', 'updateStatus')->name('status');
+        Route::post('save/{id?}', 'save')->name('save');
+
+        Route::get('login/{id}', 'login')->name('login');
+    });
+
     // Users Manager
     Route::controller('ManageUsersController')->name('users.')->prefix('users')->group(function () {
         Route::get('/', 'allUsers')->name('all');
@@ -90,6 +98,7 @@ Route::middleware('admin')->group(function () {
         Route::post('send-notification', 'sendNotificationAll')->name('notification.all.send');
         Route::get('list', 'list')->name('list');
         Route::get('notification-log/{id}', 'notificationLog')->name('notification.log');
+
     });
 
     
@@ -382,6 +391,20 @@ Route::middleware('admin')->group(function () {
             Route::post('manage-section/{id}', 'manageSectionUpdate')->name('manage.section.update');
         });
     });
+    // Manage blog
+    Route::name('blog.')->prefix('blog')->group(function () {
+        Route::controller('BlogsController')->group(function () {
+            Route::get('blog_category', 'blogCategory')->name('category');
+            Route::get('blog_category/delete/{id}', 'blogCategoryDelete')->name('category.delete');
+            Route::post('blog_category_add', 'blogCategoryAdd')->name('category.add');
+            Route::post('blog_category_add/{id}', 'blogCategoryUpdate')->name('category.edit');
 
-
+            Route::get('all-blog', 'allBlog')->name('all.blog');
+            Route::get('add_blog', 'blogAdd')->name('new.add');
+            Route::post('insert_data', 'blogInsert')->name('new.insert');
+            Route::get('delete/{id}', 'blogDelete')->name('data.delete');
+            Route::get('update_data/{id}', 'blogUpdate')->name('update.data');
+            Route::post('update_data/{id}', 'blogEditData')->name('update.data.new');
+        });
+    });
 });
