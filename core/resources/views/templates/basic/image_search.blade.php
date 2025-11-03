@@ -4,11 +4,11 @@
     <section class="section aside-section">
       <div class="container-default w-container">
         <div class="w-layout-grid grid-2-columns aside-left">
-          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" data-w-id="ad5e1ca4-4b39-0db6-83c4-ea1be7337629" style="  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
+          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
             <div class="inner-container _222px _100---tablet" style="height: 100%">
               <div>
                 <div class="mg-bottom-54px">
-                  <div data-hover="false" data-delay="0" data-w-id="ad5e1ca4-4b39-0db6-83c4-ea1be733762d" class="aside-dropdown-wrapper w-dropdown">
+                  <div data-hover="false" data-delay="0"  class="aside-dropdown-wrapper w-dropdown">
                     <div class="aside-dropdown-toogle w-dropdown-toggle" id="w-dropdown-toggle-1" aria-controls="w-dropdown-list-1" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
                       <div>Type</div>
                       <div class="line-square-icon link-icon-rigth"></div>
@@ -52,60 +52,33 @@
                   </div>
                 </div>
                 <div class="mg-bottom-32px keep">
-                  <div data-hover="false" data-delay="0"  data-w-id="ad5e1ca4-4b39-0db6-83c4-ea1be733763f" class="aside-dropdown-wrapper w-dropdown">
+                  <div data-hover="false" data-delay="0" class="aside-dropdown-wrapper w-dropdown">
                     <div class="aside-dropdown-toogle w-dropdown-toggle" id="w-dropdown-toggle-2" aria-controls="w-dropdown-list-2" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
                       <div>Color</div>
                       <div class="line-square-icon link-icon-rigth"></div>
                     </div>
                     <nav style=" transform: translate3d(0px, 10px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 0; display: none; transform-style: preserve-3d; height: 0px; "  class="aside-dropdown-list w-dropdown-list" id="w-dropdown-list-2"                      aria-labelledby="w-dropdown-toggle-2">
                       <div class="pd-top-32px w-dyn-list">
-                        <div
-                          role="list"
-                          class="grid-2-columns gap-16px grid-2-columns---tablet w-dyn-items">
-                          <div
-                            id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337648-32b2f9c1"
-                            role="listitem"
-                            class="w-dyn-item">
-                            <a
-                              href="https://stocktemplate.webflow.io/color/black"
-                              class="category-dropdown-link w-inline-block"
-                              tabindex="0"
-                              ><div class="flex-horizontal start gap-8px">
-                                <div
-                                  style="
-                                    background-color: hsla(
-                                      240,
-                                      20%,
-                                      3.92%,
-                                      1
-                                    );
-                                  "
-                                  class="resource-color-dot"></div>
+                        <div role="list" class="grid-2-columns gap-16px grid-2-columns---tablet w-dyn-items">
+                          <div  id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337648-32b2f9c1"  role="listitem" class="w-dyn-item">
+                            <a href="https://stocktemplate.webflow.io/color/black" class="category-dropdown-link w-inline-block" tabindex="0">
+                              <div class="flex-horizontal start gap-8px">
+                                <div style="background-color: hsla(240,20%, 3.92%,1);" class="resource-color-dot"></div>
                                 <div class="text-100 color-neutral-700">
                                   Black
                                 </div>
-                              </div></a
-                            >
+                              </div>
+                            </a>
                           </div>
-                          <div
-                            id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337648-32b2f9c1"
-                            role="listitem"
-                            class="w-dyn-item">
-                            <a
-                              href="https://stocktemplate.webflow.io/color/white"
-                              class="category-dropdown-link w-inline-block"
-                              tabindex="0"
-                              ><div class="flex-horizontal start gap-8px">
-                                <div
-                                  style="
-                                    background-color: hsla(0, 0%, 100%, 1);
-                                  "
-                                  class="resource-color-dot"></div>
+                          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337648-32b2f9c1" role="listitem" class="w-dyn-item">
+                            <a href="https://stocktemplate.webflow.io/color/white" class="category-dropdown-link w-inline-block" tabindex="0" >
+                              <div class="flex-horizontal start gap-8px">
+                                <div style="background-color: hsla(0, 0%, 100%, 1);" class="resource-color-dot"></div>
                                 <div class="text-100 color-neutral-700">
                                   White
                                 </div>
-                              </div></a
-                            >
+                              </div>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -184,7 +157,7 @@
                           <div class="flex-horizontal space-between gap-16px">
                             <div  class="flex-horizontal start gap-12px flex-wrap">
                               <div class="avatar-circle _02">
-                                <img src="{{ getImage(getFilePath('userProfile') . '/' . auth()->user()->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
+                                <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
                               </div>
                               <div>
                                 <div class="heading-h6-size color-neutral-100">
@@ -211,6 +184,9 @@
           </div>
         </div>
       </div>
+      @if (count($images) > 0)
+      {{ $images->links('pagination::bootstrap-5') }}
+      @endif
     </section>
   </div>
 @endsection

@@ -109,7 +109,7 @@
   <div class="container-default w-container">
       <div data-w-id="39af6c45-c0af-fd97-5a99-e6511f0a9031" class="image-wrapper block-space---194px"
           style="opacity: 1">
-          <img src="{{ asset('assets/images/app_images/space-block-1-stock-x-webflow-template.svg') }}"
+          <img src="{{ asset('core/public/assets/image/homepage_promo/'.gs()->homepage_promo_1)}}"
               alt="Space Block 1316px X 194px - Stock X Webflow Template" class="image fit-cover block-space" />
       </div>
   </div>
@@ -182,51 +182,54 @@
     transform-style: preserve-3d;
   "
           class="w-dyn-list">
+        @php
+            $defaultImageContent = getContent('default_images.content', true);
+            $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
+        @endphp
           <div role="list" class="grid-3-columns gap-38px latest-resources-grid w-dyn-items">
-              @for( $i=0 ; $i<9 ; $i++)
-              <div role="listitem" class="w-dyn-item">
-                  <a data-w-id="05b5a977-cdaa-2dde-534a-918ecb50b210"
-                      href="https://stocktemplate.webflow.io/product/3d-render-of-beautiful-black-waves-background"
-                      class="resource-card-wrapper w-inline-block">
-                      <div class="image-wrapper">
-                          <img alt="3D render of beautiful black waves background"
-                              src="{{ asset('assets/images/app_images/3d-render-of-beautiful-black-waves-background-image-stock-x-webflow-template.jpg') }}"
-                              data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D"
-                              class="image" />
-                      </div>
-                      <div class="resource-card---video-button w-condition-invisible">
-                          <img src="./Home - Stock X - Webflow Ecommerce website template_files/64347e458126ad558f064a5e_play-button-small-icon-stock-x-webflow-template.svg"
-                              alt="Play Button - Stock X Webflow Template" class="play-button" />
-                      </div>
-                      <div style=" display: none; opacity: 1;  transform: translate3d(0px, 100%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " class="resource-card-content">
-                          <div class="text-200 color-neutral-100 mg-bottom-24px">
-                              #002381923
+            @forelse ($images as $image)
+            @php
+                $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
+            @endphp
+             <div role="listitem" class="w-dyn-item">
+                <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
+                  <div class="image-wrapper">
+                    <img alt="Image"  class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
+                  </div>
+                  <div class="resource-card---video-button w-condition-invisible">
+                    <img src="./Photography - Stock X - Webflow Ecommerce website template_files/64347e458126ad558f064a5e_play-button-small-icon-stock-x-webflow-template.svg" alt="Play Button - Stock X Webflow Template" class="play-button" />
+                  </div>
+                  <div class="resource-card-content v2">
+                    <div class="text-200 color-neutral-100 mg-bottom-24px">
+                      #{{$image->track_id}}
+                    </div>
+                    <div class="mg-top-auto">
+                      <div class="flex-horizontal space-between gap-16px">
+                        <div  class="flex-horizontal start gap-12px flex-wrap">
+                          <div class="avatar-circle _02">
+                            <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
                           </div>
-                          <div class="mg-top-auto">
-                              <div class="flex-horizontal space-between gap-16px">
-                                  <div class="flex-horizontal start gap-12px flex-wrap">
-                                      <div class="avatar-circle _02">
-                                          <img src="{{ asset('assets/images/app_images/graham-hills-avatar-picture-stock-x-webflow-template.jpg') }}"
-                                              alt="Graham Hills" />
-                                      </div>
-                                      <div>
-                                          <div class="heading-h6-size color-neutral-100">
-                                              Graham Hills
-                                          </div>
-                                          <div class="text-50 color-neutral-300">
-                                              May 19, 2023
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="resource-card-arrow">
-                                      <div class="line-square-icon"></div>
-                                  </div>
-                              </div>
+                          <div>
+                            <div class="heading-h6-size color-neutral-100">
+                              {{$image->user->firstname}}
+                            </div>
+                            <div class="text-50 color-neutral-300">
+                              {{date('d-M-Y', strtotime($image->upload_date))}}
+                            </div>
                           </div>
+                        </div>
+                        <div class="resource-card-arrow">
+                          <div class="line-square-icon"></div>
+                        </div>
                       </div>
-                  </a>
+                    </div>
+                  </div>
+                </a>
               </div>
-              @endfor
+             @empty
+                 
+             @endforelse
+             
           </div>
       </div>
   </div>
@@ -235,7 +238,7 @@
   <div class="container-default w-container">
       <div data-w-id="39af6c45-c0af-fd97-5a99-e6511f0a9031" class="image-wrapper block-space---194px"
           style="opacity: 1">
-          <img src="{{ asset('assets/images/app_images/space-block-1-stock-x-webflow-template.svg') }}"
+          <img src="{{ asset('core/public/assets/image/homepage_promo/'.gs()->homepage_promo_2)}}"
               alt="Space Block 1316px X 194px - Stock X Webflow Template" class="image fit-cover block-space" />
       </div>
   </div>
@@ -292,135 +295,77 @@
                     </p>
                 </div>
                 <div id="w-node-_1ee298b4-e9d3-24e0-ed7b-e1b233e83a88-d1b2f9b3" class="buttons-row">
-                    <a href="https://stocktemplate.webflow.io/blog" class="btn-secondary w-button">Browse all
-                        articles</a>
+                    <a href="https://stocktemplate.webflow.io/blog" class="btn-secondary w-button">Browse all articles</a>
                 </div>
             </div>
         </div>
         <div class="w-dyn-list">
             <div role="list" class="grid-3-columns _1-col-tablet gap-row-48px w-dyn-items">
+                @forelse ($blogs as $blog)
                 <div role="listitem" class="blur-sibling-item w-dyn-item" style="opacity: 1">
-                    <a href="https://stocktemplate.webflow.io/blog/what-entry-level-dslr-camera-to-buy-for-photographers-just-starting"
-                        class="blog-card _3-posts---item w-inline-block"
-                        style="
-            transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-              rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-            transform-style: preserve-3d;
-            opacity: 1;
-          ">
+                    <a href="#" class="blog-card _3-posts---item w-inline-block"
+                        style=" transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1; ">
                         <div class="image-wrapper blog-card-image _3-posts---item">
-                            <img src="./Home - Stock X - Webflow Ecommerce website template_files/6435bb330051b20076f72f48_what-entry-level-dslr-camera-to-buy-for-photographers-thumbnail-image-stock-x-webflow-template.jpg"
-                                alt="What entry-level DSLR camera to buy for photographers just starting?"
-                                sizes="(max-width: 479px) 92vw, (max-width: 991px) 47vw, (max-width: 1439px) 30vw, 420.01739501953125px"
-                                srcset="
-                https://assets-global.website-files.com/642ee44a50f5436e35b2f9e1/6435bb330051b20076f72f48_what-entry-level-dslr-camera-to-buy-for-photographers-thumbnail-image-stock-x-webflow-template-p-500.jpg 500w,
-                https://assets-global.website-files.com/642ee44a50f5436e35b2f9e1/6435bb330051b20076f72f48_what-entry-level-dslr-camera-to-buy-for-photographers-thumbnail-image-stock-x-webflow-template.jpg       840w
-              "
-                                class="image fit-cover" />
+                            <img src="{{ asset('core/public/assets/image/blog_image/'.$blog->feature_image)}}"  sizes="(max-width: 479px) 92vw, (max-width: 991px) 47vw, (max-width: 1439px) 30vw, 420.01739501953125px" class="image fit-cover" />
                         </div>
                         <div class="blog-card-content _3-posts---item">
                             <div class="mg-bottom-16px">
                                 <div class="flex-horizontal start flex-wrap">
                                     <div class="text-200 medium color-neutral-600">
-                                        Resources
+                                        {{$blog->Category->blog_category}}
                                     </div>
                                     <div class="dot-divider"></div>
                                     <div class="text-200 medium color-neutral-600">
-                                        Apr 11, 2023
+                                        {{date('d-M-Y', strtotime($blog->date))}}
                                     </div>
                                 </div>
                             </div>
                             <h3 class="display-4 mg-bottom-0 title">
-                                What entry-level DSLR camera to buy for photographers just
-                                starting?
+                                {{$blog->slug}}
                             </h3>
                         </div>
                     </a>
                 </div>
-                <div role="listitem" class="blur-sibling-item w-dyn-item" style="opacity: 1;">
-                    <a href="https://stocktemplate.webflow.io/blog/76-free-lightroom-presets-you-can-download-to-save-time-on-photo-edit"
-                        class="blog-card _3-posts---item w-inline-block"
-                        style="
-            transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-              rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-            transform-style: preserve-3d;
-            opacity: 1;
-          ">
-                        <div class="image-wrapper blog-card-image _3-posts---item">
-                            <img src="{{ asset('assets/images/app_images/free-lighroom-presets-you-can-download-thumbnail-image-stock-x-webflow-template.jpg') }}"
-                                alt="76 free Lightroom presets you can download to save time on photo edit"
-                                class="image fit-cover"
-                                style="
-                transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-                  skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              " />
-                        </div>
-                        <div class="blog-card-content _3-posts---item">
-                            <div class="mg-bottom-16px">
-                                <div class="flex-horizontal start flex-wrap">
-                                    <div class="text-200 medium color-neutral-600">
-                                        News
-                                    </div>
-                                    <div class="dot-divider"></div>
-                                    <div class="text-200 medium color-neutral-600">
-                                        Apr 10, 2023
-                                    </div>
-                                </div>
-                            </div>
-                            <h3 class="display-4 mg-bottom-0 title">
-                                76 free Lightroom presets you can download to save time on
-                                photo edit
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div role="listitem" class="blur-sibling-item w-dyn-item" style="opacity: 1">
-                    <a href="https://stocktemplate.webflow.io/blog/the-best-new-mobile-photo-editing-software-you-should-try-out-in-2023"
-                        class="blog-card _3-posts---item w-inline-block"
-                        style="
-            transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-              rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-            transform-style: preserve-3d;
-            opacity: 1;
-          ">
-                        <div class="image-wrapper blog-card-image _3-posts---item">
-                            <img src="./Home - Stock X - Webflow Ecommerce website template_files/64346c2a8c240d05dc5821fb_the-best-new-mobile-photo-editing-software-thumbnail-image-stock-x-webflow-template.jpg"
-                                alt="The best new mobile photo editing software you should try out in 2023"
-                                sizes="(max-width: 479px) 92vw, (max-width: 991px) 47vw, (max-width: 1439px) 30vw, 420.01739501953125px"
-                                srcset="
-                https://assets-global.website-files.com/642ee44a50f5436e35b2f9e1/64346c2a8c240d05dc5821fb_the-best-new-mobile-photo-editing-software-thumbnail-image-stock-x-webflow-template-p-500.jpg 500w,
-                https://assets-global.website-files.com/642ee44a50f5436e35b2f9e1/64346c2a8c240d05dc5821fb_the-best-new-mobile-photo-editing-software-thumbnail-image-stock-x-webflow-template.jpg       840w
-              "
-                                class="image fit-cover"
-                                style="
-                transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-                  skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              " />
-                        </div>
-                        <div class="blog-card-content _3-posts---item">
-                            <div class="mg-bottom-16px">
-                                <div class="flex-horizontal start flex-wrap">
-                                    <div class="text-200 medium color-neutral-600">
-                                        Articles
-                                    </div>
-                                    <div class="dot-divider"></div>
-                                    <div class="text-200 medium color-neutral-600">
-                                        Apr 10, 2023
-                                    </div>
-                                </div>
-                            </div>
-                            <h3 class="display-4 mg-bottom-0 title">
-                                The best new mobile photo editing software you should try
-                                out in 2023
-                            </h3>
-                        </div>
-                    </a>
-                </div>
+                @empty
+                    <div>
+                        <h1>No Blog Found</h1>
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>
 </section>
+@push('script')
+<script>
+
+
+//lazy loading image
+let images = document.querySelectorAll(".lazy-loading-img");
+function preloadImage(image) {
+    const src = image.getAttribute("data-image_src");
+    image.src = src;
+}
+
+let imageOptions = {
+    threshold: 1,
+};
+
+const imageObserver = new IntersectionObserver((entries, imageObserver) => {
+    entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+            return;
+        } else {
+            preloadImage(entry.target);
+            imageObserver.unobserve(entry.target);
+        }
+    });
+}, imageOptions);
+
+images.forEach((image) => {
+    imageObserver.observe(image);
+});
+
+//lazy loading image end
+
+</script>
+@endpush

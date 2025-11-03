@@ -162,6 +162,62 @@
                 </div>
             </form>
         </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-30">
+                <form action="{{ route('admin.promo.one') }}" enctype="multipart/form-data" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <div class="image-upload">
+                            <div class="thumb">
+                                <div class="avatar-preview">
+                                    <div class="profilePicPreview" style="background-image: url({{ asset('core/public/assets/image/homepage_promo/'.gs()->homepage_promo_1)}})">
+                                        <button class="remove-image" type="button"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="avatar-edit">
+                                    <input class="homepage_promo_1" id="homepage_promo_1" name="homepage_promo_1" type="file" style="display: none">
+                                    <label class="bg--success  mt-2" for="homepage_promo_1" id="upload_homepage_prome_1">@lang('Upload Homepage Promo 1') </label>
+                                    {{-- <small>@lang('Supported file ') <strong>@lang('.png')</strong> ,
+                                        @lang('image will be resized into '){{ getFileSize('watermark') }}@lang('px')</small> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <button class="btn btn--primary w-100 h-45" type="submit">@lang('Submit')</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-6 col-md-12 mb-30">
+                <form action="{{ route('admin.promo.two') }}" enctype="multipart/form-data" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <div class="image-upload">
+                            <div class="thumb">
+                                <div class="avatar-preview">
+                                    <div class="profilePicPreview" style="background-image: url({{ asset('core/public/assets/image/homepage_promo/'.gs()->homepage_promo_2)}})">
+                                        <button class="remove-image" type="button"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                <div class="avatar-edit">
+                                    <input class="homepage_promo_2" id="homepage_promo_2" name="homepage_promo_2" type="file" style="display: none">
+                                    <label class="bg--success mt-2" for="homepage_promo_2">@lang('Upload Homepage Promo 2') </label>
+                                    {{-- <small>@lang('Supported file ') <strong>@lang('.png')</strong> ,
+                                        @lang('image will be resized into '){{ getFileSize('watermark') }}@lang('px')</small> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <button class="btn btn--primary w-100 h-45" type="submit">@lang('Submit')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -203,6 +259,7 @@
             $('.select2-basic').select2({
                 dropdownParent: $('#generalCard')
             });
+
         })(jQuery);
     </script>
 @endpush

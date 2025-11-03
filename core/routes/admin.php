@@ -314,6 +314,9 @@ Route::middleware('admin')->group(function () {
         Route::post('watermark', 'updateWaterMark')->name('watermark');
         Route::post('instruction', 'updateInstruction')->name('instruction');
 
+        Route::post('promo-1', 'homePageProme1')->name('promo.one');
+        Route::post('promo-2', 'homePageProme2')->name('promo.two');
+
         //sitemap
         Route::get('sitemap', 'sitemap')->name('sitemap.index');
         Route::post('sitemap', 'uploadSitemap');

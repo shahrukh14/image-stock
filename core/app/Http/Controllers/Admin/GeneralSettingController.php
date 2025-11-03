@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
 use App\Rules\FileTypeValidate;
@@ -236,8 +237,65 @@ class GeneralSettingController extends Controller
                 return back()->withNotify($notify);
             }
         }
+        
 
         $notify[] = ['success', 'watermark has been updated.'];
+        return back()->withNotify($notify);
+    }
+
+    public function homePageProme1(Request $request)
+    {
+        // return $request;
+        // $request->validate([
+        //     'homepage_promo_1' => [new FileTypeValidate(['jpg'])]
+        // ]);
+        $gs = gs();
+        $folder_path = public_path('assets/image/homepage_promo');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+
+        if (isset($request->homepage_promo_1)){
+            $sl = rand();
+            $photo = $request->file('homepage_promo_1');
+            $homepage_promo_1 = date('Ymd').'_'.$sl.'_'.'.'.$photo->getClientOriginalExtension();
+            $request->homepage_promo_1->move($folder_path, $homepage_promo_1);
+        }else{
+            $homepage_promo_1 = null;
+        }
+
+        $gs->homepage_promo_1 = $homepage_promo_1;
+        $gs->save();
+
+        $notify[] = ['success', 'Image has been updated.'];
+        return back()->withNotify($notify);
+    }
+
+    public function homePageProme2(Request $request)
+    {
+        // return $request;
+        // $request->validate([
+        //     'homepage_promo_2' => [new FileTypeValidate(['jpg'])]
+        // ]);
+        $gs = gs();
+        $folder_path = public_path('assets/image/homepage_promo');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+
+        if (isset($request->homepage_promo_2)){
+            $sl = rand();
+            $photo = $request->file('homepage_promo_2');
+            $homepage_promo_2 = date('Ymd').'_'.$sl.'_'.'.'.$photo->getClientOriginalExtension();
+            $request->homepage_promo_2->move($folder_path, $homepage_promo_2);
+        }else{
+            $homepage_promo_2 = null;
+        }
+
+        $gs->homepage_promo_2 = $homepage_promo_2;
+        $gs->save();
+
+        $notify[] = ['success', 'Image has been updated.'];
         return back()->withNotify($notify);
     }
 

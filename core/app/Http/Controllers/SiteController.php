@@ -44,9 +44,10 @@ class SiteController extends Controller
             });
         })->orderBy('id', 'DESC')->withCount(['files as premium' => function ($file) {
             $file->active()->premium();
-        }])->with('user', 'likes')->limit(28)->get();
+        }])->with('user', 'likes')->limit(24)->get();
 
-        return view($this->activeTemplate . 'home', compact('pageTitle', 'sections', 'images'));
+        $blogs = Blog::with('Category')->get();
+        return view($this->activeTemplate . 'home', compact('pageTitle', 'sections', 'images','blogs'));
     }
 
     public function pages($slug)
@@ -454,7 +455,6 @@ class SiteController extends Controller
             $collections = $getCollections['collections'];
             $collectionCount = $getCollections['collectionCount'];
         }
-
         $categories = Category::active()->whereHas('images', function ($query) {
             $query->approved()->hasActiveFiles();
         })->get();
@@ -466,7 +466,7 @@ class SiteController extends Controller
         $images = $this->searchImages($request);
         $data['imageCount'] = (clone $images)->count();
         if (!$onlyCount) {
-            $data['images'] = $images->paginate(getPaginate(25));
+            $data['images'] = $images->paginate(getPaginate(9));
         }
         return $data;
     }
