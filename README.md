@@ -6,7 +6,6 @@ It includes **subscription plans**, secure payments, user dashboards, and admin 
 
 ## 🚀 Features
 
-### 🧠 AI Transcription
 - 🖼️ Browse & Download Free and Premium Images, Vectors, and Videos
 - 💳 Secure Purchase System with Subscription Plans
 - 🔐 Authentication with Roles (Admin / User)
@@ -16,3 +15,12 @@ It includes **subscription plans**, secure payments, user dashboards, and admin 
 - ⚡ Fast & Responsive UI built with Bootstrap & JavaScript
 - 📊 Admin Dashboard for Uploads, Plans & Transactions
 - 📨 Email Notifications for Purchases and Renewals
+
+
+## 🧠 Tech Stack
+
+- Backend: Laravel 10
+- Frontend: HTML5, CSS3, JavaScript & jQuery
+- Database: MySQL / MariaDB
+- Payments: Stripe / Razorpay (Choose as configured)
+- Storage: Local / AWS S3 
