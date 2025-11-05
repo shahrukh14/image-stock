@@ -6,13 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title> {{ $general->siteName(__($pageTitle)) }}</title>
     @include('partials.seo')
-    {{-- <link href="{{ asset('assets/global/css/bootstrap.min.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('assets/global/css/master_style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/global/css/custom.css') }}" rel="stylesheet">
   
-    {{--  BEGIN: fontawesome css --}}
-    <link href="{{ asset('assets/global/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    {{--  END: fontawesome css --}}
     @stack('style-lib')
     @stack('style')
 
@@ -37,9 +33,6 @@
     @yield('panel')
 
     <script src="{{ asset('assets/global/js/jquery.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/global/js/bootstrap.bundle.min.js') }}"></script> --}}
-    <script src="{{ asset('assets/global/js/master_script.js') }}"></script>
-    <script src="{{ asset('assets/global/js/all.min.js') }}" type="text/javascript"></script>
 
     @stack('script-lib')
 

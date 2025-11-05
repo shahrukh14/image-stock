@@ -244,22 +244,15 @@
   </div>
 </section>
 
-<section class="section section-hero---v1" style="margin-top:82px;">
-  <div data-w-id="03dc96b0-1839-8e38-c79d-e2524e050dcf" class="container-default width-100 w-container">
-      <div data-w-id="90910fe2-6c7e-3f4a-e936-820a1edf6b0e"
-          style="
-    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-    opacity: 1;
-    transform-style: preserve-3d;
-  "
-          class="inner-container _640px center">
+<section class="section section-hero---x" style="margin-top:82px;">
+  <div class="container-default width-100 w-container">
+      <div style=" transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d; " class="inner-container _640px center">
           <div class="inner-container _550px---mbl center">
               <div class="text-center">
-                  <h1 class="display-1 color-neutral-100 mg-bottom-16px">
+                  <h1 class="display-1 nutral-black mg-bottom-16px">
                     Browse our design resources<span class="text-no-wrap">we have for you</span>
                   </h1>
-                  <p class="color-neutral-200 mg-bottom-32px keep">
+                  <p class="nutral-black mg-bottom-32px keep">
                      You can employ textured backgrounds and images to give
                       users the that they are completely immersed in your design.
                   </p>
@@ -321,7 +314,7 @@
                                 </div>
                             </div>
                             <h3 class="display-4 mg-bottom-0 title">
-                                {{$blog->slug}}
+                                {{$blog->title}}
                             </h3>
                         </div>
                     </a>

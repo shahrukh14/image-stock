@@ -70,13 +70,13 @@
                 <div>
                     <ul role="list" class="pages-list-wrapper">
                         <li class="footer-list-item">
-                            <a href="#" class="pages-menu-link">Terms & Conditions</a>
+                            <a href="{{route('terms.and.condition')}}" class="pages-menu-link">Terms & Conditions</a>
                         </li>
                         <li class="footer-list-item">
-                            <a href="#" class="pages-menu-link">Privacy Policy</a>
+                            <a href="{{route('privacy.policy')}}" class="pages-menu-link">Privacy Policy</a>
                         </li>
                         <li class="footer-list-item">
-                            <a href="#" class="pages-menu-link">Cookie Policy</a>
+                            <a href="{{route('cookie.policy')}}" class="pages-menu-link">Cookie Policy</a>
                         </li>
                         <li class="footer-list-item">
                             <a href="#" class="pages-menu-link">Do not sell my personal information</a>

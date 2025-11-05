@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Mail;
+
 use Carbon\Carbon;
 use App\Models\Page;
 use App\Models\Plan;
@@ -25,7 +25,8 @@ use App\Models\SupportTicket;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-
+use Mail;
+use App\Models\Color;
 class SiteController extends Controller
 {
     private $memberRelation = ['images', 'downloads', 'publicCollections', 'privateCollections', 'followers', 'followings'];
@@ -125,13 +126,35 @@ class SiteController extends Controller
     }
 
     public function contactSubmitData(Request $request){
+
+        if (!gs('contact_system')) {
+            abort(404);
+        }
+
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'phone_no' => 'required',
+            'subject' => 'required|string|max:255',
+            'message' => 'required',
+        ]);
+
+        if (!verifyCaptcha()) {
+            $notify[] = ['error', 'Invalid captcha provided'];
+            return back()->withNotify($notify);
+        }
+
+        $request->session()->regenerateToken();
+
         $random = getNumber();
+
         $ticket = new SupportTicket();
         $ticket->user_id = auth()->id() ?? 0;
         $ticket->name = $request->name;
         $ticket->email = $request->email;
-        $ticket->phone = $request->phone;
+        $ticket->phone_no = $request->phone_no;
         $ticket->priority = Status::PRIORITY_MEDIUM;
+
 
         $ticket->ticket = $random;
         $ticket->subject = $request->subject;
@@ -139,23 +162,34 @@ class SiteController extends Controller
         $ticket->status = Status::TICKET_OPEN;
         $ticket->save();
 
+        $adminNotification = new AdminNotification();
+        $adminNotification->user_id = auth()->user() ? auth()->user()->id : 0;
+        $adminNotification->title = 'A new contact message has been submitted';
+        $adminNotification->click_url = urlPath('admin.ticket.view', $ticket->id);
+        $adminNotification->save();
 
-        // $staff =  SchoolStaff::where(['email'=> $request->email, 'school_code'=> $request->school_code])->first();
-        // $otp = rand(100000, 999999);
-        if ($request->email) {
+        $message = new SupportMessage();
+        $message->support_ticket_id = $ticket->id;
+        $message->message = $request->message;
+        $message->save();
+
+        // Mail trigger start 
+        $admin_email = env('ADMIN_EMAIL');
+        if ($admin_email) {
             $mailData = [
-                'title' => 'Enquiry Request Send',
-                'body' => 'Massage sent'
+                'title' => 'Enquiry Request By '.$request->name,
+                'name' => $request->name ,
+                'email' => $request->email ,
+                'phone_no' => $request->phone_no ,
+                'subject' => $request->subject ,
             ];
             $notify[] = ['success', 'Ticket created successfully!'];
-            Mail::to($request->email)->send(new ConatctUsMail($mailData));
-            return redirect()->back();
+            Mail::to($admin_email)->send(new ConatctUsMail($mailData));
+            return redirect()->back()->withNotify($notify);
         } else {
             $notify[] = ['danger', 'Some thing went wrong successfully!'];
-            return redirect()->back();
+            return redirect()->back()->withNotify($notify);
         }
-        $notify[] = ['success', 'Ticket created successfully!'];
-        return redirect()->back()->withNotify($notify);
     }
 
     public function policyPages($slug, $id)
@@ -455,10 +489,11 @@ class SiteController extends Controller
             $collections = $getCollections['collections'];
             $collectionCount = $getCollections['collectionCount'];
         }
+        $colors = Color::orderBy('id', 'DESC')->get();
         $categories = Category::active()->whereHas('images', function ($query) {
             $query->approved()->hasActiveFiles();
         })->get();
-        return view($this->activeTemplate . 'image_search', compact('pageTitle', 'images', 'collections', 'imageCount', 'collectionCount', 'categories'));
+        return view($this->activeTemplate . 'image_search', compact('pageTitle', 'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
     }
 
     private function getImages($request, $onlyCount = false)
@@ -466,7 +501,7 @@ class SiteController extends Controller
         $images = $this->searchImages($request);
         $data['imageCount'] = (clone $images)->count();
         if (!$onlyCount) {
-            $data['images'] = $images->paginate(getPaginate(9));
+            $data['images'] = $images->paginate(getPaginate(3));
         }
         return $data;
     }
@@ -739,5 +774,25 @@ class SiteController extends Controller
         $pageTitle = "Price";
         $activeTemplate = $this->activeTemplate;
         return view($this->activeTemplate .'price_list',compact('pageTitle','activeTemplate'));
+    }
+    public function errorPage(){
+        $pageTitle = "404 error";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'error_page',compact('pageTitle','activeTemplate'));
+    }
+    public function privacyPolicy(){
+        $pageTitle = "Privacy Policy";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'privacy_policy',compact('pageTitle','activeTemplate'));
+    }
+    public function cookiePolicyPage(){
+        $pageTitle = "Cookie Policy";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'cookie_policy',compact('pageTitle','activeTemplate'));
+    }
+    public function termAndCondition(){
+        $pageTitle = "Term And Condition";
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate .'terms_and_condition',compact('pageTitle','activeTemplate'));
     }
 }

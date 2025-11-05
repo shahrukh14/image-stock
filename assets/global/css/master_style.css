@@ -2212,6 +2212,7 @@ textarea.w-select {
 }
 
 :root {
+    --neutral--black: #000;
     --neutral--600: #525252;
     --neutral--800: #070707;
     --accent--primary-1: #08080c;
@@ -4465,6 +4466,10 @@ figcaption {
     color: var(--neutral--100);
 }
 
+.nutral-black{
+    color: var( --neutral--black);
+}
+
 .grid-1-column {
     grid-template-rows: auto;
     grid-template-columns: 1fr;
@@ -5963,7 +5968,15 @@ figcaption {
 }
 
 .section.section-hero---v1 {
-    background-image: url("https://assets-global.website-files.com/642ee44a50f54346d0b2f9b0/642f4b356f1e9c126af01436_find-the-best-design-for-your-project-image-stock-x-webflow-template.jpg");
+    background-image: url("/image_stock/assets/images/home_banner.jpg");
+    background-position: 0 0;
+    background-size: cover;
+    padding-top: 122px;
+    padding-bottom: 122px;
+}
+
+.section.section-hero---x {
+    background-image: url("/image_stock/assets/images/Home-hero2-image 1.jpg");
     background-position: 0 0;
     background-size: cover;
     padding-top: 122px;

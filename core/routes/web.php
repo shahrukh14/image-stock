@@ -75,6 +75,10 @@ Route::controller('SiteController')->group(function () {
     Route::get('/about', 'About')->name('about');
     Route::get('/product-details', 'ProductDetails')->name('product.details');
     Route::get('/price', 'Price')->name('price.details');
+    Route::get('/404','errorPage')->name('error.page');
+    Route::get('/privacy_policy','privacyPolicy')->name('privacy.policy');
+    Route::get('/cookie_policy','cookiePolicyPage')->name('cookie.policy');
+    Route::get('/terms_and_condition','termAndCondition')->name('terms.and.condition');
     Route::get('/{slug}', 'pages')->name('pages');
     Route::get('/', 'index')->name('home');
     Route::prefix('blog')->name('blog.')->group(function () {
