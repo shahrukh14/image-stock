@@ -175,17 +175,11 @@
           </div>
       </div>
       <div data-w-id="8cac8ffd-800d-315e-f17f-fc7385698285"
-          style="
-    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-    opacity: 1;
-    transform-style: preserve-3d;
-  "
-          class="w-dyn-list">
-        @php
-            $defaultImageContent = getContent('default_images.content', true);
-            $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
-        @endphp
+          style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)n rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="w-dyn-list">
+            @php
+                $defaultImageContent = getContent('default_images.content', true);
+                $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
+            @endphp
           <div role="list" class="grid-3-columns gap-38px latest-resources-grid w-dyn-items">
             @forelse ($images as $image)
             @php
@@ -194,10 +188,7 @@
              <div role="listitem" class="w-dyn-item">
                 <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
                   <div class="image-wrapper">
-                    <img alt="Image"  class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
-                  </div>
-                  <div class="resource-card---video-button w-condition-invisible">
-                    <img src="./Photography - Stock X - Webflow Ecommerce website template_files/64347e458126ad558f064a5e_play-button-small-icon-stock-x-webflow-template.svg" alt="Play Button - Stock X Webflow Template" class="play-button" />
+                    <img alt="Image" class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
                   </div>
                   <div class="resource-card-content v2">
                     <div class="text-200 color-neutral-100 mg-bottom-24px">

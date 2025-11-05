@@ -66,12 +66,14 @@ Route::controller('SiteController')->group(function () {
     
     Route::get('placeholder-image/{size}', 'placeholderImage')->name('placeholder.image');
     
+    //subscribe 
+    Route::post('/subscribe', 'userSubscribe')->name('user.subscribe');
     //Blog Page
     // Route::get('/login', 'Login')->name('login');
     Route::get('/signup', 'Signup')->name('signup');
     Route::get('/upload-files', 'UploadFiles')->name('upload.files');
     
-    
+    // Static Pages
     Route::get('/about', 'About')->name('about');
     Route::get('/product-details', 'ProductDetails')->name('product.details');
     Route::get('/price', 'Price')->name('price.details');
@@ -79,8 +81,11 @@ Route::controller('SiteController')->group(function () {
     Route::get('/privacy_policy','privacyPolicy')->name('privacy.policy');
     Route::get('/cookie_policy','cookiePolicyPage')->name('cookie.policy');
     Route::get('/terms_and_condition','termAndCondition')->name('terms.and.condition');
+
     Route::get('/{slug}', 'pages')->name('pages');
+    // Home 
     Route::get('/', 'index')->name('home');
+    //Blog Section
     Route::prefix('blog')->name('blog.')->group(function () {
         Route::get('category/all', 'blogPage')->name('all');
         Route::get('category/{slug}', 'blogPageCategory')->name('specific.category');

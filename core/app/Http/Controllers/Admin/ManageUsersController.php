@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
 use App\Models\Deposit;
 use App\Models\NotificationLog;
+use App\Models\Subscriber;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Withdrawal;
@@ -398,6 +399,17 @@ class ManageUsersController extends Controller
         $user->save();
         $notification = $user->is_featured ? 'Featured user successfully' : 'User unfeatured successfully';
         $notify[] = ['success', $notification];
+        return back()->withNotify($notify);
+    }
+    public function allSubscriber() {
+        $pageTitle = "All Subscriber";
+        $subscribers = Subscriber::searchable(['email'])->orderBy('email')->paginate(getPaginate());
+        return view('admin.subscriber.all_subscriber',compact('subscribers','pageTitle'));
+    }
+    public function subscriberDelete($id) {
+        $sub = Subscriber::find($id);
+        $sub->delete();
+        $notify[] = ['success', 'Subscriber deleted successfully'];
         return back()->withNotify($notify);
     }
 }

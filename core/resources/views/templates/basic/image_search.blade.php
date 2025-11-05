@@ -7,7 +7,55 @@
           <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
             <div class="inner-container _222px _100---tablet" style="height: 100%">
               <div id="accordion">
-                <div class="mg-bottom-54px">
+                <h3>Type <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
+                <div>
+                  <div role="list"  class="grid-1-column gap-row-24px w-dyn-items">
+                    <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem"  class="collection-item w-dyn-item">
+                      <a href="https://stocktemplate.webflow.io/category/photography"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
+                        <div class="flex-horizontal start gap-8px">
+                          <img src="{{ asset('assets\images\app_images\camera.svg') }}"  alt="Photography" class="image category-dropdown-link---icon" />
+                          <div  class="text-100 medium color-neutral-700">
+                            Photography
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem" class="collection-item w-dyn-item">
+                      <a href="https://stocktemplate.webflow.io/category/vectors-graphics" class="category-dropdown-link w-inline-block" tabindex="0">
+                        <div class="flex-horizontal start gap-8px">
+                          <img src="{{ asset('assets\images\app_images\vector.svg') }}" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
+                          <div class="text-100 medium color-neutral-700">
+                            Vectors &amp; graphics
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                    <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1"  role="listitem" class="collection-item w-dyn-item">
+                      <a href="https://stocktemplate.webflow.io/category/videos" class="category-dropdown-link w-inline-block" tabindex="0">
+                        <div class="flex-horizontal start gap-8px">
+                          <img src="{{ asset('assets\images\app_images\video.svg') }}" alt="Videos" class="image category-dropdown-link---icon" />
+                          <div class="text-100 medium color-neutral-700">
+                            Videos
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <h3>Color <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
+                <div>
+                  @if ($colors->count())
+                    <div>
+                      @foreach ($colors as $color)
+                      <div style="margin-bottom: 5px; margin-left:10px;">
+                        <span class="color-badge color-selector search-param" id="color-{{ $color->id }}" data-param="color" data-param_value="{{ $color->color_code }}" data-search_type="single" style="background: #{{ $color->color_code }};"></span><span style="color: black; margin-left:2px;">{{ $color->name }}</span>
+                      </div>
+                        {{-- <span class="color-selector search-param" id="color-{{ $color->id }}" data-param="color" data-param_value="{{ $color->color_code }}" data-search_type="single" border: 1px solid @if ($color->color_code != 'ffffff' && $color->color_code != 'fff') #{{ $color->color_code }}; @else #bac8d3 @endif">{{ $color->name }}</span> --}}
+                      @endforeach
+                    </div>
+                  @endif
+                </div>
+                {{-- <div class="mg-bottom-54px">
                   <div data-hover="false" data-delay="0"  class="aside-dropdown-wrapper w-dropdown">
                     <div class="aside-dropdown-toogle w-dropdown-toggle" id="w-dropdown-toggle-1" aria-controls="w-dropdown-list-1" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
                       <h5>Type</h5>
@@ -50,9 +98,9 @@
                       </div>
                     </nav>
                   </div>
-                </div>
+                </div> --}}
               
-                <div class="mg-bottom-32px keep">
+                {{-- <div class="mg-bottom-32px keep">
                   <div data-hover="false" data-delay="0" class="aside-dropdown-wrapper w-dropdown">
                     <div class="aside-dropdown-toogle w-dropdown-toggle" id="w-dropdown-toggle-2" aria-controls="w-dropdown-list-2" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
                       <div>Color</div>
@@ -85,40 +133,17 @@
                       </div>
                     </nav>
                   </div>
-                </div>
+                </div> --}}
               </div>
-              @if ($colors->count())
-              <div>
-               
-                @foreach ($colors as $color)
-                    <li>
-                        <span class="color-selector search-param" id="color-{{ $color->id }}" data-param="color" data-param_value="{{ $color->color_code }}" data-search_type="single" style="background: #{{ $color->color_code }};border: 1px solid @if ($color->color_code != 'ffffff' && $color->color_code != 'fff') #{{ $color->color_code }}; @else #bac8d3 @endif">{{ $color->name }}</span>
-                    </li>
-                @endforeach
-                 
-              </div>
-            @endif
             
             @php echo getAds('728x90', 2);@endphp
 
             </div>
           </div>
-          <div
-            id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337651-32b2f9c1"
-            class="aside-content-rigth">
+          <div class="aside-content-rigth">
             <div class="inner-container _981px width-100">
               <div class="mg-bottom-80px">
-                <div
-                  data-w-id="bc90223f-762d-bd0d-11e5-1536d02e72a5"
-                  style="
-                    background-image: url('https://assets-global.website-files.com/642ee44a50f5436e35b2f9e1/64303a175e9f378e30d6f168_photographies-banner-image-stock-x-webflow-template.jpg');
-                    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-                      rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-                      skew(0deg, 0deg);
-                    opacity: 1;
-                    transform-style: preserve-3d;
-                  "
-                  class="category-banner">
+                <div style=" background-image: url('https://assets-global.website-files.com/642ee44a50f5436e35b2f9e1/64303a175e9f378e30d6f168_photographies-banner-image-stock-x-webflow-template.jpg');  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="category-banner">
                   <div class="inner-container _635px center">
                     <div class="text-center">
                       <h1 class="display-3 color-neutral-100 mg-bottom-12px">
@@ -180,34 +205,118 @@
                 </div>
                 <div role="navigation"  aria-label="List" class="w-pagination-wrapper pagination-wrapper"></div>
               </div>
+              
+              
+                @php 
+                  $url = request()->fullUrl();
+        
+                  //For next
+                  $nextParam = "page=".$page;
+                  $nextUrlParts = parse_url($url);
+                  parse_str($nextUrlParts['query'], $nextQueryParams);
+                  parse_str($nextParam, $nextParams);
+                  $nextQueryParams = array_merge($nextQueryParams, $nextParams);
+                  $nextUrlParts['query'] = http_build_query($nextQueryParams);
+                  $nextUrl = $nextUrlParts['scheme'] . '://' . $nextUrlParts['host'] . $nextUrlParts['path'] . '?' . $nextUrlParts['query'];
+        
+                  //For Previous
+                  $back = $page-2;
+                  $previousParam = "page=".$back;
+                  $previousUrlParts = parse_url($url);
+                  parse_str($previousUrlParts['query'], $previousQueryParams);
+                  parse_str($previousParam, $previousParams);
+                  $previousQueryParams = array_merge($previousQueryParams, $previousParams);
+                  $previousUrlParts['query'] = http_build_query($previousQueryParams);
+                  $previousUrl = $previousUrlParts['scheme'] . '://' . $previousUrlParts['host'] . $previousUrlParts['path'] . '?' . $previousUrlParts['query'];
+        
+                @endphp
+              <div style="text-align: right">
+                @if($page > 2)
+                  <a href="{{$previousUrl}}" class="btn-btn"><< Previous</a>
+                @endif
+
+                @if(count($images) > 0)
+                  <a href="{{$nextUrl}}" class="btn-btn">Next >></a>
+                @endif
+              </div>
             </div>
+           
           </div>
         </div>
       </div>
-      @if (count($images) > 0)
+      {{-- @if (count($images) > 0)
       {{ $images->links('pagination::bootstrap-5') }}
-      @endif
+      @endif --}}
+      
     </section>
   </div>
 @endsection
 
 <style>
-  .gallery__img {
-      width: 100%;
-      height: 100%;
-      border-radius: 2px;
-      object-fit: cover;
-      vertical-align: bottom;
-      transition: all 0.3s ease;
-      transform-origin: center;
-      position: relative;
-      z-index: -1;
-  }
+
+.btn-btn{
+  text-decoration: none;
+  background-color: #689F38;
+  color: #fff !important;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  line-height: 4.5;
+  border-radius: 0.25rem;
+  margin-left: 5px;
+}
+.gallery__img {
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    object-fit: cover;
+    vertical-align: bottom;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    position: relative;
+    z-index: -1;
+}
+.activearrow {
+  float: right;
+  display: none;
+}
+.inactivearrow {
+  float: right;
+  display: block;
+}
+.ui-state-active .activearrow {
+  display: block;
+}
+.ui-state-active .inactivearrow {
+  display: none;
+}
+#accordion h3 {
+    margin-bottom: 15px;
+    cursor: pointer;
+}
 </style>
 
 @push('script')
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
+  $('#price-link').click(function (event) {
+        event.preventDefault(); // Prevent the default behavior of the anchor tag
+
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search);
+
+        // Set the "price" parameter to the desired value (e.g., 20)
+        params.set('page', '2');
+
+        // Update the URL with the modified search parameters
+        url.search = params.toString();
+
+        // Redirect to the updated URL
+        window.location.href = url.toString();
+    });
 
 $( function() {
   $( "#accordion" ).accordion();

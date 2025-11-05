@@ -152,7 +152,6 @@
     <script>
         (function($) {
             "use strict"
-
             var subject = null,
                 message = null,
                 start = null,

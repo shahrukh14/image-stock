@@ -4960,8 +4960,8 @@ figcaption {
 }
 
 .btn-primary {
-    border: 1px solid var(--neutral--800) !important;
-    background-color: var(--neutral--800) !important;
+    border: 1px solid var(--neutral--800) ;
+    background-color: var(--neutral--800) ;
     color: var(--neutral--100);
     text-align: center;
     transform-style: preserve-3d;
@@ -5014,8 +5014,8 @@ figcaption {
 
 .btn-primary.white:hover {
     border-color: var(--neutral--100);
-    color: var(--neutral--100);
-    background-color: rgba(0, 0, 0, 0);
+    color: var(--neutral--100) !important;
+    background-color: rgba(0, 0, 0, 1);
 }
 
 .btn-primary.inside-input {
@@ -5100,7 +5100,7 @@ figcaption {
     border-color: var(--accent--primary-1);
     background-color: var(--accent--primary-1);
     opacity: 1;
-    color: var(--neutral--100);
+    color: var(--neutral--100)  !important;
     transform: translate3d(0, -3px, 0.01px);
 }
 
@@ -5225,7 +5225,7 @@ figcaption {
 
 .badge-secondary.category-badges:hover {
     background-color: var(--neutral--800);
-    color: var(--neutral--100);
+    color: var(--neutral--100) !important;
     transform: translate(0, -3px);
 }
 
@@ -5968,7 +5968,7 @@ figcaption {
 }
 
 .section.section-hero---v1 {
-    background-image: url("/image_stock/assets/images/home_banner.jpg");
+    background-image: url("/assets/images/home_banner.jpg");
     background-position: 0 0;
     background-size: cover;
     padding-top: 122px;
@@ -5976,7 +5976,7 @@ figcaption {
 }
 
 .section.section-hero---x {
-    background-image: url("/image_stock/assets/images/Home-hero2-image 1.jpg");
+    background-image: url("/assets/images/Home-hero2-image 1.jpg");
     background-position: 0 0;
     background-size: cover;
     padding-top: 122px;
@@ -12038,4 +12038,12 @@ figcaption {
     font-style: normal;
     font-display: swap;
 }
+
+.color-badge {
+    padding: 1px 11px;
+    text-align: center;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
 

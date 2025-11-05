@@ -32,11 +32,10 @@
                             <div class="social-icon-font"></div>
                         </a><a href="https://twitter.com/" target="_blank" class="social-icon w-inline-block">
                             <div class="social-icon-font"></div>
-                        </a><a href="https://instagram.com/" target="_blank"
-                            class="social-icon w-inline-block">
+                        </a><a href="https://instagram.com/" target="_blank" class="social-icon w-inline-block">
                             <div class="social-icon-font"></div>
                         </a><a href="https://pinterest.com/" target="_blank" class="social-icon w-inline-block">
-                            <div class="social-icon-font"></div>
+                            <div class="social-icon-font"></div>
                         </a>
                         <a href="https://linkedin.com/" target="_blank" class="social-icon w-inline-block">
                             <div class="social-icon-font"></div>
@@ -173,16 +172,11 @@
                 <div id="w-node-_1f3473f7-34d2-25ec-9f4e-99c81a58b3ea-a2612b67"
                     class="inner-container _484px width-100 _100---tablet">
                     <div class="input-and-button---form-block">
-                        <form id="Footer-Form" name="wf-form-Footer-Form" data-name="Footer Form" method="get"
-                            data-wf-page-id="642ee44a50f54319d1b2f9b3"
-                            data-wf-element-id="3f6661a9-88e7-47bc-76df-590fa2612bfc" aria-label="Footer Form">
+                        <form id="Footer-Form" name="wf-form-Footer-Form" action="{{route('user.subscribe')}}" data-name="Footer Form" method="post" data-wf-page-id="642ee44a50f54319d1b2f9b3" data-wf-element-id="3f6661a9-88e7-47bc-76df-590fa2612bfc" aria-label="Footer Form">
+                            @csrf
                             <div class="position-relative">
-                                <input type="email" class="input button-inside w-input" maxlength="256"
-                                    name="Email" data-name="Email" placeholder="Enter your email..."
-                                    id="Footer-Email" required="" /><input type="submit"
-                                    value="Subscribe now" data-wait="Please wait..."
-                                    id="w-node-_3f6661a9-88e7-47bc-76df-590fa2612bff-a2612b67"
-                                    class="btn-primary inside-input default white-mb w-button" />
+                                <input type="email" class="input button-inside w-input" maxlength="256" name="email" data-name="Email" placeholder="Enter your email..." id="Footer-Email" required="" />
+                                <input type="submit" value="Subscribe now" data-wait="Please wait..." id="w-node-_3f6661a9-88e7-47bc-76df-590fa2612bff-a2612b67" class="btn-primary inside-input default white-mb w-button" />
                             </div>
                         </form>
                         <div class="success-message color-neutral-100 w-form-done" tabindex="-1"

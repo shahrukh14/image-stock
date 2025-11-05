@@ -20,6 +20,7 @@ use App\Models\Category;
 use App\Models\Collection;
 use App\Models\GatewayCurrency;
 use App\Models\ImageFile;
+use App\Models\Subscriber;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
 use App\Models\Transaction;
@@ -396,7 +397,6 @@ class SiteController extends Controller
                 $gate->where('status', Status::ENABLE);
             })->with('method')->orderby('method_code')->get();
         }
-
         return view($this->activeTemplate . 'image_details', compact('pageTitle', 'image', 'relatedImages', 'seoContents', 'todayDownload', 'monthlyDownload', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency'));
     }
 
@@ -473,6 +473,12 @@ class SiteController extends Controller
 
     public function search(Request $request)
     {
+        if($request->page){
+            $page = $request->page+1;
+        }else{
+            $page = 2;
+        }
+
         $pageTitle = "Search";
         $images = collect([]);
         $collections = collect([]);
@@ -493,7 +499,7 @@ class SiteController extends Controller
         $categories = Category::active()->whereHas('images', function ($query) {
             $query->approved()->hasActiveFiles();
         })->get();
-        return view($this->activeTemplate . 'image_search', compact('pageTitle', 'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
+        return view($this->activeTemplate . 'image_search', compact('pageTitle','page' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
     }
 
     private function getImages($request, $onlyCount = false)
@@ -501,7 +507,7 @@ class SiteController extends Controller
         $images = $this->searchImages($request);
         $data['imageCount'] = (clone $images)->count();
         if (!$onlyCount) {
-            $data['images'] = $images->paginate(getPaginate(3));
+            $data['images'] = $images->paginate(getPaginate(21));
         }
         return $data;
     }
@@ -794,5 +800,12 @@ class SiteController extends Controller
         $pageTitle = "Term And Condition";
         $activeTemplate = $this->activeTemplate;
         return view($this->activeTemplate .'terms_and_condition',compact('pageTitle','activeTemplate'));
+    }
+    public function userSubscribe(Request $request){
+       $subscriber = new Subscriber();
+       $subscriber->email = $request->email;
+       $subscriber->save();
+       $notify[] = ['success', 'You subscribed successfully!'];
+       return redirect()->back()->withNotify($notify);
     }
 }

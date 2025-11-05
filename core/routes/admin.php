@@ -98,6 +98,9 @@ Route::middleware('admin')->group(function () {
         Route::post('send-notification', 'sendNotificationAll')->name('notification.all.send');
         Route::get('list', 'list')->name('list');
         Route::get('notification-log/{id}', 'notificationLog')->name('notification.log');
+        // subscribers
+        Route::get('subscriber/all', 'allSubscriber')->name('subscriber.all');
+        Route::get('subscriber/{id}', 'subscriberDelete')->name('subscriber.delete');
 
     });
 

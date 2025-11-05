@@ -177,6 +177,13 @@
                                     <span class="menu-title">@lang('Notification to All')</span>
                                 </a>
                             </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.users.subscriber.all') }}">
+                                <a class="nav-link" href="{{ route('admin.users.subscriber.all') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('All Subscriber')</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
