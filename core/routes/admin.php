@@ -284,6 +284,10 @@ Route::middleware('admin')->group(function () {
         Route::get('general-setting', 'index')->name('setting.index');
         Route::post('general-setting', 'update')->name('setting.update');
 
+        //Photos Page Setting
+        Route::get('photos-setting', 'photosPageSetting')->name('photos.page.setting');
+        Route::post('photos-setting-update', 'photosPageSettingUpdate')->name('photos.page.update');
+
         //configuration
         Route::get('setting/system-configuration', 'systemConfiguration')->name('setting.system.configuration');
         Route::post('setting/system-configuration', 'systemConfigurationSubmit');
@@ -319,6 +323,9 @@ Route::middleware('admin')->group(function () {
 
         Route::post('promo-1', 'homePageProme1')->name('promo.one');
         Route::post('promo-2', 'homePageProme2')->name('promo.two');
+
+        Route::post('hero-banner-1', 'updateheroBanner1')->name('hero.banner1');
+        Route::post('hero-banner-2', 'updateheroBanner2')->name('hero.banner2');
 
         //sitemap
         Route::get('sitemap', 'sitemap')->name('sitemap.index');

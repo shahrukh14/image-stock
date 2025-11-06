@@ -1,6 +1,23 @@
 .bg--green-new {
+    background-color: #fff !important;
+}
+.login-wrapper__top,
+.login-form .cmn-btn.bg--green-new {
     background-color: #63a544 !important;
 }
 #title::after {
     border-color: #63a544 transparent transparent transparent !important;
 }
+.navbar-search .navbar-search-field {
+    border: 1px solid #4634ff !important;
+    color: #0d6efd !important;
+    box-shadow: 0 0 5px #4634ff80;
+}
+
+*[class*="bg--"]:not(.bg--white) .fullscreen-btn, *[class*="bg--"]:not(.bg--white) .navbar__right button i, *[class*="bg--"]:not(.bg--white) .navbar-user__name {
+    color: #34495e !important;
+}
+
+.sidebar[class*="bg--"] .sidebar__menu .sidebar-menu-item .side-menu--open span.menu-title, .sidebar[class*="bg--"] .sidebar__menu .sidebar-menu-item .side-menu--open i {
+    color: #fff;
+  }

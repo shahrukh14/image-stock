@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use App\Models\Blog;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use App\Models\Frontend;
 
 class BlogsController extends Controller
 {
@@ -96,12 +97,16 @@ class BlogsController extends Controller
             $join = Arr::join($formatData,'-');
             $blog->slug = $join;
         }
+
+        
+
         // formatting end the data
         $blog->author = $request->author;
         $blog->category = $request->category;
         $blog->date = $request->date;
         $blog->feature_image = $image;
         $blog->blog_body = $request->blog_body;
+        $blog->seo_data = json_encode($request->seo_data);
         $blog->save();
         $notify[] = ['success', 'Blog Added successfully'];
         return redirect()->route('admin.blog.all.blog')->withNotify($notify);
@@ -145,6 +150,7 @@ class BlogsController extends Controller
         $blog->category = $request->category;
         $blog->date = $request->date;
         $blog->blog_body = $request->blog_body;
+        $blog->seo_data = json_encode($request->seo_data);
         $blog->save();
         $notify[] = ['success', 'Blog Updated successfully'];
         return redirect()->route('admin.blog.all.blog')->withNotify($notify);

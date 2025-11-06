@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 @section('content')
-    <div class="login-main" style="background-image: url('{{ asset('assets/admin_reviewer/images/login.jpg') }}')">
+    <div class="login-main">
+        {{-- <div class="login-main" style="background-image: url('{{ asset('assets/admin_reviewer/images/login.jpg') }}')"> --}}
         <div class="container custom-container">
             <div class="row justify-content-center">
                 <div class="col-xxl-5 col-xl-5 col-lg-6 col-md-8 col-sm-11">
@@ -23,7 +24,7 @@
                                         <input type="password" class="form-control" name="password" required>
                                     </div>
                                     <x-captcha />
-                                    <div class="d-flex flex-wrap justify-content-between">
+                                    <div class="d-flex flex-wrap justify-content-between">  
                                         <div class="form-check me-3">
                                             <input class="form-check-input" name="remember" type="checkbox" id="remember">
                                             <label class="form-check-label" for="remember">@lang('Remember Me')</label>

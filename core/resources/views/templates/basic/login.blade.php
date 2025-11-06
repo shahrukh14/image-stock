@@ -19,6 +19,28 @@
                     </div>
                     <div id="w-node-_9eb9b4a8-abc6-d1d3-38aa-da6b1d25671d-852cefdd" class="margin-top-20px text-align-center">Don't have an account? <a href="{{ route('signup') }}" class="text-link text-medium color-neutral-800">Sign Up</a></div>
                     <div id="w-node-_9eb9b4a8-abc6-d1d3-38aa-da6b1d25671d-852cefdd" class="margin-top-20px text-align-center"><a href="{{ route('user.password.request') }}" class="text-link text-medium color-neutral-800">Forgot Password</a></div>
+
+                    @php
+                        $credentials = $general->socialite_credentials;
+                    @endphp
+                    @if ($credentials->google->status == Status::ENABLE || $credentials->facebook->status == Status::ENABLE || $credentials->linkedin->status == Status::ENABLE)
+                    <div>
+                        <div class="margin-top-20px text-align-center"><span class="text-medium color-neutral-800">or Login with</span></div>
+                        <div class="w-layout-grid social-media-grid-top" style="margin-left:155px; margin-top:10px;">
+                            @if ($credentials->google->status == Status::ENABLE)
+                                <a href="{{ route('user.social.login', 'google') }}"  class="social-icon w-inline-block"><div class="social-icon-font"></div></a>
+                            @endif
+
+                            @if ($credentials->facebook->status == Status::ENABLE)
+                                <a href="{{ route('user.social.login', 'facebook') }}"  class="social-icon w-inline-block"><div class="social-icon-font"></div></a>
+                            @endif
+
+                            @if ($credentials->linkedin->status == Status::ENABLE)
+                                <a href="{{ route('user.social.login', 'linkedin') }}"  class="social-icon w-inline-block"><div class="social-icon-font"></div></a>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </form>
         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Storage;
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
@@ -254,17 +255,31 @@ class GeneralSettingController extends Controller
         if (!File::exists($folder_path)) {
             File::makeDirectory($folder_path, 0777, true, true);
         }
-
+        $json = json_decode($gs->homepage_promo_1);
         if (isset($request->homepage_promo_1)){
             $sl = rand();
             $photo = $request->file('homepage_promo_1');
             $homepage_promo_1 = date('Ymd').'_'.$sl.'_'.'.'.$photo->getClientOriginalExtension();
             $request->homepage_promo_1->move($folder_path, $homepage_promo_1);
+
+            if($json){
+                $img = $json->image;
+                $imagePath = public_path("assets/image/homepage_promo/{$img}");
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+                
         }else{
-            $homepage_promo_1 = null;
+            $homepage_promo_1 = $json->image;
         }
 
-        $gs->homepage_promo_1 = $homepage_promo_1;
+        $homepage_promo = [
+            'image' => $homepage_promo_1,
+            'url'=> $request->promo_banner_url
+        ];
+
+        $gs->homepage_promo_1 = json_encode($homepage_promo);
         $gs->save();
 
         $notify[] = ['success', 'Image has been updated.'];
@@ -282,17 +297,116 @@ class GeneralSettingController extends Controller
         if (!File::exists($folder_path)) {
             File::makeDirectory($folder_path, 0777, true, true);
         }
-
+        $json = json_decode($gs->homepage_promo_2);
         if (isset($request->homepage_promo_2)){
             $sl = rand();
             $photo = $request->file('homepage_promo_2');
             $homepage_promo_2 = date('Ymd').'_'.$sl.'_'.'.'.$photo->getClientOriginalExtension();
             $request->homepage_promo_2->move($folder_path, $homepage_promo_2);
+
+            if($json){
+                $img = $json->image;
+                $imagePath = public_path("assets/image/homepage_promo/{$img}");
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+            
+
         }else{
-            $homepage_promo_2 = null;
+            $homepage_promo_2 = $json->image;
         }
 
-        $gs->homepage_promo_2 = $homepage_promo_2;
+        $homepage_promo = [
+            'image' => $homepage_promo_2,
+            'url'=> $request->promo_banner_url
+        ];
+
+        $gs->homepage_promo_2 = json_encode($homepage_promo);
+        $gs->save();
+
+        $notify[] = ['success', 'Image has been updated.'];
+        return back()->withNotify($notify);
+    }
+
+    public function updateheroBanner1(Request $request){
+
+        $gs = gs();
+        $folder_path = public_path('assets/image/hero_banner');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+
+        $json = json_decode($gs->hero_banner_1);
+
+        if (isset($request->hero_banner_1['image'])){
+            $sl = rand();
+            $photo = $request->hero_banner_1['image'];
+            $hero_banner_1 = date('Ymd').'_'.$sl.'_'.'.'.$photo->getClientOriginalExtension();
+            $request->hero_banner_1['image']->move($folder_path, $hero_banner_1);
+
+           if($json){
+                $img = $json->image;
+                $imagePath = public_path("assets/image/hero_banner/{$img}");
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                } 
+           }
+
+        }else{
+            $hero_banner_1 = $json->image;
+        } 
+
+        $data = [
+            'image'         => $hero_banner_1,
+            'heading'       => $request->hero_banner_1['heading'],
+            'sub_heading'   => $request->hero_banner_1['sub_heading'],
+            'button_text'   => $request->hero_banner_1['button_text'],
+            'button_url'    => $request->hero_banner_1['button_url'],
+        ];
+
+        $gs->hero_banner_1 = json_encode($data);
+        $gs->save();
+
+        $notify[] = ['success', 'Image has been updated.'];
+        return back()->withNotify($notify);
+    }
+
+    public function updateheroBanner2(Request $request){
+        // return $request;
+        $gs = gs();
+        $folder_path = public_path('assets/image/hero_banner');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+        $json = json_decode($gs->hero_banner_2);
+        if (isset($request->hero_banner_2['image'])){
+            $sl = rand();
+            $photo = $request->hero_banner_2['image'];
+            $hero_banner_2 = date('Ymd').'_'.$sl.'_'.'.'.$photo->getClientOriginalExtension();
+            $request->hero_banner_2['image']->move($folder_path, $hero_banner_2);
+
+            if($json){
+                $img = $json->image;
+                $imagePath = public_path("assets/image/hero_banner/{$img}");
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+             
+        }else{
+            $hero_banner_2 = $json->image;
+        }
+
+        $data = [
+            'image'         => $hero_banner_2,
+            'heading'       => $request->hero_banner_2['heading'],
+            'sub_heading'   => $request->hero_banner_2['sub_heading'],
+            'button_text'   => $request->hero_banner_2['button_text'],
+            'button_url'    => $request->hero_banner_2['button_url'],
+        ];
+
+        $gs->hero_banner_2 = json_encode($data);
         $gs->save();
 
         $notify[] = ['success', 'Image has been updated.'];
@@ -485,6 +599,50 @@ class GeneralSettingController extends Controller
         }
 
         $notify[] = ['success', 'Sitemap uploaded successfully'];
+        return back()->withNotify($notify);
+    }
+
+    public function photosPageSetting(){
+        $pageTitle = 'Photos Page Setting';
+        return view('admin.setting.photos', compact('pageTitle'));
+    }
+
+    public function photosPageSettingUpdate(Request $request){
+        // return $request;
+        $gs = gs();
+        $folder_path = public_path('assets/image/photos_setting');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+        $json = json_decode($gs->photos_setting);
+        if (isset($request->photos_setting['image'])){
+            $sl = rand();
+            $photo = $request->photos_setting['image'];
+            $photos_setting = date('Ymd').'_'.$sl.'_'.'.'.$photo->getClientOriginalExtension();
+            $request->photos_setting['image']->move($folder_path, $photos_setting);
+
+            if($json){
+                $img = $json->image;
+                $imagePath = public_path("assets/image/hero_banner/{$img}");
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+             
+        }else{
+            $photos_setting = $json->image;
+        }
+
+        $data = [
+            'image'         => $photos_setting,
+            'heading'       => $request->photos_setting['heading'],
+            'sub_heading'   => $request->photos_setting['sub_heading']
+        ];
+
+        $gs->photos_setting = json_encode($data);
+        $gs->save();
+
+        $notify[] = ['success', 'Image has been updated.'];
         return back()->withNotify($notify);
     }
 }

@@ -336,16 +336,21 @@ class UserController extends Controller
     }
 
     public function becomeContributor(Request $request,$id){
-        $data = [
-            'firstname' => $request->firstname,
-            'mobile' => $request->mobile,
-            'address' => $request->location,
-            'website' => $request->website,
-            'description' => $request->description,
-            'user_status' => 0,
+        $user = User::find($id);
+        $user->firstname = $request->firstname;
+        $user->mobile = $request->mobile;
+        $user->website = $request->website;
+        $user->description = $request->description;
+        $user->user_status =1;
+        $user->address = [
+            'country' =>  $user->address->country,
+            'address' => $request->address,
+            'state' => $user->address->state,
+            'zip' => $user->address->zip,
+            'city' => $user->address->city,
         ];
-        User::where('id', $id)->update($data);
+        $user->save();
         $notify[] = ['success', 'Application Submitted'];
-        return back()->withNotify($notify);
+        return to_route('user.home')->withNotify($notify);
     }
 }

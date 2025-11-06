@@ -7,7 +7,7 @@
                     <div class="inner-container _420px---mbl center">
                         <div class="text-center mg-bottom-32px keep">
                             <h1 class="mg-bottom-12px">Become <span class="text-no-wrap">a contributor</span></h1>
-                            <p class="paragraph-small mg-bottom-0">please fill out form</p>
+                            <p class="paragraph-small mg-bottom-0">please fill out the form</p>
                         </div>
                     </div>
                 </div>
@@ -24,26 +24,26 @@
                                 <input type="email" class="input w-input" name="email" value="{{$user->email}}" id="email" required readonly>
                                 </div>
                             <div>
-                                <label for="mobile">Mobile number</label>
-                                <input type="tel" class="input w-input" name="mobile" value="{{$user->mobile}}" id="mobile" required>
+                                <label for="mobile">Phone number</label>
+                                <input type="number" class="input w-input" name="mobile" value="{{$user->mobile}}" id="mobile" required>
                             </div>
                             <div>
-                                <label for="location">Location</label>
-                                <input type="text" class="input w-input" name="location" value="{{$user->address}}" id="location" required>
+                                <label for="address">Location</label>
+                                <input type="text" class="input w-input" name="address" value="{{$user->address->address}}" id="address" required>
                                 </div>
                             <div>
                                 <label for="location">Username</label>
                                 <input type="text" class="input w-input" name="username" id="username"  value="{{$user->username}}" required readonly>
                             </div>
                             <div>
-                                <label or="website">Website</label>
+                                <label for="website">Website</label>
                                 <input type="text" class="input w-input" name="website" value="{{$user->website}}" id="website" required>
                             </div>
                             <div id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f77-1caef54c" class="text-area-wrapper">
                                 <label for="description">Description</label>
                                 <textarea id="description" name="description" maxlength="5000" placeholder="Tell your audience about you..." class="text-area mg-bottom-0 w-input" required>{{$user->description}}</textarea>
                             </div>
-                            @if($user->user_status == 0)
+                            @if($user->user_status == 1)
                                 <input type="button" value="Already Applied" data-wait="Please wait..." id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-100 mg-top-16px w-button" disabled>
                             @else
                                 <input type="submit" value="Apply now" data-wait="Please wait..." id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-100 mg-top-16px w-button">

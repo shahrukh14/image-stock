@@ -49,9 +49,46 @@
                             <textarea name="blog_body" rows="10" class="form-control  nicEdit" placeholder="@lang('Your email template')">{{ $blog->blog_body }}</textarea>
                         </div>
                     </div>
+
+                    <div class="col-md-12 mt-2">
+                        <h5 class="form-group">SEO Section</h5>
+                    </div>
+                    @php
+                        $seo_data = json_decode($blog->seo_data);
+                    @endphp
+                    <input type="hidden" name="seo_data[seo_image]" value=" ">
+                    <div class="col-md-12">
+                        <div class="form-group select2-parent position-relative">
+                            <label>@lang('Meta Keywords')</label>
+                            <small class="ms-2 mt-2  ">@lang('Separate multiple keywords by') <code>,</code>(@lang('comma')) @lang('or') <code>@lang('enter')</code> @lang('key')</small>
+                            <select name="seo_data[keywords][]" class="form-control select2-auto-tokenize"  multiple="multiple" required>
+                                @if($seo_data != null && $seo_data->keywords)
+                                    @foreach($seo_data->keywords as $option)
+                                        <option value="{{ $option }}" selected>{{ __($option) }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                  
+                    <div class="col-md-12">
+                        <label>@lang('Meta Description')</label>
+                        <textarea name="seo_data[description]" rows="3" class="form-control" required>@if($seo_data){{ $seo_data->description}} @endif</textarea>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>@lang('Social Title')</label>
+                        <input type="text" class="form-control" name="seo_data[social_title]" value="@if($seo_data) {{ $seo_data->social_title}}  @endif" required/>
+                    </div>
+                    <div class="col-md-12">
+                        <label>@lang('Social Description')</label>
+                        <textarea name="seo_data[social_description]" rows="3" class="form-control" required>@if($seo_data){{ $seo_data->social_description}} @endif</textarea>
+                    </div>
+                    <input type="hidden" name="seo_data[image]" value=" ">
+                </div>
+                <button type="submit" class="btn w-100 bg--green h-45 mt-3">@lang('Submit')</button>
                     
                 </div>
-                <button type="submit" class="btn w-100 bg--green h-45">@lang('Submit')</button>
             </form>
         </div>
     </div><!-- card end -->

@@ -48,7 +48,7 @@ class SiteController extends Controller
             $file->active()->premium();
         }])->with('user', 'likes')->limit(24)->get();
 
-        $blogs = Blog::with('Category')->get();
+        $blogs = Blog::with('Category')->orderBy('id','DESC')->limit(3)->get();
         return view($this->activeTemplate . 'home', compact('pageTitle', 'sections', 'images','blogs'));
     }
 
@@ -471,8 +471,120 @@ class SiteController extends Controller
         return view($this->activeTemplate . 'invoice', compact('transaction', 'pageTitle', 'image', 'plan'));
     }
 
-    public function search(Request $request)
+    public function photos(Request $request){
+        
+        $pageTitle = "Images";
+        $images = collect([]);
+        $collections = collect([]);
+        $getImages = $this->getPhotos($request);
+        $images = $getImages['images'];
+        $imageCount = $getImages['imageCount'];
+        $getCollections = $this->getCollections($request, true);
+        $collectionCount = $getCollections['collectionCount'];
+
+        $colors = Color::orderBy('id', 'DESC')->get();
+        $categories = Category::active()->whereHas('images', function ($query) {
+            $query->approved()->hasActiveFiles();
+        })->get();
+        return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
+    }
+
+    private function getPhotos($request, $onlyCount = false){
+        $images = $this->searcPhotos($request);
+        $data['imageCount'] = (clone $images)->count();
+        if (!$onlyCount) {
+            $data['images'] = $images->paginate(getPaginate(21));
+        }
+        return $data;
+    }
+
+    private function searcPhotos($request)
     {
+        $images = Image::approved()->where(function ($q) {
+            $q->where('user_id', auth()->id())->orWhereHas('category', function ($category) {
+                $category->active();
+            });
+        })->with('likes', 'user')->withCount(['files as premium' => function ($file) {
+            $file->active()->premium();
+        }]);
+
+        if ($request->category) {
+            $category = $request->category;
+            $images = $images->whereHas('category', function ($query) use ($category) {
+                $query->where('slug', $category)->where('status', Status::ENABLE);
+            });
+        }
+
+        if ($request->has('tag') && $request->tag != 'all') {
+            $images->whereJsonContains('tags', $request->tag);
+        }
+        // filter by extensions
+        if ($request->has('extension') && $request->extension != 'all') {
+            $images->whereJsonContains('extensions', $request->extension);
+        }
+
+        if ($request->has('is_free')) {
+            $isFree = $request->is_free;
+            $images = $images->whereHas('files', function ($q) use ($isFree) {
+                $q->active()->where('is_free', $isFree);
+            });
+        }
+
+        if ($request->has('color')) {
+            $images = $images->whereJsonContains('colors', $request->color);
+        }
+
+        if ($request->has('tag')) {
+            $images = $images->whereJsonContains('tags', $request->tag);
+        }
+
+        if ($request->has('filter')) {
+            $filter = $request->filter;
+            $images = $images->where(function ($query) use ($filter) {
+                $query->where('title', 'like', "%$filter%")->orWhere(function ($query) use ($filter) {
+                    $query->whereJsonContains('tags', $filter);
+                })->orWhere(function ($query) use ($filter) {
+                    $query->whereHas('category', function ($category) use ($filter) {
+                        $category->where('name', 'like', "%$filter%");
+                    })->orWhereHas('user', function ($user) use ($filter) {
+                        $user->where('username', 'like', "%$filter%")
+                            ->orWhere('firstname', 'like', "%$filter%")
+                            ->orWhere('lastname', 'like', "%$filter%");
+                    })->orWhereHas('collections', function ($collections) use ($filter) {
+                        $collections->where('title', 'like', "%$filter%");
+                    });
+                });
+            });
+        }
+
+        //last filter
+        if ($request->has('period')) {
+            $images = $images->where('upload_date', '>=', Carbon::now()->subMonth($request->period));
+        }
+
+        if ($request->has('popular')) {
+            $images = $images->popular();
+        }
+
+
+        if (!$request->has('sort_by')) {
+            $images = $images->orderBy('id', 'desc');
+        } else {
+            $images = $images->orderBy('id', 'asc');
+        }
+
+        return $images;
+    }
+
+    public function vectors(Request $request){
+        return abort(404);
+    }
+
+    public function videos(Request $request){
+        return abort(404);
+    }
+
+    public function search(Request $request){
         if($request->page){
             $page = $request->page+1;
         }else{
@@ -713,12 +825,11 @@ class SiteController extends Controller
     {
         $pageTitle = "Blog";
         $activeTemplate = $this->activeTemplate;
-        // $blogs = Blog::orderby('id', 'DESC')->paginate(10);
         $search = $request['search_blog'] ? $request['search_blog'] : "";
         if ($search !== "") {
-            $blogs = Blog::where('title', 'LIKE', "%$search%")->orderby('id', 'DESC')->paginate(10);
+            $blogs = Blog::where('title', 'LIKE', "%$search%")->with('Category')->orderby('id', 'DESC')->paginate(10);
         } else {
-            $blogs = Blog::orderby('id', 'DESC')->paginate(10);
+            $blogs = Blog::orderby('id', 'DESC')->with('Category')->paginate(9);
         }
         $blogCategory = BlogCategory::all();
         return view($this->activeTemplate .'user.blog.blog',compact('pageTitle','activeTemplate','blogs','blogCategory'));
@@ -789,17 +900,20 @@ class SiteController extends Controller
     public function privacyPolicy(){
         $pageTitle = "Privacy Policy";
         $activeTemplate = $this->activeTemplate;
-        return view($this->activeTemplate .'privacy_policy',compact('pageTitle','activeTemplate'));
+        $content = Frontend::findOrFail(42);
+        return view($this->activeTemplate .'privacy_policy',compact('pageTitle','activeTemplate','content'));
     }
     public function cookiePolicyPage(){
         $pageTitle = "Cookie Policy";
         $activeTemplate = $this->activeTemplate;
-        return view($this->activeTemplate .'cookie_policy',compact('pageTitle','activeTemplate'));
+        $content = Frontend::findOrFail(69);
+        return view($this->activeTemplate .'cookie_policy',compact('pageTitle','activeTemplate','content'));
     }
     public function termAndCondition(){
         $pageTitle = "Term And Condition";
         $activeTemplate = $this->activeTemplate;
-        return view($this->activeTemplate .'terms_and_condition',compact('pageTitle','activeTemplate'));
+        $content = Frontend::findOrFail(43);
+        return view($this->activeTemplate .'terms_and_condition',compact('pageTitle','activeTemplate','content'));
     }
     public function userSubscribe(Request $request){
        $subscriber = new Subscriber();
@@ -807,5 +921,12 @@ class SiteController extends Controller
        $subscriber->save();
        $notify[] = ['success', 'You subscribed successfully!'];
        return redirect()->back()->withNotify($notify);
+    }
+
+    public function doNotSellPersonalInformation(){
+        $pageTitle = "Personal Informations";
+        $activeTemplate = $this->activeTemplate;
+        $content = Frontend::findOrFail(67);
+        return view($this->activeTemplate .'not_sell_personal_information',compact('pageTitle','activeTemplate','content'));
     }
 }

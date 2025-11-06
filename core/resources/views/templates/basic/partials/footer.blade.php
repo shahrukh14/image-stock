@@ -8,13 +8,13 @@
 @endphp
 {{-- @include($activeTemplate . 'partials.cookie') --}}
 
-@if (!request()->routeIs(['search', 'user*']))
+{{-- @if (!request()->routeIs(['search', 'user*']))
     <section>
         <div class="custom--container container">
             @php echo getAds('728x90', 2);@endphp
         </div>
     </section>
-@endif
+@endif --}}
 
 <footer class="footer-wrapper" style="opacity: 1">
     <div class="container-default w-container">
@@ -29,19 +29,22 @@
                     </div>
                     <div class="w-layout-grid social-media-grid-top">
                         <a href="https://facebook.com/" target="_blank" class="social-icon w-inline-block">
-                            <div class="social-icon-font"></div>
-                        </a><a href="https://twitter.com/" target="_blank" class="social-icon w-inline-block">
-                            <div class="social-icon-font"></div>
-                        </a><a href="https://instagram.com/" target="_blank" class="social-icon w-inline-block">
-                            <div class="social-icon-font"></div>
-                        </a><a href="https://pinterest.com/" target="_blank" class="social-icon w-inline-block">
-                            <div class="social-icon-font"></div>
+                            <div class="facebook social"></div>
+                        </a>
+                        <a href="https://twitter.com/" target="_blank" class="social-icon w-inline-block">
+                            <div class="twitter social"></div>
+                        </a>
+                        <a href="https://instagram.com/" target="_blank" class="social-icon w-inline-block">
+                            <div class="instagram social"></div>
+                        </a>
+                        <a href="https://pinterest.com/" target="_blank" class="social-icon w-inline-block">
+                            <div class="pinterest social"></div>
                         </a>
                         <a href="https://linkedin.com/" target="_blank" class="social-icon w-inline-block">
-                            <div class="social-icon-font"></div>
+                            <div class="linkedIn social"></div>
                         </a>
                         <a href="https://youtube.com/" target="_blank" class="social-icon w-inline-block">
-                            <div class="social-icon-font"></div>
+                            <div class="youtube social"></div>
                         </a>
                     </div>
                 </div>
@@ -55,14 +58,14 @@
                                 <a href="{{route('contact')}}" class="pages-menu-link">Contact</a>
                             </li>
                             <li class="footer-list-item">
-                                <a href="{{route('blog.all')}}" class="pages-menu-link">Blog</a>
+                                <a href="{{route('blog.all')}}" class="pages-menu-link">Blog </a>
                             </li>
                             <li class="footer-list-item">
                                 <a href="{{route('user.become.contributor.page')}}" class="pages-menu-link">Become a contributor</a>
                             </li>
-                            <li class="footer-list-item">
+                            {{-- <li class="footer-list-item">
                                 <a href="{{route('upload.files')}}" class="pages-menu-link">Upload files</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </div>
@@ -78,7 +81,7 @@
                             <a href="{{route('cookie.policy')}}" class="pages-menu-link">Cookie Policy</a>
                         </li>
                         <li class="footer-list-item">
-                            <a href="#" class="pages-menu-link">Do not sell my personal information</a>
+                            <a href="{{route('do.not.sell.personal.information')}}" class="pages-menu-link">Do not sell my personal information</a>
                         </li>
                     </ul>
                 </div>
@@ -87,66 +90,23 @@
                         class="inner-container _300px---mbl">
                         <div class="text-300 bold menu-title">Collections</div>
                         <div class="w-layout-grid grid-1-column gap-row-16px">
-                            <a id="w-node-c2fb024a-8e07-dd22-d9c5-9d502630947f-a2612b67"
-                                href="#"
-                                class="blur-sibling-item text-decoration-none w-inline-block" style="opacity: 1">
+                            <a href="{{ route('photos') }}" class="blur-sibling-item text-decoration-none w-inline-block" style="opacity: 1">
                                 <div class="flex-horizontal space-between gap-16px">
-                                    <div class="flex-horizontal start gap-12px">
-                                        <div class="image-wrapper footer-collection-icon">
-                                            <img src="{{ asset('assets\images\app_images\photography-image-stock-x-webflow-template.svg') }}"
-                                                alt="Photography Icon - Stock X Webflow Template"
-                                                class="image" />
-                                        </div>
-                                        <div>
-                                            <div class="heading-h6-size mg-bottom-2px title">
-                                                Photography
-                                            </div>
-                                            <div>Explore collection</div>
-                                        </div>
-                                    </div>
-                                    <div class="arrow-card-icon">
-                                        <div class="line-square-icon"></div>
+                                    <div class="image-wrapper footer-collection-icon photos">
                                     </div>
                                 </div>
-                            </a><a id="w-node-c2fb024a-8e07-dd22-d9c5-9d502630948c-a2612b67"
-                                href="#"
-                                class="blur-sibling-item text-decoration-none w-inline-block" style="opacity: 1">
+                            </a>
+
+                            <a href="{{ route('photos') }}" class="blur-sibling-item text-decoration-none w-inline-block" style="opacity: 1">
                                 <div class="flex-horizontal space-between gap-16px">
-                                    <div class="flex-horizontal start gap-12px">
-                                        <div class="image-wrapper footer-collection-icon">
-                                            <img src="{{ asset('assets\images\app_images\vectors-and-graphics-image-stock-x-webflow-template.svg') }}"
-                                                alt="Vectors And Graphics Icon - Stock X Webflow Template"
-                                                class="image" />
-                                        </div>
-                                        <div>
-                                            <div class="heading-h6-size mg-bottom-2px title">
-                                                Vectors &amp;&nbsp;graphics
-                                            </div>
-                                            <div>Explore collection</div>
-                                        </div>
-                                    </div>
-                                    <div class="arrow-card-icon">
-                                        <div class="line-square-icon"></div>
+                                    <div class="image-wrapper footer-collection-icon vectors">
                                     </div>
                                 </div>
-                            </a><a id="w-node-c2fb024a-8e07-dd22-d9c5-9d5026309499-a2612b67"
-                                href="#"
-                                class="blur-sibling-item text-decoration-none w-inline-block" style="opacity: 1">
+                            </a>
+
+                            <a href="{{ route('photos') }}" class="blur-sibling-item text-decoration-none w-inline-block" style="opacity: 1">
                                 <div class="flex-horizontal space-between gap-16px">
-                                    <div class="flex-horizontal start gap-12px">
-                                        <div class="image-wrapper footer-collection-icon">
-                                            <img src="{{ asset('assets\images\app_images\fvideos-image-stock-x-webflow-template.svg') }}"
-                                                alt="Videos Icon - Stock X Webflow Template" class="image" />
-                                        </div>
-                                        <div>
-                                            <div class="heading-h6-size mg-bottom-2px title">
-                                                Videos
-                                            </div>
-                                            <div>Explore collection</div>
-                                        </div>
-                                    </div>
-                                    <div class="arrow-card-icon">
-                                        <div class="line-square-icon"></div>
+                                    <div class="image-wrapper footer-collection-icon videos">
                                     </div>
                                 </div>
                             </a>
@@ -200,7 +160,7 @@
             <p class="mg-bottom-0">
                 Copyright © 2023. 
                 <a href="#" target="_blank" class="text-link text-decoration-none">All Rights reserved .</a>
-                <a href="#" target="_blank" class="text-link text-decoration-none">Greenstock.com</a>
+                <a href="{{ route('home') }}" target="_blank" class="text-link text-decoration-none">Greenstockpro.com</a>
             </p>
         </div>
     </div>

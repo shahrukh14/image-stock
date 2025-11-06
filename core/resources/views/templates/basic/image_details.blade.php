@@ -5,7 +5,7 @@
             <div class="container-default w-container">
                 <div class="mg-bottom-32px keep">
                     <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;" class="flex-horizontal start breadcrumbs">
-                        <a href="https://stocktemplate.webflow.io/home" class="text-link text-200 medium">Home</a>
+                        <a href="{{ route('home') }}" class="text-link text-200 medium" style="text-decoration: none;">Home</a>
                         <div class="anchor-link-divider">
                             <div class="line-square-icon"></div>
                         </div>
@@ -13,7 +13,7 @@
                             <div class="w-dyn-list">
                                 <div role="list" class="w-dyn-items">
                                     <div role="listitem" class="w-dyn-item">
-                                        <a href="https://stocktemplate.webflow.io/category/photography" class="text-link text-200 medium">Photography</a>
+                                        <a href="{{ route('photos') }}" class="text-link text-200 medium" style="text-decoration: none;">Photos</a>
                                     </div>
                                 </div>
                             </div>
@@ -21,7 +21,19 @@
                         <div class="anchor-link-divider">
                             <div class="line-square-icon"></div>
                         </div>
-                        <div class="text-200 medium">3D render of beautiful black waves background</div>
+                        <div>
+                            <div class="w-dyn-list">
+                                <div role="list" class="w-dyn-items">
+                                    <div role="listitem" class="w-dyn-item">
+                                        <a href="{{ route('photos', 'category='.$image->Category->name ) }}" class="text-link text-200 medium" style="text-decoration: none;">{{$image->Category->name}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="anchor-link-divider">
+                            <div class="line-square-icon"></div>
+                        </div>
+                        <div class="text-200 medium">{{$image->title}}</div>
                     </div>
                 </div>
                 <div class="w-layout-grid grid-2-columns product-page">
@@ -101,19 +113,19 @@
                                 <div class="flex-horizontal start gap-6px">
                                     <img src="{{ asset('assets\images\app_images\resolution-icon-stock-x-webflow-template.svg') }}" alt="Resolution">
                                     @foreach ($imageFiles as $key => $imageFile)
-                                    <div class="text-100 medium color-neutral-700">{{ $imageFile->resolution }}</div>
+                                        <div class="text-100 medium color-neutral-700">{{ $imageFile->resolution }}</div>
                                     @endforeach
                                 </div>
                             </div>
-                            {{-- <div>
+                            <div>
                                 <div class="mg-bottom-8px">
-                                    <div class="text-100 bold color-neutral-800">Size</div>
+                                    <div class="text-100 bold color-neutral-800">Category</div>
                                 </div>
                                 <div class="flex-horizontal start gap-6px">
-                                    <img src="{{ asset('assets\images\app_images\_size-icon-stock-x-webflow-template.svg') }}" alt="Size">
-                                    <div class="text-100 medium color-neutral-700">6.42 MB</div>
+                                    <img src="{{ asset('assets\images\app_images\_type-icon-stock-x-webflow-template.svg') }}" alt="Size">
+                                    <div class="text-100 medium color-neutral-700">{{ $image->Category->name}}</div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div>
                                 <div class="mg-bottom-8px">
                                     <div class="text-100 bold color-neutral-800">Type</div>
@@ -136,13 +148,12 @@
                     <div class="w-layout-grid grid-2-columns title-and-buttons">
                         <h2 class="display-3 mg-bottom-0">Related Photos</h2>
                         <div class="buttons-row">
-                            <a href="#" class="btn-secondary w-button">Browse all Photos</a>
+                            <a href="{{ route('photos') }}" class="btn-secondary w-button">Browse all Photos</a>
                         </div>
                     </div>
                 </div>
                 <div class="w-dyn-list">
                     <div role="list" class="grid-3-columns _1-col-tablet gap-row-48px w-dyn-items">
-
                         @foreach ($relatedImages as $related_image)
                         @php
                             $imageUrl = imageUrl(getFilePath('stockImage'), $related_image->thumb);

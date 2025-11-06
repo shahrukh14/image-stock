@@ -1,27 +1,11 @@
 {
-    "banner": {
-        "builder": true,
-        "no_selection": true,
-        "name": "Banner Section",
-        "content": {
-            "images": {
-                "left_image": {
-                    "size": "1100x1140"
-                },
-                "right_image": {
-                    "size": "750x500"
-                }
-            },
-            "title": "text"
-        }
-    },
     "about": {
         "builder": true,
         "name": "About Section",
         "content": {
             "images": {
                 "image": {
-                    "size": "800x570"
+                    "size": "1440x520"
                 }
             },
             "title": "text",
@@ -48,63 +32,6 @@
             "modal": true
         }
     },
-    "social_icon": {
-        "builder": true,
-        "no_selection": true,
-        "name": "Social Icon",
-        "element": {
-            "name": "text",
-            "url": "text",
-            "icon": "icon",
-            "modal": true
-        }
-    },
-    "cta": {
-        "builder": true,
-        "name": "CTA Section",
-        "content": {
-            "images": {
-                "image": {
-                    "size": "1700x700"
-                }
-            },
-            "title": "text",
-            "subtitle": "text",
-            "button_text": "text",
-            "button_url": "text"
-        }
-    },
-    "seller_join": {
-        "builder": true,
-        "name": "Seller Join Section",
-        "content": {
-            "images": {
-                "image": {
-                    "size": "440x350"
-                }
-            },
-            "title": "text",
-            "description": "text",
-            "button_text": "text",
-            "button_url": "text"
-        }
-    },
-    "contact": {
-        "builder": true,
-        "no_selection": true,
-        "name": "Contact Page",
-        "content": {
-            "images": {
-                "background_image": {
-                    "size": "1920x800"
-                }
-            },
-            "form_title": "text",
-            "mobile": "text",
-            "address": "text",
-            "email": "text"
-        }
-    },
     "footer": {
         "builder": true,
         "no_selection": true,
@@ -113,38 +40,6 @@
             "heading": "text",
             "title": "text",
             "description": "textarea"
-        }
-    },
-    "login": {
-        "builder": true,
-        "no_selection": true,
-        "name": "Login Page",
-        "content": {
-            "images": {
-                "background_image": {
-                    "size": "1920x800"
-                },
-                "image": {
-                    "size": "690x550"
-                }
-            },
-            "form_title": "text"
-        }
-    },
-    "register": {
-        "builder": true,
-        "no_selection": true,
-        "name": "Register Page",
-        "content": {
-            "images": {
-                "background_image": {
-                    "size": "1920x800"
-                },
-                "image": {
-                    "size": "690x550"
-                }
-            },
-            "form_title": "text"
         }
     },
     "plan": {
@@ -156,15 +51,7 @@
             "subtitle": "text"
         }
     },
-    "collection": {
-        "builder": true,
-        "no_selection": false,
-        "name": "Collection",
-        "content": {
-            "title": "text",
-            "subtitle": "text"
-        }
-    },
+  
     "contributor": {
         "builder": true,
         "name": "Contributor Section",
@@ -196,15 +83,6 @@
             "title": "text",
             "details": "textarea-nic",
             "modal": false
-        }
-    },
-    "kyc_instruction": {
-        "builder": true,
-        "no_selection": true,
-        "name": "KYC Instructions",
-        "content": {
-            "verification_instruction": "textarea",
-            "pending_instruction": "textarea"
         }
     },
     "default_images": {

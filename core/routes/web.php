@@ -51,8 +51,21 @@ Route::controller('SiteController')->group(function () {
     Route::get('images/{scope}', 'images')->name('images');
     Route::get('image/{slug}/{id}', 'imageDetail')->name('image.detail');
 
+     //Blog Section
+     Route::prefix('blog')->name('blog.')->group(function () {
+        Route::get('/', 'blogPage')->name('all');
+        Route::get('category/{slug}', 'blogPageCategory')->name('specific.category');
+        Route::get('/{slug}', 'blogDetailsPage')->name('details');
+    });
+
     //search
     Route::get('search', 'search')->name('search');
+
+    Route::get('photos', 'photos')->name('photos');
+
+    Route::get('vectors', 'vectors')->name('vectors');
+
+    Route::get('videos', 'videos')->name('videos');
 
     Route::get('/change/{lang?}', 'changeLanguage')->name('lang');
 
@@ -81,16 +94,12 @@ Route::controller('SiteController')->group(function () {
     Route::get('/privacy_policy','privacyPolicy')->name('privacy.policy');
     Route::get('/cookie_policy','cookiePolicyPage')->name('cookie.policy');
     Route::get('/terms_and_condition','termAndCondition')->name('terms.and.condition');
+    Route::get('/do-not-sell-personal-information','doNotSellPersonalInformation')->name('do.not.sell.personal.information');
 
     Route::get('/{slug}', 'pages')->name('pages');
     // Home 
     Route::get('/', 'index')->name('home');
-    //Blog Section
-    Route::prefix('blog')->name('blog.')->group(function () {
-        Route::get('category/all', 'blogPage')->name('all');
-        Route::get('category/{slug}', 'blogPageCategory')->name('specific.category');
-        Route::get('/{slug}', 'blogDetailsPage')->name('details');
-    });
+   
 });
 
 Route::prefix('donation')->name('donation.')->group(function () {

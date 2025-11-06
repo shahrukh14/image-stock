@@ -2212,6 +2212,7 @@ textarea.w-select {
 }
 
 :root {
+    --button--green: #63A544;
     --neutral--black: #000;
     --neutral--600: #525252;
     --neutral--800: #070707;
@@ -5015,7 +5016,7 @@ figcaption {
 .btn-primary.white:hover {
     border-color: var(--neutral--100);
     color: var(--neutral--100) !important;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: var(--button--green);
 }
 
 .btn-primary.inside-input {
@@ -5097,8 +5098,8 @@ figcaption {
 }
 
 .btn-secondary:hover {
-    border-color: var(--accent--primary-1);
-    background-color: var(--accent--primary-1);
+    border-color: var(--neutral--100);
+    background-color: var(--button--green);
     opacity: 1;
     color: var(--neutral--100)  !important;
     transform: translate3d(0, -3px, 0.01px);
@@ -5224,7 +5225,7 @@ figcaption {
 }
 
 .badge-secondary.category-badges:hover {
-    background-color: var(--neutral--800);
+    background-color: var(--button--green);
     color: var(--neutral--100) !important;
     transform: translate(0, -3px);
 }
@@ -5968,7 +5969,6 @@ figcaption {
 }
 
 .section.section-hero---v1 {
-    background-image: url("/assets/images/home_banner.jpg");
     background-position: 0 0;
     background-size: cover;
     padding-top: 122px;
@@ -5976,7 +5976,6 @@ figcaption {
 }
 
 .section.section-hero---x {
-    background-image: url("/assets/images/Home-hero2-image 1.jpg");
     background-position: 0 0;
     background-size: cover;
     padding-top: 122px;
@@ -6880,8 +6879,8 @@ figcaption {
 
 .accordion-item-wrapper {
     width: 100%;
-    border-top: 1px solid var(--neutral--700);
-    border-bottom: 1px solid var(--neutral--700);
+    border-top: 1px solid var(--button--green);
+    border-bottom: 1px solid var(--button--green);
     cursor: pointer;
     transform-style: preserve-3d;
     justify-content: space-between;
@@ -7055,14 +7054,14 @@ figcaption {
 }
 
 .categories-badges-wrapper {
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     display: flex;
 }
 
 .categories-badges-wrapper.right-categories {
     grid-row-gap: 8px;
     flex-wrap: wrap;
-    margin-right: -20px;
+    /* margin-right: -20px; */
 }
 
 .categories-badges-wrapper.center-categories {
@@ -12046,4 +12045,6 @@ figcaption {
     margin-top: 10px;
 }
 
-
+.blog-card:hover img {
+    transform: translate3d(0px, 0px, 0px) scale3d(1.1, 1.1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg) !important;
+}

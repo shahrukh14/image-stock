@@ -11,7 +11,7 @@
                 <div>
                   <div role="list"  class="grid-1-column gap-row-24px w-dyn-items">
                     <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem"  class="collection-item w-dyn-item">
-                      <a href="https://stocktemplate.webflow.io/category/photography"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
+                      <a href="{{ route('photos') }}"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                           <img src="{{ asset('assets\images\app_images\camera.svg') }}"  alt="Photography" class="image category-dropdown-link---icon" />
                           <div  class="text-100 medium color-neutral-700">
@@ -20,7 +20,7 @@
                         </div>
                       </a>
                     </div>
-                    <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem" class="collection-item w-dyn-item">
+                    <div id="{{ route('vectors') }}" role="listitem" class="collection-item w-dyn-item">
                       <a href="https://stocktemplate.webflow.io/category/vectors-graphics" class="category-dropdown-link w-inline-block" tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                           <img src="{{ asset('assets\images\app_images\vector.svg') }}" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
@@ -31,7 +31,7 @@
                       </a>
                     </div>
                     <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1"  role="listitem" class="collection-item w-dyn-item">
-                      <a href="https://stocktemplate.webflow.io/category/videos" class="category-dropdown-link w-inline-block" tabindex="0">
+                      <a href="{{ route('videos') }}" class="category-dropdown-link w-inline-block" tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                           <img src="{{ asset('assets\images\app_images\video.svg') }}" alt="Videos" class="image category-dropdown-link---icon" />
                           <div class="text-100 medium color-neutral-700">
@@ -42,98 +42,20 @@
                     </div>
                   </div>
                 </div>
-                <h3>Color <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
+                <h3>Category <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
                 <div>
-                  @if ($colors->count())
+                  @if ($categories->count())
                     <div>
-                      @foreach ($colors as $color)
-                      <div style="margin-bottom: 5px; margin-left:10px;">
-                        <span class="color-badge color-selector search-param" id="color-{{ $color->id }}" data-param="color" data-param_value="{{ $color->color_code }}" data-search_type="single" style="background: #{{ $color->color_code }};"></span><span style="color: black; margin-left:2px;">{{ $color->name }}</span>
+                      @foreach ($categories as $category)
+                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
+                        <span class="color-badge color-selector search-param" ></span>
+                        <a href="{{ route('photos', ['category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
                       </div>
                         {{-- <span class="color-selector search-param" id="color-{{ $color->id }}" data-param="color" data-param_value="{{ $color->color_code }}" data-search_type="single" border: 1px solid @if ($color->color_code != 'ffffff' && $color->color_code != 'fff') #{{ $color->color_code }}; @else #bac8d3 @endif">{{ $color->name }}</span> --}}
                       @endforeach
                     </div>
                   @endif
-                </div>
-                {{-- <div class="mg-bottom-54px">
-                  <div data-hover="false" data-delay="0"  class="aside-dropdown-wrapper w-dropdown">
-                    <div class="aside-dropdown-toogle w-dropdown-toggle" id="w-dropdown-toggle-1" aria-controls="w-dropdown-list-1" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
-                      <h5>Type</h5>
-                      <div class="line-square-icon link-icon-rigth"></div>
-                    </div>
-                    <nav style="transform: translate3d(0px, 10px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 0; display: none;  transform-style: preserve-3d; height: 0px; " class="aside-dropdown-list w-dropdown-list" id="w-dropdown-list-1" aria-labelledby="w-dropdown-toggle-1">
-                      <div class="pd-top-32px w-dyn-list">
-                        <div role="list"  class="grid-1-column gap-row-24px w-dyn-items">
-                          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem"  class="collection-item w-dyn-item">
-                            <a href="https://stocktemplate.webflow.io/category/photography"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
-                              <div class="flex-horizontal start gap-8px">
-                                <img src="./Photography - Stock X - Webflow Ecommerce website template_files/64303a15497e2572f68afe43_photographies-icon-stock-x-webflow-template.svg"  alt="Photography" class="image category-dropdown-link---icon" />
-                                <div  class="text-100 medium color-neutral-700">
-                                  Photography
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem" class="collection-item w-dyn-item">
-                            <a href="https://stocktemplate.webflow.io/category/vectors-graphics" class="category-dropdown-link w-inline-block" tabindex="0">
-                              <div class="flex-horizontal start gap-8px">
-                                <img src="./Photography - Stock X - Webflow Ecommerce website template_files/64303a0171bbe338095d31b1_vectors-and-graphics-icon-stock-x-webflow-template.svg" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
-                                <div class="text-100 medium color-neutral-700">
-                                  Vectors &amp; graphics
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1"  role="listitem" class="collection-item w-dyn-item">
-                            <a href="https://stocktemplate.webflow.io/category/videos" class="category-dropdown-link w-inline-block" tabindex="0">
-                              <div class="flex-horizontal start gap-8px">
-                                <img rc="./Photography - Stock X - Webflow Ecommerce website template_files/643039a43e90e9a9a55c8b92_videos-icon-stock-x-webflow-template.svg" alt="Videos" class="image category-dropdown-link---icon" />
-                                <div class="text-100 medium color-neutral-700">
-                                  Videos
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </nav>
-                  </div>
-                </div> --}}
-              
-                {{-- <div class="mg-bottom-32px keep">
-                  <div data-hover="false" data-delay="0" class="aside-dropdown-wrapper w-dropdown">
-                    <div class="aside-dropdown-toogle w-dropdown-toggle" id="w-dropdown-toggle-2" aria-controls="w-dropdown-list-2" aria-haspopup="menu" aria-expanded="false" role="button" tabindex="0">
-                      <div>Color</div>
-                      <div class="line-square-icon link-icon-rigth"></div>
-                    </div>
-                    <nav style=" transform: translate3d(0px, 10px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 0; display: none; transform-style: preserve-3d; height: 0px; "  class="aside-dropdown-list w-dropdown-list" id="w-dropdown-list-2"                      aria-labelledby="w-dropdown-toggle-2">
-                      <div class="pd-top-32px w-dyn-list">
-                        <div role="list" class="grid-2-columns gap-16px grid-2-columns---tablet w-dyn-items">
-                          <div  id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337648-32b2f9c1"  role="listitem" class="w-dyn-item">
-                            <a href="https://stocktemplate.webflow.io/color/black" class="category-dropdown-link w-inline-block" tabindex="0">
-                              <div class="flex-horizontal start gap-8px">
-                                <div style="background-color: hsla(240,20%, 3.92%,1);" class="resource-color-dot"></div>
-                                <div class="text-100 color-neutral-700">
-                                  Black
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337648-32b2f9c1" role="listitem" class="w-dyn-item">
-                            <a href="https://stocktemplate.webflow.io/color/white" class="category-dropdown-link w-inline-block" tabindex="0" >
-                              <div class="flex-horizontal start gap-8px">
-                                <div style="background-color: hsla(0, 0%, 100%, 1);" class="resource-color-dot"></div>
-                                <div class="text-100 color-neutral-700">
-                                  White
-                                </div>
-                              </div>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </nav>
-                  </div>
-                </div> --}}
+                </div>              
               </div>
             
             @php echo getAds('728x90', 2);@endphp
@@ -141,16 +63,24 @@
             </div>
           </div>
           <div class="aside-content-rigth">
+            @php
+                $photos_setting = json_decode(gs()->photos_setting);
+                if($photos_setting){
+                    $photos_setting_image = $photos_setting->image;
+                }else{
+                    $photos_setting_image = "photos_default_banner.jpg";
+                }
+            @endphp
             <div class="inner-container _981px width-100">
               <div class="mg-bottom-80px">
-                <div style=" background-image: url('https://assets-global.website-files.com/642ee44a50f5436e35b2f9e1/64303a175e9f378e30d6f168_photographies-banner-image-stock-x-webflow-template.jpg');  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="category-banner">
+                <div style=" background-image: url({{ asset('core/public/assets/image/photos_setting/'.$photos_setting_image)}});  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="category-banner">
                   <div class="inner-container _635px center">
                     <div class="text-center">
                       <h1 class="display-3 color-neutral-100 mg-bottom-12px">
-                        Photos
+                       @if($photos_setting) {{$photos_setting->heading}} @else Photos @endif
                       </h1>
                       <p class="color-neutral-200 mg-bottom-0">
-                       Good photos are vitalto express your message accurately.GreenStock provides the <br>right stock photos for your projects , and social media posts and more.
+                        @if($photos_setting) {{$photos_setting->sub_heading}}  @endif
                       </p>
                     </div>
                   </div>
@@ -207,30 +137,8 @@
               </div>
               
               
-                @php 
-                  $url = request()->fullUrl();
-        
-                  //For next
-                  $nextParam = "page=".$page;
-                  $nextUrlParts = parse_url($url);
-                  parse_str($nextUrlParts['query'], $nextQueryParams);
-                  parse_str($nextParam, $nextParams);
-                  $nextQueryParams = array_merge($nextQueryParams, $nextParams);
-                  $nextUrlParts['query'] = http_build_query($nextQueryParams);
-                  $nextUrl = $nextUrlParts['scheme'] . '://' . $nextUrlParts['host'] . $nextUrlParts['path'] . '?' . $nextUrlParts['query'];
-        
-                  //For Previous
-                  $back = $page-2;
-                  $previousParam = "page=".$back;
-                  $previousUrlParts = parse_url($url);
-                  parse_str($previousUrlParts['query'], $previousQueryParams);
-                  parse_str($previousParam, $previousParams);
-                  $previousQueryParams = array_merge($previousQueryParams, $previousParams);
-                  $previousUrlParts['query'] = http_build_query($previousQueryParams);
-                  $previousUrl = $previousUrlParts['scheme'] . '://' . $previousUrlParts['host'] . $previousUrlParts['path'] . '?' . $previousUrlParts['query'];
-        
-                @endphp
-              <div style="text-align: right">
+                 
+              {{-- <div style="text-align: right">
                 @if($page > 2)
                   <a href="{{$previousUrl}}" class="btn-btn"><< Previous</a>
                 @endif
@@ -238,15 +146,15 @@
                 @if(count($images) > 0)
                   <a href="{{$nextUrl}}" class="btn-btn">Next >></a>
                 @endif
-              </div>
+              </div> --}}
             </div>
            
           </div>
         </div>
       </div>
-      {{-- @if (count($images) > 0)
+      @if (count($images) > 0)
       {{ $images->links('pagination::bootstrap-5') }}
-      @endif --}}
+      @endif
       
     </section>
   </div>

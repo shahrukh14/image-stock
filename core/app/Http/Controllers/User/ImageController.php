@@ -308,7 +308,7 @@ class ImageController extends Controller
                 });
 
                 if ($general->watermark == Status::ENABLE) {
-                    $watermark = ImageFacade::make('assets/images/watermark.png')->opacity(45)->rotate(45)->greyscale()->fit(200,100);
+                    $watermark = ImageFacade::make('assets/images/watermark.png')->opacity(45)->rotate(45)->greyscale()->fit(400,200);
                     $thumb->insert($watermark, 'center');
                 }
 

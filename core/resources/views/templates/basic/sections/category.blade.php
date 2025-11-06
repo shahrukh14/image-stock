@@ -12,92 +12,32 @@
               <div class="text-center mg-bottom-40px">
                   <h2 class="display-3 mg-bottom-6px">Resource collection</h2>
                   <p class="mg-bottom-0">
-                     Quick to use .Convenient.Instantly download stock photos , vectors and videos<span class="text-no-wrap"></span>
+                    Quick to use. Convenient. Instantly download stock photos, vectors and videos.
                   </p>
               </div>
           </div>
           <div class="w-dyn-list">
               <div role="list" class="grid-3-columns categories-grid-v1 w-dyn-items">
-                  <div id="w-node-_2dce5fa7-96ca-5fa7-4a4c-73970b369a72-d1b2f9b3" role="listitem"
-                      class="blur-sibling-item w-dyn-item" style="opacity: 1">
-                      <a data-w-id="99e9e6c4-ee43-b7fe-56e5-2a61c8750ee9" style="opacity: 1"
-                          href="https://stocktemplate.webflow.io/category/photography"
-                          class="card resouce-category-card w-inline-block">
-                          <div class="inner-container resouce-category-card---icon">
-                              <img src="{{ asset('assets/images/app_images/photographies-image-stock-x-webflow-template.svg') }}"
-                                  alt="Photography" class="image" />
-                          </div>
-                          <div>
-                              <div class="title mg-bottom-4px">
-                                  <div class="flex-horizontal start resouce-category-card---title">
-                                      <h3 class="heading-h5-size mg-bottom-0">
-                                          Photography
-                                      </h3>
-                                      <div class="arrow-card-icon link-icon-rigth">
-                                          <div class="line-square-icon"></div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <p class="paragraph-small mg-bottom-0">
-                                  Download-high-quality phptos and images
-                              </p>
+                  <div class="blur-sibling-item w-dyn-item" style="opacity: 1">
+                      <a href="{{ route('photos') }}" class="w-inline-block">
+                          <div class="resouce-collection photos">
+                            
                           </div>
                       </a>
                   </div>
-                  <div id="w-node-_2dce5fa7-96ca-5fa7-4a4c-73970b369a72-d1b2f9b3" role="listitem"
-                      class="blur-sibling-item w-dyn-item">
-                      <a data-w-id="99e9e6c4-ee43-b7fe-56e5-2a61c8750ee9" style="opacity: 1"
-                          href="https://stocktemplate.webflow.io/category/vectors-graphics"
-                          class="card resouce-category-card w-inline-block">
-                          <div class="inner-container resouce-category-card---icon">
-                              <img src="{{ asset('assets/images/app_images/vectors-and-graphics-image-stock-x-webflow-template.svg') }}"
-                                  alt="Vectors &amp; graphics" class="image"
-                                  style="
-                transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-                  rotateX(0deg) rotateY(0deg) rotateZ(0deg)
-                  skew(0deg, 0deg);
-                transform-style: preserve-3d;
-              " />
-                          </div>
-                          <div>
-                              <div class="title mg-bottom-4px">
-                                  <div class="flex-horizontal start resouce-category-card---title">
-                                      <h3 class="heading-h5-size mg-bottom-0">
-                                          Vectors &amp; graphics
-                                      </h3>
-                                      <div class="arrow-card-icon link-icon-rigth">
-                                          <div class="line-square-icon"></div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <p class="paragraph-small mg-bottom-0">
-                                 Download scalable vector graphics
-                              </p>
-                          </div>
+                  <div class="blur-sibling-item w-dyn-item">
+                      <a href="{{ route('vectors') }}" class="w-inline-block">
+                        <div class="resouce-collection vectors">
+                            
+                        </div>
                       </a>
                   </div>
                   <div id="w-node-_2dce5fa7-96ca-5fa7-4a4c-73970b369a72-d1b2f9b3" role="listitem"
                       class="blur-sibling-item w-dyn-item" style="opacity: 1">
-                      <a data-w-id="99e9e6c4-ee43-b7fe-56e5-2a61c8750ee9" style="opacity: 1"
-                          href="https://stocktemplate.webflow.io/category/videos"
-                          class="card resouce-category-card w-inline-block">
-                          <div class="inner-container resouce-category-card---icon">
-                              <img src="{{ asset('assets/images/app_images/videos-image-stock-x-webflow-template.svg') }}"
-                                  alt="Videos" class="image" />
-                          </div>
-                          <div>
-                              <div class="title mg-bottom-4px">
-                                  <div class="flex-horizontal start resouce-category-card---title">
-                                      <h3 class="heading-h5-size mg-bottom-0">Videos</h3>
-                                      <div class="arrow-card-icon link-icon-rigth">
-                                          <div class="line-square-icon"></div>
-                                      </div>
-                                  </div>
-                              </div>
-                              <p class="paragraph-small mg-bottom-0">
-                                  Download HD stock photos 
-                              </p>
-                          </div>
+                      <a href="{{ route('videos') }}"  class="w-inline-block">
+                        <div class="resouce-collection videos">
+                            
+                        </div>
                       </a>
                   </div>
               </div>
@@ -107,75 +47,55 @@
 </section>
 <section class="section _0px">
   <div class="container-default w-container">
-      <div data-w-id="39af6c45-c0af-fd97-5a99-e6511f0a9031" class="image-wrapper block-space---194px"
-          style="opacity: 1">
-          <img src="{{ asset('core/public/assets/image/homepage_promo/'.gs()->homepage_promo_1)}}"
-              alt="Space Block 1316px X 194px - Stock X Webflow Template" class="image fit-cover block-space" />
-      </div>
+    @php
+        $homepage_promo_1 = json_decode(gs()->homepage_promo_1);
+        if($homepage_promo_1 != null){
+            $homepage_promo_1_url = $homepage_promo_1->url;
+            $homepage_promo_1_image = $homepage_promo_1->image;
+        }else{
+            $homepage_promo_1_url = "javascript:void(0)";
+            $homepage_promo_1_image = '';
+        }
+    @endphp
+    <div class="image-wrapper block-space---194px">
+        <a href="{{$homepage_promo_1_url}}">
+            <img src="{{ asset('core/public/assets/image/homepage_promo/'.$homepage_promo_1_image)}}" alt="Promo Code Banner" class="image fit-cover block-space" />
+        </a>
+    </div>
   </div>
 </section>
 
 <section class="section">
   <div class="container-default w-container">
-      <div data-w-id="32042f69-8904-fa5e-3ef5-8cfc31dfe61c"
-          style="
-    transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-      rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-    opacity: 1;
-    transform-style: preserve-3d;
-  "
-          class="title-left---content-rigth mg-bottom-32px keep">
+      <div style=" transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; "
+           class="title-left---content-rigth mg-bottom-32px keep">
           <div>
               <h2 class="display-3 mg-bottom-6px">Latest Stock Assets</h2>
-              {{-- <p class="mg-bottom-0">
-                  Lorem ipsum dolor sit amet
-                  <span class="text-no-wrap">consectetur tincidunt.</span>
-              </p> --}}
           </div>
           <div class="categories-filter-wrapper">
               {{-- <div class="heading-h5-size no-wrap">Filter by:</div> --}}
               <div class="w-dyn-list">
                   <div role="list" class="categories-badges-wrapper w-dyn-items">
                       <div role="listitem" class="categories-badges-item-wrapper w-dyn-item">
-                          <a href="https://stocktemplate.webflow.io/home" aria-current="page"
-                              class="badge-secondary category-badges w-inline-block w-condition-invisible w--current">
-                              <div>All</div>
-                          </a><a href="https://stocktemplate.webflow.io/category/photography"
-                              class="badge-secondary category-badges w-inline-block"><img
-                                  src="{{ asset('assets/images/app_images/photographies-icon-stock-x-webflow-template.svg') }}"
-                                  alt="Photography" class="category-badge-image" style="filter: invert(0%)" />
-                              <div>Photos</div>
+                          <a href="{{ route('photos') }}" class="category-badges w-inline-block">
+                            <div class="category-badges photos"></div>
                           </a>
                       </div>
                       <div role="listitem" class="categories-badges-item-wrapper w-dyn-item">
-                          <a href="https://stocktemplate.webflow.io/home" aria-current="page"
-                              class="badge-secondary category-badges w-inline-block w-condition-invisible w--current">
-                              <div>All</div>
-                          </a><a href="https://stocktemplate.webflow.io/category/vectors-graphics"
-                              class="badge-secondary category-badges w-inline-block"><img
-                                  src="{{ asset('assets/images/app_images/vectors-and-graphics-icon-stock-x-webflow-template.svg') }}"
-                                  alt="Vectors &amp; graphics" class="category-badge-image"
-                                  style="filter: invert(0%)" />
-                              <div>Vectors &amp; graphics</div>
+                          <a href="{{ route('vectors') }}"  class="category-badges w-inline-block">
+                            <div class="category-badges vectors"></div>
                           </a>
                       </div>
                       <div role="listitem" class="categories-badges-item-wrapper w-dyn-item">
-                          <a href="https://stocktemplate.webflow.io/home" aria-current="page"
-                              class="badge-secondary category-badges w-inline-block w-condition-invisible w--current">
-                              <div>All</div>
-                          </a><a href="https://stocktemplate.webflow.io/category/videos"
-                              class="badge-secondary category-badges w-inline-block"><img
-                                  src="{{ asset('assets/images/app_images/videos-icon-stock-x-webflow-template.svg') }}"
-                                  alt="Videos" class="category-badge-image" style="filter: invert(0%)" />
-                              <div>Videos</div>
+                          <a href="{{ route('videos') }}" class="category-badges w-inline-block">
+                            <div class="category-badges videos"></div>
                           </a>
                       </div>
                   </div>
               </div>
           </div>
       </div>
-      <div data-w-id="8cac8ffd-800d-315e-f17f-fc7385698285"
-          style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)n rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="w-dyn-list">
+      <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)n rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="w-dyn-list">
             @php
                 $defaultImageContent = getContent('default_images.content', true);
                 $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
@@ -227,32 +147,46 @@
 </section>
 <section class="section _0px">
   <div class="container-default w-container">
-      <div data-w-id="39af6c45-c0af-fd97-5a99-e6511f0a9031" class="image-wrapper block-space---194px"
-          style="opacity: 1">
-          <img src="{{ asset('core/public/assets/image/homepage_promo/'.gs()->homepage_promo_2)}}"
-              alt="Space Block 1316px X 194px - Stock X Webflow Template" class="image fit-cover block-space" />
+    @php
+        $homepage_promo_2 = json_decode(gs()->homepage_promo_2);
+        if($homepage_promo_1 != null){
+            $homepage_promo_1_url = $homepage_promo_2->url;
+            $homepage_promo_2_image = $homepage_promo_2->image;
+        }else{
+            $homepage_promo_2_url = "javascript:void(0)";
+            $homepage_promo_2_image = '';
+        }
+    @endphp
+      <div class="image-wrapper block-space---194px">
+        <a href="{{$homepage_promo_1_url}}">
+          <img src="{{ asset('core/public/assets/image/homepage_promo/'.$homepage_promo_2_image)}}" alt="Promo Banner" class="image fit-cover block-space" />
+        </a>
       </div>
   </div>
 </section>
 
-<section class="section section-hero---x" style="margin-top:82px;">
+@php
+    if(gs()->hero_banner_2 != null){
+        $hero_banner_2 = json_decode(gs()->hero_banner_2);
+        $hero_banner_image_2 = $hero_banner_2->image;
+    }else{
+        $hero_banner_image_2 = "default_banner.jpg";
+        $hero_banner_2 = null;
+    }
+@endphp
+<section class="section section-hero---x" style="background-image: url({{ asset('core/public/assets/image/hero_banner/'.$hero_banner_image_2)}}); margin-top:82px;">
   <div class="container-default width-100 w-container">
       <div style=" transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d; " class="inner-container _640px center">
           <div class="inner-container _550px---mbl center">
               <div class="text-center">
                   <h1 class="display-1 nutral-black mg-bottom-16px">
-                    Browse our design resources<span class="text-no-wrap">we have for you</span>
+                    @if($hero_banner_2){{ $hero_banner_2->heading }}@endif
                   </h1>
                   <p class="nutral-black mg-bottom-32px keep">
-                     You can employ textured backgrounds and images to give
-                      users the that they are completely immersed in your design.
+                    @if($hero_banner_2){{ $hero_banner_2->sub_heading }}@endif
                   </p>
                   <div class="buttons-row center">
-                      <a href="https://stocktemplate.webflow.io/resources"
-                          class="btn-primary white button-row w-button">Browse resources</a>
-                          {{-- <a
-                          href="https://stocktemplate.webflow.io/apply-as-author"
-                          class="btn-secondary white w-button">Become an author</a> --}}
+                    <a href="@if($hero_banner_2){{ $hero_banner_2->button_url }}@else javascript:void(0) @endif" class="btn-primary white button-row w-button">@if($hero_banner_2){{ $hero_banner_2->button_text }}@else Browse @endif</a>
                   </div>
               </div>
           </div>
@@ -261,36 +195,28 @@
 </section>
 <section class="section pd-120px">
     <div class="container-default w-container">
-        <div data-w-id="222cd305-fd06-39fd-9c49-cf1fd116a3b9"
-            style="
-      transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1)
-        rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-      opacity: 1;
-      transform-style: preserve-3d;
-    "
-            class="mg-bottom-32px keep">
+        <div class="mg-bottom-32px keep">
             <div class="w-layout-grid grid-2-columns title-and-buttons">
                 <div>
                     <h2 class="display-3 mg-bottom-6px">
-                        Blog <span class="text-no-wrap">&amp;&nbsp;articles</span>
+                        Blog & Articles
                     </h2>
                     <p class="mg-bottom-0">
                        Extensive collections of articles covering a wide range of issues and offering helpful advice.
                     </p>
                 </div>
-                <div id="w-node-_1ee298b4-e9d3-24e0-ed7b-e1b233e83a88-d1b2f9b3" class="buttons-row">
-                    <a href="https://stocktemplate.webflow.io/blog" class="btn-secondary w-button">Browse all articles</a>
+                <div class="buttons-row">
+                    <a href="{{ route('blog.all')}}" class="btn-secondary w-button">Browse all articles</a>
                 </div>
             </div>
         </div>
         <div class="w-dyn-list">
             <div role="list" class="grid-3-columns _1-col-tablet gap-row-48px w-dyn-items">
                 @forelse ($blogs as $blog)
-                <div role="listitem" class="blur-sibling-item w-dyn-item" style="opacity: 1">
-                    <a href="#" class="blog-card _3-posts---item w-inline-block"
-                        style=" transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1; ">
+                <div role="listitem" class="blur-sibling-item w-dyn-item">
+                    <a href="{{ route('blog.details', $blog->slug )}}" class="blog-card _3-posts---item w-inline-block" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; opacity: 1;">
                         <div class="image-wrapper blog-card-image _3-posts---item">
-                            <img src="{{ asset('core/public/assets/image/blog_image/'.$blog->feature_image)}}"  sizes="(max-width: 479px) 92vw, (max-width: 991px) 47vw, (max-width: 1439px) 30vw, 420.01739501953125px" class="image fit-cover" />
+                            <img src="{{ asset('core/public/assets/image/blog_image/'.$blog->feature_image)}}" class="image fit-cover" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"/>
                         </div>
                         <div class="blog-card-content _3-posts---item">
                             <div class="mg-bottom-16px">

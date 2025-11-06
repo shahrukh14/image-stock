@@ -53,7 +53,6 @@ class AuthorizationController extends Controller
                 'code' => $user->ver_code
             ], [$type]);
         }
-
         return view($this->activeTemplate . 'user.auth.authorization.' . $type, compact('user', 'pageTitle'));
     }
 

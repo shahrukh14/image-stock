@@ -195,7 +195,7 @@
                                                     @else
                                                         <a class="btn btn-sm btn-outline--primary" href="{{ route('admin.frontend.sections.element', [$key, $data->id]) }}"><i class="la la-pencil-alt"></i>@lang('Edit')</a>
                                                     @endif
-                                                    <button class="btn btn-sm btn-outline--danger confirmationBtn" data-action="{{ route('admin.frontend.remove', $data->id) }}" data-question="@lang('Are you sure to remove this item?')"><i class="la la-trash"></i>@lang('Remove')</button>
+                                                    {{-- <button class="btn btn-sm btn-outline--danger confirmationBtn" data-action="{{ route('admin.frontend.remove', $data->id) }}" data-question="@lang('Are you sure to remove this item?')"><i class="la la-trash"></i>@lang('Remove')</button> --}}
                                                 </div>
                                             </td>
                                         </tr>
@@ -384,13 +384,13 @@
             </div>
         </div>
 
-        @push('breadcrumb-plugins')
+        {{-- @push('breadcrumb-plugins')
             @if ($section->element->modal)
                 <a class="btn btn-sm btn-outline--primary addBtn" href="javascript:void(0)"><i class="las la-plus"></i>@lang('Add New')</a>
             @else
                 <a class="btn btn-sm btn-outline--primary" href="{{ route('admin.frontend.sections.element', $key) }}"><i class="las la-plus"></i>@lang('Add New')</a>
             @endif
-        @endpush
+        @endpush --}}
     @endif
     {{-- if section element end --}}
 

@@ -49,9 +49,38 @@
                             <textarea name="blog_body" rows="10" class="form-control  nicEdit" placeholder="@lang('Your email template')"></textarea>
                         </div>
                     </div>
-                    
+
+                    <div class="col-md-12 mt-2">
+                        <h5 class="form-group">SEO Section</h5>
+                    </div>
+
+                    <input type="hidden" name="seo_data[seo_image]" value=" ">
+                    <div class="col-md-12">
+                        <div class="form-group select2-parent position-relative">
+                            <label>@lang('Meta Keywords')</label>
+                            <small class="ms-2 mt-2  ">@lang('Separate multiple keywords by') <code>,</code>(@lang('comma')) @lang('or') <code>@lang('enter')</code> @lang('key')</small>
+                            <select name="seo_data[keywords][]" class="form-control select2-auto-tokenize"  multiple="multiple" required>
+                                
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>@lang('Meta Description')</label>
+                        <textarea name="seo_data[description]" rows="3" class="form-control" required> </textarea>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label>@lang('Social Title')</label>
+                        <input type="text" class="form-control" name="seo_data[social_title]" value="" required/>
+                    </div>
+                    <div class="col-md-12">
+                        <label>@lang('Social Description')</label>
+                        <textarea name="seo_data[social_description]" rows="3" class="form-control" required></textarea>
+                    </div>
+                    <input type="hidden" name="seo_data[image]" value=" ">
                 </div>
-                <button type="submit" class="btn w-100 bg--green h-45">@lang('Submit')</button>
+                <button type="submit" class="btn w-100 bg--green h-45 mt-3">@lang('Submit')</button>
             </form>
         </div>
     </div><!-- card end -->

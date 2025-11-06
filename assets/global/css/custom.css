@@ -175,7 +175,7 @@
   padding: 0px 100px !important;
 }
 .bg-accent-gray{
-  background-color: gray;
+  background-color: #ededed;
 }
 .mg-bottom-50px-text-center {
   margin-bottom: 50px;
@@ -644,4 +644,154 @@
 
 .Align-center{
   align-items: center !important;
+}
+
+.facebook {
+  background: url("/core/public/assets/image/icons/facebook.png") no-repeat;
+}
+
+.social-icon:hover .facebook.social {
+  background: url("/core/public/assets/image/icons/facebook_green.png") no-repeat;
+}
+
+.twitter {
+  background: url("/core/public/assets/image/icons/twitter.png") no-repeat;
+}
+
+.social-icon:hover .twitter.social {
+  background: url("/core/public/assets/image/icons/twitter_green.png") no-repeat;
+}
+
+.instagram {
+  background: url("/core/public/assets/image/icons/instagram.png") no-repeat;
+}
+
+.social-icon:hover .instagram.social {
+  background: url("/core/public/assets/image/icons/instagram_green.png") no-repeat;
+}
+
+.pinterest {
+  background: url("/core/public/assets/image/icons/pinterest.png") no-repeat;
+}
+
+.social-icon:hover .pinterest.social {
+  background: url("/core/public/assets/image/icons/pinterest_green.png") no-repeat;
+}
+
+.linkedIn {
+  background: url("/core/public/assets/image/icons/linkedIn.png") no-repeat;
+}
+
+.social-icon:hover .linkedIn.social {
+  background: url("/core/public/assets/image/icons/linkedIn_green.png") no-repeat;
+}
+
+.youtube {
+  background: url("/core/public/assets/image/icons/youtube.png") no-repeat;
+}
+
+.social-icon:hover .youtube.social {
+  background: url("/core/public/assets/image/icons/youtube_green.png") no-repeat;
+}
+
+.social{
+  height: 20px;
+  width: 20px;
+}
+
+.image-wrapper.footer-collection-icon.photos {
+  background: url("/core/public/assets/image/icons/photo collection button footer.png") no-repeat;
+}
+
+.image-wrapper.footer-collection-icon.photos:hover {
+  background: url("/core/public/assets/image/icons/photo collection button footer green.png") no-repeat;
+}
+
+.image-wrapper.footer-collection-icon.vectors {
+  background: url("/core/public/assets/image/icons/vector & graphics button footer.png") no-repeat;
+}
+
+.image-wrapper.footer-collection-icon.vectors:hover {
+  background: url("/core/public/assets/image/icons/vector & graphics button footer green.png") no-repeat;
+}
+
+.image-wrapper.footer-collection-icon.videos {
+  background: url("/core/public/assets/image/icons/videos button footer.png") no-repeat;
+}
+
+.image-wrapper.footer-collection-icon.videos:hover {
+  background: url("/core/public/assets/image/icons/videos button footer green.png") no-repeat;
+}
+
+.image-wrapper.footer-collection-icon {
+  height: 80px;
+  width: 331px;
+}
+
+.category-badges .photos{
+  background: url("/core/public/assets/image/icons/photo button.png") no-repeat;
+}
+
+.category-badges .photos:hover{
+  background: url("/core/public/assets/image/icons/photo button green.png") no-repeat;
+}
+
+.category-badges .vectors{
+  background: url("/core/public/assets/image/icons/vectors & graphics.png") no-repeat;
+}
+
+.category-badges .vectors:hover{
+  background: url("/core/public/assets/image/icons/vectors & graphics green.png") no-repeat;
+}
+
+.category-badges .videos{
+  background: url("/core/public/assets/image/icons/videos button.png") no-repeat;
+  background-position: right;
+}
+
+.category-badges .videos:hover{
+  background: url("/core/public/assets/image/icons/videos button green.png") no-repeat;
+  background-position: right;
+}
+
+.category-badges.vectors {
+  height: 52px;
+  width: 225px;
+}
+.category-badges {
+  height: 52px;
+  width: 178px;
+}
+
+.resouce-collection.photos{
+  background: url("/core/public/assets/image/icons/photosWhite.png") no-repeat;
+}
+
+.resouce-collection.photos:hover{
+  background: url("/core/public/assets/image/icons/photos_green.png") no-repeat;
+}
+
+.resouce-collection.vectors{
+  background: url("/core/public/assets/image/icons/vectorgraphicsWhite.png") no-repeat;
+}
+
+.resouce-collection.vectors:hover{
+  background: url("/core/public/assets/image/icons/vectorgraphicsGreen.png") no-repeat;
+}
+
+.resouce-collection.videos{
+  background: url("/core/public/assets/image/icons/videos gray bg black text.png") no-repeat;
+}
+
+.resouce-collection.videos:hover{
+  background: url("/core/public/assets/image/icons/videos green bg white text.png") no-repeat;
+}
+
+.resouce-collection {
+  height: 120px;
+  width: 415px;
+}
+
+.section.section-hero---v2.about{
+  background-size: 100%;
 }

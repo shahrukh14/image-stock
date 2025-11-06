@@ -21,13 +21,6 @@
                     </a>
                 </li>
 
-                {{-- <li class="sidebar-menu-item {{ menuActive('admin.reviewers.*') }}">
-                    <a class="nav-link" href="{{ route('admin.reviewers.all') }}">
-                        <i class="menu-icon las la-user-cog"></i>
-                        <span class="menu-title">@lang('Manage Reviewer')</span>
-                    </a>
-                </li> --}}
-
                 <li class="sidebar-menu-item {{ menuActive('admin.ads.all') }}">
                     <a class="nav-link" href="{{ route('admin.ads.all') }}">
                         <i class="menu-icon lab la-adversal"></i>
@@ -66,12 +59,12 @@
                     </div>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.color.all') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.color.all') }}">
                     <a class="nav-link" href="{{ route('admin.color.all') }}">
                         <i class="menu-icon las la-tint"></i>
                         <span class="menu-title">@lang('Manage Colors')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item {{ menuActive('admin.manage.reason.all') }}">
                     <a class="nav-link" href="{{ route('admin.manage.reason.all') }}">
@@ -555,12 +548,13 @@
                     </a>
                 </li>
 
-                {{-- <li class="sidebar-menu-item {{ menuActive('admin.donation.setting.index') }}">
-                    <a class="nav-link" href="{{ route('admin.donation.setting.index') }}">
-                        <i class="menu-icon las la-donate"></i>
-                        <span class="menu-title">@lang('Donation Setting')</span>
+
+                <li class="sidebar-menu-item {{ menuActive('admin.photos.page.setting') }}">
+                    <a class="nav-link" href="{{ route('admin.photos.page.setting') }}">
+                        <i class="menu-icon las la-image"></i>
+                        <span class="menu-title">@lang('Photos Page Setting')</span>
                     </a>
-                </li> --}}
+                </li>
 
                 <li class="sidebar-menu-item {{ menuActive('admin.setting.logo.icon') }}">
                     <a class="nav-link" href="{{ route('admin.setting.logo.icon') }}">
@@ -598,12 +592,12 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.kyc.setting') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.kyc.setting') }}">
                     <a class="nav-link" href="{{ route('admin.kyc.setting') }}">
                         <i class="menu-icon las la-user-check"></i>
                         <span class="menu-title">@lang('KYC Setting')</span>
                     </a>
-                </li>
+                </li> --}}
 
 
                 <li class="sidebar-menu-item sidebar-dropdown">
@@ -643,12 +637,12 @@
 
                 <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.frontend.templates') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.frontend.templates') }}">
                     <a class="nav-link" href="{{ route('admin.frontend.templates') }}">
                         <i class="menu-icon la la-html5"></i>
                         <span class="menu-title">@lang('Manage Templates')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- <li class="sidebar-menu-item {{ menuActive('admin.frontend.manage.*') }}">
                     <a class="nav-link" href="{{ route('admin.frontend.manage.pages') }}">
@@ -739,19 +733,19 @@
                     </div>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.setting.custom.css') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.setting.custom.css') }}">
                     <a class="nav-link" href="{{ route('admin.setting.custom.css') }}">
                         <i class="menu-icon lab la-css3-alt"></i>
                         <span class="menu-title">@lang('Custom CSS')</span>
                     </a>
-                </li>
+                </li> --}}
 
-                <li class="sidebar-menu-item {{ menuActive('admin.request.report') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.request.report') }}">
                     <a class="nav-link" data-default-url="{{ route('admin.request.report') }}" href="{{ route('admin.request.report') }}">
                         <i class="menu-icon las la-bug"></i>
                         <span class="menu-title">@lang('Report & Request') </span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
             {{-- <div class="text-uppercase mb-3 text-center display-none">
                 <span class="text--primary">{{ __(systemDetails()['name']) }}</span>
