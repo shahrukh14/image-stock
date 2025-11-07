@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-
+    @stack('modal')
     @include($activeTemplate . 'partials.footer')
 
 @endsection

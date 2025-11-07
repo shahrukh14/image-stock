@@ -27,23 +27,26 @@
                             <img src="{{ getImage(getFilePath('logoIcon') . '/logo.png') }}" alt="Logo - Stock X Webflow Template" class="footer-logo" />
                         </a>
                     </div>
+                    @php
+                        $socialIcons = getContent('social_icon.element', false, 6, true);
+                    @endphp
                     <div class="w-layout-grid social-media-grid-top">
-                        <a href="https://facebook.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[0]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="facebook social"></div>
                         </a>
-                        <a href="https://twitter.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[1]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="twitter social"></div>
                         </a>
-                        <a href="https://instagram.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[3]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="instagram social"></div>
                         </a>
-                        <a href="https://pinterest.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[5]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="pinterest social"></div>
                         </a>
-                        <a href="https://linkedin.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[2]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="linkedIn social"></div>
                         </a>
-                        <a href="https://youtube.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[4]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="youtube social"></div>
                         </a>
                     </div>
@@ -82,6 +85,9 @@
                         </li>
                         <li class="footer-list-item">
                             <a href="{{route('do.not.sell.personal.information')}}" class="pages-menu-link">Do not sell my personal information</a>
+                        </li>
+                        <li class="footer-list-item">
+                            <a href="{{route('license')}}" class="pages-menu-link">License</a>
                         </li>
                     </ul>
                 </div>
@@ -159,7 +165,7 @@
         <div class="footer-bottom">
             <p class="mg-bottom-0">
                 Copyright © 2023. 
-                <a href="#" target="_blank" class="text-link text-decoration-none">All Rights reserved .</a>
+                <a href="#" target="_blank" class="text-link text-decoration-none">All Rights Reserved .</a>
                 <a href="{{ route('home') }}" target="_blank" class="text-link text-decoration-none">Greenstockpro.com</a>
             </p>
         </div>

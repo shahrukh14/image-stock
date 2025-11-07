@@ -30,11 +30,11 @@
         </div>
     </div>
 @endsection
-
 @push('modal')
     @include($activeTemplate . 'partials.collection_modal')
     @include($activeTemplate . 'partials.share_modal')
 @endpush
+
 
 @push('script')
     <script>

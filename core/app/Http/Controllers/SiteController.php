@@ -323,8 +323,8 @@ class SiteController extends Controller
                 $q->hasActiveFiles();
             });
         })->with('user', 'likes')->where('user_id', $member->id)->orderBy('id', 'DESC')->paginate(getPaginate());
-
-        return view($this->activeTemplate . 'member.images', compact('pageTitle', 'member', 'images', 'seoContents'));
+        $activeTemplate = $this->activeTemplate;
+        return view($this->activeTemplate . 'member.images', compact('pageTitle', 'member', 'images', 'seoContents','activeTemplate'));
     }
 
     public function memberCollections($username)
@@ -890,7 +890,8 @@ class SiteController extends Controller
     public function Price(){
         $pageTitle = "Price";
         $activeTemplate = $this->activeTemplate;
-        return view($this->activeTemplate .'price_list',compact('pageTitle','activeTemplate'));
+        $plans     = Plan::active()->get();
+        return view($this->activeTemplate .'price_list',compact('pageTitle','activeTemplate','plans'));
     }
     public function errorPage(){
         $pageTitle = "404 error";
@@ -928,5 +929,12 @@ class SiteController extends Controller
         $activeTemplate = $this->activeTemplate;
         $content = Frontend::findOrFail(67);
         return view($this->activeTemplate .'not_sell_personal_information',compact('pageTitle','activeTemplate','content'));
+    }
+
+    public function license(){
+        $pageTitle = "License";
+        $activeTemplate = $this->activeTemplate;
+        $content = Frontend::findOrFail(77);
+        return view($this->activeTemplate .'license',compact('pageTitle','activeTemplate','content'));
     }
 }

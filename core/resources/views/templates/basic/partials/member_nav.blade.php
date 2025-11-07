@@ -167,9 +167,7 @@
 
 @push('modal')
     @include($activeTemplate . 'partials.login_modal')
-    @auth
-        @include($activeTemplate . 'partials.profile_modal')
-    @endauth
+    @include($activeTemplate . 'partials.profile_modal')
 @endpush
 
 @push('script')

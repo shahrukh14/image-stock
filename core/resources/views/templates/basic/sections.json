@@ -32,6 +32,27 @@
             "modal": true
         }
     },
+    "contact": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Contact Page",
+        "content": {
+            "form_title": "text",
+            "sub_title": "text",
+            "mobile": "text",
+            "email": "text"
+        }
+    },
+    "social_icon": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Social Icon",
+        "element": {
+            "name": "text",
+            "url": "text",
+            "modal": true
+        }
+    },
     "footer": {
         "builder": true,
         "no_selection": true,

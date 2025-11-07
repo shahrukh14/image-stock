@@ -95,6 +95,7 @@ Route::controller('SiteController')->group(function () {
     Route::get('/cookie_policy','cookiePolicyPage')->name('cookie.policy');
     Route::get('/terms_and_condition','termAndCondition')->name('terms.and.condition');
     Route::get('/do-not-sell-personal-information','doNotSellPersonalInformation')->name('do.not.sell.personal.information');
+    Route::get('/license','license')->name('license');
 
     Route::get('/{slug}', 'pages')->name('pages');
     // Home 

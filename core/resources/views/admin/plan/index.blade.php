@@ -30,7 +30,7 @@
                                         </td>
 
                                         <td>
-                                            <span class="d-block">{{ showAmount($plan->monthly_price) }} {{ __($general->cur_text) }} / @lang('month')</span>
+                                            {{-- <span class="d-block">{{ showAmount($plan->monthly_price) }} {{ __($general->cur_text) }} / @lang('month')</span> --}}
                                             <span>{{ showAmount($plan->yearly_price) }} {{ __($general->cur_text) }} / @lang('year')</span>
                                         </td>
 
@@ -94,21 +94,27 @@
                             <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label>@lang('Title')</label>
+                            <label>@lang('Description')</label>
                             <input type="text" class="form-control" name="title" required>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label>@lang('Monthly Price')</label>
                             <div class="input-group">
                                 <input type="number" step="any" class="form-control" name="monthly_price" required>
                                 <span class="input-group-text">{{ __($general->cur_text) }}</span>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label>@lang('Yearly Price')</label>
                             <div class="input-group">
                                 <input type="number" step="any" class="form-control" name="yearly_price" required>
                                 <span class="input-group-text">{{ __($general->cur_text) }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Image')</label>
+                            <div class="input-group">
+                                <input type="file" class="form-control" name="image[]">
                             </div>
                         </div>
                         <div class="form-group">

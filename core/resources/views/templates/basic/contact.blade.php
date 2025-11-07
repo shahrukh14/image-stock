@@ -43,33 +43,35 @@
                   </div>
                 </div>
               </div>
-              <div id="w-node-_8c1563e2-8c31-9390-4fcb-8ac70f2bf3b9-c050df8a"
-                data-w-id="8c1563e2-8c31-9390-4fcb-8ac70f2bf3b9" style="opacity: 1;" class="contact-form-right-side border-left-green">
-                <div id="w-node-_032e8a53-5b2e-ec2b-8a9b-1e458f37e486-c050df8a" class="contact-form-rigth-side-content">
+              <div class="contact-form-right-side border-left-green">
+                <div class="contact-form-rigth-side-content">
                   <div class="inner-container _465px width-100">
-                    <h1 class="display-1 mg-bottom-12px">Get <span class="text-no-wrap">in touch</span></h1>
-                    <p class="mg-bottom-24px keep">Follow us on our social media channels.
-                      <span class="text-no-wrap">We will respond within 24 hours.</span></p>
-                      <div class="w-layout-grid social-media-grid-top">
-                        <a href="https://facebook.com/" target="_blank" class="social-icon w-inline-block">
+                    @php
+                      $content =  $content = getContent('contact.content', true);
+                      $socialIcons = getContent('social_icon.element', false, 6, true);
+                    @endphp
+                    <h1 class="display-1 mg-bottom-12px">{{ __(@$content->data_values->form_title) }}</h1>
+                    <p class="mg-bottom-24px keep">{{ __(@$content->data_values->sub_title) }}</p>
+                    <div class="w-layout-grid social-media-grid-top">
+                        <a href="{{$socialIcons[0]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="facebook social"></div>
                         </a>
-                        <a href="https://twitter.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[1]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="twitter social"></div>
                         </a>
-                        <a href="https://instagram.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[3]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="instagram social"></div>
                         </a>
-                        <a href="https://pinterest.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[5]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="pinterest social"></div>
                         </a>
-                        <a href="https://linkedin.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[2]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="linkedIn social"></div>
                         </a>
-                        <a href="https://youtube.com/" target="_blank" class="social-icon w-inline-block">
+                        <a href="{{$socialIcons[4]->data_values->url}}" target="_blank" class="social-icon w-inline-block">
                             <div class="youtube social"></div>
                         </a>
-                    </div>
+                  </div>
                   </div>
                 </div>
                 <div id="w-node-_8c1563e2-8c31-9390-4fcb-8ac70f2bf3cc-c050df8a"
@@ -86,7 +88,7 @@
                         </div>
                         <div>
                           <div class="text-200 mg-bottom-8px">Send us an email</div>
-                          <div class="text-200 bold color-neutral-800">support@greenstockpro.com</div>
+                          <div class="text-200 bold color-neutral-800">{{ __(@$content->data_values->email) }}</div>
                         </div>
                       </a>
                       <a href="tel:(414)435-094" class="contact-link w-inline-block">
@@ -97,7 +99,7 @@
                         </div>
                         <div>
                           <div class="text-200 mg-bottom-8px">Give us a call</div>
-                          <div class="text-200 bold color-neutral-800">(727) 219 - 2805</div>
+                          <div class="text-200 bold color-neutral-800">{{ __(@$content->data_values->mobile) }}</div>
                         </div>
                       </a>
                     </div>

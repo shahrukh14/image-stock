@@ -32,7 +32,7 @@
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
-                    <i class="fas fa-wallet"></i>
+                    <i class="las la-wallet"></i>
                 </div>
                 <div class="dashboard-widget__content">
                     <span class="dashboard-widget__title">
@@ -43,14 +43,14 @@
                     </h4>
                 </div>
                 <span class="dashboard-widget__overlay-icon">
-                    <i class="fas fa-wallet"></i>
+                    <i class="las la-wallet"></i>
                 </span>
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
-                    <i class="fas fa-file-invoice-dollar"></i>
+                    <i class="las la-file-invoice-dollar"></i>
                 </div>
                 <div class="dashboard-widget__content">
                     <span class="dashboard-widget__title">
@@ -61,14 +61,14 @@
                     </h4>
                 </div>
                 <span class="dashboard-widget__overlay-icon">
-                    <i class="fas fa-file-invoice-dollar"></i>
+                    <i class="las la-file-invoice-dollar"></i>
                 </span>
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
-                    <i class="fas fa-credit-card"></i>
+                    <i class="las la-credit-card"></i>
                 </div>
                 <div class="dashboard-widget__content">
                     <span class="dashboard-widget__title">
@@ -79,14 +79,14 @@
                     </h4>
                 </div>
                 <span class="dashboard-widget__overlay-icon">
-                    <i class="fas fa-credit-card"></i>
+                    <i class="las la-credit-card"></i>
                 </span>
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
-                    <i class="fas fa-credit-card"></i>
+                    <i class="las la-credit-card"></i>
                 </div>
                 <div class="dashboard-widget__content">
                     <span class="dashboard-widget__title">
@@ -97,14 +97,14 @@
                     </h4>
                 </div>
                 <span class="dashboard-widget__overlay-icon">
-                    <i class="fas fa-credit-card"></i>
+                    <i class="las la-credit-card"></i>
                 </span>
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
-                    <i class="fas fa-money-bill-wave-alt"></i>
+                    <i class="las la-money-bill-wave-alt"></i>
                 </div>
                 <div class="dashboard-widget__content">
                     <span class="dashboard-widget__title">
@@ -115,14 +115,14 @@
                     </h4>
                 </div>
                 <span class="dashboard-widget__overlay-icon">
-                    <i class="fas fa-money-bill-wave-alt"></i>
+                    <i class="las la-money-bill-wave-alt"></i>
                 </span>
             </div>
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
-                    <i class="fas fa-images"></i>
+                    <i class="las la-images"></i>
                 </div>
                 <div class="dashboard-widget__content">
                     <span class="dashboard-widget__title">
@@ -133,7 +133,7 @@
                     </h4>
                 </div>
                 <span class="dashboard-widget__overlay-icon">
-                    <i class="fas fa-images"></i>
+                    <i class="las la-images"></i>
                 </span>
             </div>
         </div>
@@ -142,7 +142,7 @@
             <div class="col-sm-6 col-md-4">
                 <div class="dashboard-widget">
                     <div class="dashboard-widget__icon">
-                        <i class="fas fa-box"></i>
+                        <i class="las la-box"></i>
                     </div>
                     <div class="dashboard-widget__content">
                         <span class="dashboard-widget__title">
@@ -153,14 +153,14 @@
                         </p>
                     </div>
                     <span class="dashboard-widget__overlay-icon">
-                        <i class="fas fa-box"></i>
+                        <i class="las la-box"></i>
                     </span>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="dashboard-widget">
                     <div class="dashboard-widget__icon">
-                        <i class="fas fa-download"></i>
+                        <i class="las la-download"></i>
                     </div>
                     <div class="dashboard-widget__content">
                         <span class="dashboard-widget__title">
@@ -171,14 +171,14 @@
                         </h4>
                     </div>
                     <span class="dashboard-widget__overlay-icon">
-                        <i class="fas fa-download"></i>
+                        <i class="las la-download"></i>
                     </span>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="dashboard-widget">
                     <div class="dashboard-widget__icon">
-                        <i class="fas fa-download"></i>
+                        <i class="las la-download"></i>
                     </div>
                     <div class="dashboard-widget__content">
                         <span class="dashboard-widget__title">
@@ -189,7 +189,7 @@
                         </h4>
                     </div>
                     <span class="dashboard-widget__overlay-icon">
-                        <i class="fas fa-download"></i>
+                        <i class="las la-download"></i>
                     </span>
                 </div>
             </div>

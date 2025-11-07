@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+
 
 class PlanController extends Controller
 {
@@ -20,11 +22,29 @@ class PlanController extends Controller
         $this->validation($request, $id);
 
         if ($id) {
-            $plan         = Plan::findOrFail($id);
-            $notification = 'Plan updated successfully';
+            $plan           = Plan::findOrFail($id);
+            $notification   = 'Plan updated successfully';
+            $images         =  $plan->image;
         } else {
-            $plan         = new Plan();
-            $notification = 'Plan added successfully';
+            $plan           = new Plan();
+            $notification   = 'Plan added successfully';
+            $images  = [];
+        }
+
+        $folder_path = public_path('assets/image/plan_images');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+       
+        if ($request->image){
+            $images  = [];
+            foreach(($request->image) AS $photo){
+                $sl = rand();
+                $imageName =  date('Ymd').'_'.$sl.'.'.$photo->getClientOriginalExtension();
+                $photo->move($folder_path, $imageName);
+                $images[] = $imageName;
+            }
+            $images = json_encode($images);
         }
 
         $plan->name          = $request->name;
@@ -33,6 +53,7 @@ class PlanController extends Controller
         $plan->yearly_price  = $request->yearly_price;
         $plan->daily_limit   = $request->daily_limit;
         $plan->monthly_limit = $request->monthly_limit;
+        $plan->image         = $images;
         $plan->save();
 
         $notify[] = ['success', $notification];
@@ -49,7 +70,7 @@ class PlanController extends Controller
         $request->validate([
             'name'          => 'required|max:40|unique:plans,id,' . $id,
             'title'         => 'required|string|max:255',
-            'monthly_price' => 'required|numeric|gte:0',
+            // 'monthly_price' => 'required|numeric|gte:0',
             'yearly_price'  => 'required|numeric|gte:0',
             'daily_limit'   => 'required|integer|gte:-1',
             'monthly_limit' => 'required|integer|gte:-1'

@@ -37,7 +37,7 @@
                             </div>
                             <div>
                                 <label for="website">Website</label>
-                                <input type="text" class="input w-input" name="website" value="{{$user->website}}" id="website" required>
+                                <input type="text" class="input w-input" name="website" value="{{$user->website}}" id="website">
                             </div>
                             <div id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f77-1caef54c" class="text-area-wrapper">
                                 <label for="description">Description</label>
