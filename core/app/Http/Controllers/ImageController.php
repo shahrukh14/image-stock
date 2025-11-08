@@ -81,8 +81,7 @@ class ImageController extends Controller
         }
     }
 
-    private function premiumDownloadProcess($file)
-    {
+    private function premiumDownloadProcess($file){
         $user = auth()->user();
         if (!$user) {
             throw ValidationException::withMessages(['user' => 'Please login to download this image']);
@@ -101,6 +100,7 @@ class ImageController extends Controller
             $this->purchaseProcessByPlan($file, $user);
             
         } else {
+
             $this->purchaseProcessByBalance($file, $user);
         }
     }

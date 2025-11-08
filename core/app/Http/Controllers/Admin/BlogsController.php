@@ -51,8 +51,13 @@ class BlogsController extends Controller
         $blogCategory->save();
         return back()->withNotify($notify);
     }
-    public function blogCategoryDelete($id)
-    {
+    public function blogCategoryDelete($id){
+
+        $blosgs = Blog::where('category', $id)->get();
+        if(count($blosgs) > 0){
+            $notify[] = ['error', 'Unable to delete, You have blogs in this category'];
+            return back()->withNotify($notify);
+        }
         BlogCategory::find($id)->delete();
         $notify[] = ['success', 'Category Deleted successfully'];
         return back()->withNotify($notify);

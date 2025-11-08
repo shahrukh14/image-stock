@@ -62,24 +62,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12 mb-3">
-                                                <label class="form-label">@lang('Colors')</label>
-                                                <select class="form-select form--control select2-tokenize" name="colors[]" multiple="multiple" required>
-                                                    @foreach ($colors as $color)
-                                                        <option value="{{ $color->color_code }}" @selected(@$image && in_array($color->color_code, $image->colors))>
-                                                            {{ __($color->name) }}
-                                                        </option>
-                                                    @endforeach
-
-                                                    @if (old('colors'))
-                                                        @foreach (old('colors') as $oldColor)
-                                                            <option value="{{ $oldColor }}" selected>
-                                                                {{ __(ucfirst($oldColor)) }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
+                                            
                                             <div class="col-12 mb-3">
                                                 <label class="form-label">@lang('Extensions')</label>
                                                 <select class="form-select form--control select2-tokenize" name="extensions[]" multiple="multiple" required>
@@ -442,10 +425,10 @@
                 error = true;
                 notify('error', `@lang('The resolution field is required')`);
             }
-            if (!$('select[name="colors[]"]').val().length) {
-                error = true;
-                notify('error', `@lang('The colors field is required')`);
-            }
+            // if (!$('select[name="colors[]"]').val().length) {
+            //     error = true;
+            //     notify('error', `@lang('The colors field is required')`);
+            // }
             if (!$('select[name="extensions[]"]').val().length) {
                 error = true;
                 notify('error', `@lang('The extensions field is required')`);

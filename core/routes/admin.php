@@ -408,7 +408,7 @@ Route::middleware('admin')->group(function () {
     Route::name('blog.')->prefix('blog')->group(function () {
         Route::controller('BlogsController')->group(function () {
             Route::get('blog_category', 'blogCategory')->name('category');
-            Route::get('blog_category/delete/{id}', 'blogCategoryDelete')->name('category.delete');
+            Route::post('blog_category/delete/{id}', 'blogCategoryDelete')->name('category.delete');
             Route::post('blog_category_add', 'blogCategoryAdd')->name('category.add');
             Route::post('blog_category_add/{id}', 'blogCategoryUpdate')->name('category.edit');
 

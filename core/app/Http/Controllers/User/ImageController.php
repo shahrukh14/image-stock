@@ -460,8 +460,6 @@ class ImageController extends Controller
             'description'    => 'required|string',
             'tags'           => 'required|array',
             'tags.*'         => 'required|string',
-            'colors'         => 'required|array',
-            'colors.*'       => 'required|in:' . $colors,
             'extensions'     => 'required|array',
             'extensions.*'   => 'required|string|in:' . implode(',', $fileExtensions),
             'is_free'        => $imageFileDataValidation . '|array',

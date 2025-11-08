@@ -97,8 +97,6 @@ class ManageImageController extends Controller
             'tags.*'        => 'required|string',
             'extensions'    => 'required|array',
             'extensions.*'  => 'required|in:' . implode(',', $extensions),
-            'colors'        => 'required|array',
-            'colors.*'      => 'required|in:' . implode(',', $colors),
             'status'        => 'nullable|in:0,1,3',
             'statusFile'    => 'required|array',
             'statusFile.*'    => 'required|in:0,1',
@@ -111,7 +109,6 @@ class ManageImageController extends Controller
             'file_id.*'         => 'required|integer',
         ], [
             'extensions.*.in' => 'Extensions are invalid',
-            'colors.*.in' => 'Colors are invalid'
         ]);
 
         $category = Category::active()->find($request->category);

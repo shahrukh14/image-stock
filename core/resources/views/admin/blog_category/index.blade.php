@@ -28,9 +28,12 @@
                                                 <button class="btn btn-outline--primary cuModalBtn btn-sm" data-user-id="{{$category->id}}" data-modal_title="@lang('Update Category')" data-resource="{{ $category }}">
                                                     <i class="las la-pen"></i>@lang('Edit')
                                                 </button>
-                                                <a href="{{route('admin.blog.category.delete',['id'=>$category->id])}}" class="btn btn-outline--primary btn-sm" data-modal_title="@lang('Delete Category')" data-resource="{{ $category }}">
+                                                {{-- <a href="{{route('admin.blog.category.delete',['id'=>$category->id])}}" class="btn btn-outline--primary btn-sm" data-modal_title="@lang('Delete Category')" data-resource="{{ $category }}">
                                                     <i class="las la-trash"></i>@lang('Delete')
-                                                </a>
+                                                </a> --}}
+                                                <button class="btn btn-outline--danger confirmationBtn btn-sm" data-question="@lang('Are you sure to delete this Category?')" data-action="{{route('admin.blog.category.delete',['id'=>$category->id])}}"  data-modal_title="@lang('Delete Category')" data-resource="{{ $category }}">
+                                                    <i class="las la-trash-alt"></i>@lang('Delete')
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>

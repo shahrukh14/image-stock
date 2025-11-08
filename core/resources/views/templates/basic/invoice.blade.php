@@ -70,7 +70,8 @@
                 </div>
                 <!--End Table-->
                 <div class="pay-btn-wrapper no-print">
-                    <button class="btn btn--base btn-sm" id="dwn" type="button"><i class="las la-print"></i> @lang('Print')</button>
+                    <a href="{{ route('user.home') }}" class="backBtn"><i class="las la-arrow"></i> @lang('Back')</a>
+                    <button class="btnBtn" id="dwn" type="button"><i class="las la-print"></i> @lang('Print')</button>
                 </div>
             </div>
             <!--End InvoiceBot-->
@@ -292,6 +293,25 @@
 
             .paid {
                 background-color: #28C76F;
+            }
+
+            .btnBtn{
+                padding: 2px 12px;
+                margin-right: 8px;
+                border-radius: 20px;
+                border: 2px solid;
+                text-decoration: none;
+                background: #6DAE47;
+                color: #000;
+            }
+
+            .backBtn{
+                padding: 6px 12px;
+                margin-right: 8px;
+                border-radius: 20px;
+                border: 2px solid;
+                text-decoration: none;
+                background: #6DAE47;
             }
         }
     </style>

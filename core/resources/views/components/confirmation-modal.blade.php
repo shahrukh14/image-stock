@@ -13,16 +13,27 @@
                     <p class="question"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn--dark" data-bs-dismiss="modal">@lang('No')</button>
-                    <button type="submit" class="btn btn--primary">@lang('Yes')</button>
+                    <button type="button" class="btnBtn" data-bs-dismiss="modal">@lang('No')</button>
+                    <button type="submit" class="btnBtn" data-bs-dismiss="modal">@lang('Yes')</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-@push('script')
+@push('style')
+    <style>
+    .btnBtn{
+        padding: 2px 10px;
+        border-radius: 20px;
+        border: 2px solid #000 !important;
+        text-decoration: none;
+    }
+    </style>
+@endpush
 
+@push('script')
+<script src="http://localhost/viserstock/assets/global/js/bootstrap.bundle.min.js"></script>
 <script>
     (function ($) {
         "use strict";

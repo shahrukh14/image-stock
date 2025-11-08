@@ -58,14 +58,28 @@
                         <div class="product-page-main-content---bottom">
                             <div class="mg-bottom-24px keep">
                                 <div class="flex-horizontal start flex-wrap">
+                               
                                 @foreach ($imageFiles as $key => $imageFile)
-                                @if ($imageFile->is_free == Status::PREMIUM)
-                                    <div class="heading-h2-size mg-right-22px">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }}</div>
-                                    <div class="heading-h2-size compare-at-price">{{ showAmount($imageFile->price + 5) }} {{ __($general->cur_text) }}</div>
-                                @else
-                                    <div class="heading-h2-size" style="margin-left:155px">FREE</div>
-                                @endif
-                                    
+                                @php
+                                    $downloadActionClass = 'login-btn';
+                                    if (auth()->check() || $imageFile->is_free) {
+                                        $downloadActionClass = 'confirmationBtn';
+                                    }
+                                @endphp
+                               
+                                    {{-- <div class="heading-h2-size mg-right-22px">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }}</div> --}}
+                                    {{-- <div class="heading-h2-size compare-at-price">{{ showAmount($imageFile->price + 5) }} {{ __($general->cur_text) }}</div> --}}
+                                    <div>
+                                        <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
+                                        <span class="download-span">|<span>
+                                        <span class="download-span">{{ $imageFile->resolution }}</span>
+                                        <span class="download-span">|<span>
+                                        <span class="download-span">
+                                            <button class="downloadBtn {{ $downloadActionClass }}" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" type="button">
+                                                Download
+                                            </button>
+                                        </span>
+                                    </div>
                                 @endforeach
                                 </div>
                             </div>
@@ -84,13 +98,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="buttons-row add-cart-buttons"><input type="submit" value="Add to Cart" class="w-commerce-commerceaddtocartbutton btn-primary width-100">
-                                        <a style="display:none"  class="w-commerce-commercebuynowbutton btn-secondary width-100 mg-top-0px w-dyn-hide" href="https://stocktemplate.webflow.io/checkout">Buy now</a>
-                                    </div>
+                                    {{-- <div class="buttons-row add-cart-buttons">
+                                        <input type="submit" value="Add to Cart" class="w-commerce-commerceaddtocartbutton btn-primary width-100">
+                                    </div> --}}
                                 </form>
-                                <div style="display:none" class="w-commerce-commerceaddtocartoutofstock" tabindex="0">
-                                    <div>This product is out of stock.</div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -197,7 +208,66 @@
             </div>
         </section>
     </div>
+
+    <x-confirmation-modal />
+
+    @include($activeTemplate . 'partials.collection_modal')
+    @include($activeTemplate . 'partials.share_modal')
+    @include($activeTemplate . 'partials.login_modal')
 @endsection
+
+@push('modal')
+    <!--  Purchase Modal  -->
+    <div class="modal custom--modal fade" id="purchaseModal" aria-hidden="true" aria-labelledby="title" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title">@lang('Purchase Plan')</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"><b>X</b></button>
+                </div>
+                @auth
+                    <form action="{{ route('user.plan.purchase') }}" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <input name="period" type="hidden">
+                            <input name="plan" type="hidden">
+                            <div class="row gy-3">
+
+                                <h6 class="text-danger already_purchased text-center">
+                                    @lang('You already purchased the plan')
+                                </h6>
+
+                                <p class="plan-info text-center">@lang('By purchasing') <span class="fw-bold plan_name"></span> @lang(' plan, you will get ') <span class="daily_limit fw-bold"></span>@lang(' images download opurtunity per day and') <span class="monthly_limit fw-bold"></span> @lang(' images per month.')</p>
+                                {{-- <input type="hidden" name="payment_type" value="direct"> --}}
+                                <div class="form-group payment-info">
+                                    <label class="form-label required" for="payment_type">@lang('Payment Type')</label>
+                                    <div class="form--select">
+                                        <select class="form-select" id="payment_type" name="payment_type" required>
+                                            <option value="">@lang('Select One')</option>
+                                            <option value="direct">@lang('Direct Payment')</option>
+                                            <option value="wallet">@lang('From Wallet')</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="loginBtn planSubmitConfirm" type="submit">@lang('Buy Now') <span class="plan_id"></span> </button>
+                            <button class="btn btn--dark closeButton" data-bs-dismiss="modal" type="button">@lang('Close')</button>
+                        </div>
+                    </form>
+                @else
+                    <div class="modal-body">
+                        <h4 style="text-align: center">@lang('Please login first to buy a plan')</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="loginBtn" href="{{ route('user.login') }}">Login</a>
+                    </div>
+                @endauth
+            </div>
+        </div>
+    </div>
+@endpush
 
 <style>
     .gallery__img {
@@ -210,6 +280,18 @@
         transform-origin: center;
         position: relative;
         z-index: -1;
+    }
+
+    .download-span{
+        margin-right: 5px;
+    }
+
+    .downloadBtn{
+        padding: 1px 10px;
+        margin-bottom: 3px;
+        border-radius: 20px;
+        border: 2px solid #000 !important;
+        text-decoration: none;
     }
   </style>
 @push('script')

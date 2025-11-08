@@ -69,8 +69,8 @@
                                 </h6>
 
                                 <p class="plan-info text-center">@lang('By purchasing') <span class="fw-bold plan_name"></span> @lang(' plan, you will get ') <span class="daily_limit fw-bold"></span>@lang(' images download opurtunity per day and') <span class="monthly_limit fw-bold"></span> @lang(' images per month.')</p>
-                                <input type="hidden" name="payment_type" value="direct">
-                                {{-- <div class="form-group payment-info">
+                                {{-- <input type="hidden" name="payment_type" value="direct"> --}}
+                                <div class="form-group payment-info">
                                     <label class="form-label required" for="payment_type">@lang('Payment Type')</label>
                                     <div class="form--select">
                                         <select class="form-select" id="payment_type" name="payment_type" required>
@@ -79,7 +79,7 @@
                                             <option value="wallet">@lang('From Wallet')</option>
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">

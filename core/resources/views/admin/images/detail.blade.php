@@ -36,14 +36,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
                                             <label>@lang('Title')</label>
                                             <input class="form-control" name="title" type="text" value="{{ $image->title }}" required>
                                         </div>
                                     </div>
 
-                                    @if ($colors)
+                                    {{-- @if ($colors)
                                         <div class="col-md-6">
                                             <div class="form-group" id="extension">
                                                 <label>@lang('Colors')</label>
@@ -54,7 +54,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    @endif
+                                    @endif --}}
                                     @if ($extensions)
                                         <div class="col-md-12">
                                             <div class="form-group" id="extension">
