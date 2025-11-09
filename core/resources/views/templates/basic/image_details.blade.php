@@ -69,15 +69,13 @@
                                
                                     {{-- <div class="heading-h2-size mg-right-22px">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }}</div> --}}
                                     {{-- <div class="heading-h2-size compare-at-price">{{ showAmount($imageFile->price + 5) }} {{ __($general->cur_text) }}</div> --}}
-                                    <div>
+                                    <div class="spanDiv">
                                         <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
                                         <span class="download-span">|<span>
                                         <span class="download-span">{{ $imageFile->resolution }}</span>
                                         <span class="download-span">|<span>
-                                        <span class="download-span">
-                                            <button class="downloadBtn {{ $downloadActionClass }}" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" type="button">
-                                                Download
-                                            </button>
+                                        <span class="download-span {{ $downloadActionClass }}" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')">
+                                            <i class="fa-solid fa-download"></i> Download
                                         </span>
                                     </div>
                                 @endforeach
@@ -134,7 +132,7 @@
                                 </div>
                                 <div class="flex-horizontal start gap-6px">
                                     <img src="{{ asset('assets\images\app_images\_type-icon-stock-x-webflow-template.svg') }}" alt="Size">
-                                    <div class="text-100 medium color-neutral-700">{{ $image->Category->name}}</div>
+                                     <div class="text-100 medium color-neutral-700">{{ (implode(' | ', $image->categoryName($image->category_id))) }}</div>
                                 </div>
                             </div>
                             <div>
@@ -269,6 +267,10 @@
     </div>
 @endpush
 
+@push('style')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+@endpush
+
 <style>
     .gallery__img {
         width: 100%;
@@ -293,6 +295,15 @@
         border: 2px solid #000 !important;
         text-decoration: none;
     }
+
+    
+    .spanDiv{
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+
   </style>
 @push('script')
 <script>

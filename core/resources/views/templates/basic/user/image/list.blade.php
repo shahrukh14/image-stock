@@ -34,7 +34,13 @@
                                                 @lang('Category :')
                                             </div>
                                             <div class="image-information__item-right">
-                                                {{ __($image->category->name) }}
+                                                {{-- {{ __($image->category->name) }} --}}
+                                                @php 
+                                                    $categories = $image->categoryName($image->category_id);
+                                                @endphp
+                                                @foreach($categories as $category)
+                                                    {{ $category->name ." " }}
+                                                @endforeach
                                             </div>
                                         </div>
                                     </li>

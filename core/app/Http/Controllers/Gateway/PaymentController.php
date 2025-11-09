@@ -154,9 +154,9 @@ class PaymentController extends Controller
         $dirName = $deposit->gateway->alias;
         $new     = __NAMESPACE__ . '\\' . $dirName . '\\ProcessController';
 
-        $data = $new::process($deposit);
+        $data = $new::process($deposit); 
         $data = json_decode($data);
-
+       
 
         if (isset($data->error)) {
             $notify[] = ['error', $data->message];
@@ -183,7 +183,7 @@ class PaymentController extends Controller
 
 
     public static function userDataUpdate($deposit, $isManual = null)
-    {
+    { 
         if ($deposit->status == Status::PAYMENT_INITIATE || $deposit->status == Status::PAYMENT_PENDING) {
 
 

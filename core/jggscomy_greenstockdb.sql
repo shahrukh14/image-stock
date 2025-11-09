@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 28, 2023 at 01:10 PM
--- Server version: 10.4.27-MariaDB-log
--- PHP Version: 8.1.10
+-- Generation Time: Nov 27, 2023 at 02:45 AM
+-- Server version: 5.7.23-23
+-- PHP Version: 8.1.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `viserstock`
+-- Database: `jggscomy_greenstockdb`
 --
 
 -- --------------------------------------------------------
@@ -29,13 +29,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `email` varchar(40) DEFAULT NULL,
-  `username` varchar(40) DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `remember_token` varchar(255) DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -55,10 +55,10 @@ INSERT INTO `admins` (`id`, `name`, `email`, `username`, `email_verified_at`, `i
 
 CREATE TABLE `admin_notifications` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `title` varchar(255) DEFAULT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT 0,
-  `click_url` text DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `click_url` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -73,11 +73,7 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 (3, 0, 'A new contact message has been submitted', 0, '/admin/ticket/view/3', '2023-11-07 01:25:18', '2023-11-07 01:25:18'),
 (4, 0, 'A new contact message has been submitted', 0, '/admin/ticket/view/10', '2023-11-07 03:33:42', '2023-11-07 03:33:42'),
 (5, 2, 'New member registered', 0, '/admin/users/detail/2', '2023-11-19 20:12:20', '2023-11-19 20:12:20'),
-(6, 0, 'SMTP Error: Could not authenticate.', 0, '#', '2023-11-21 12:08:01', '2023-11-21 12:08:01'),
-(7, 0, 'SMTP Error: Could not authenticate.', 0, '#', '2023-11-27 20:24:09', '2023-11-27 20:24:09'),
-(8, 1, 'Payment successful via Paypal Express', 0, '/admin/deposit/successful', '2023-11-28 02:26:01', '2023-11-28 02:26:01'),
-(9, 0, 'SMTP Error: Could not authenticate.', 0, '#', '2023-11-28 02:26:05', '2023-11-28 02:26:05'),
-(10, 0, 'SMTP Error: Could not authenticate.', 0, '#', '2023-11-28 02:26:13', '2023-11-28 02:26:13');
+(6, 0, 'SMTP Error: Could not authenticate.', 0, '#', '2023-11-21 12:08:01', '2023-11-21 12:08:01');
 
 -- --------------------------------------------------------
 
@@ -87,9 +83,9 @@ INSERT INTO `admin_notifications` (`id`, `user_id`, `title`, `is_read`, `click_u
 
 CREATE TABLE `admin_password_resets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(40) DEFAULT NULL,
-  `token` varchar(40) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -101,24 +97,24 @@ CREATE TABLE `admin_password_resets` (
 
 CREATE TABLE `ads` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = image, 1 = script',
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = image, 1 = script',
   `image` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `code` text DEFAULT NULL,
+  `code` text,
   `size` varchar(255) DEFAULT NULL,
-  `target_url` text DEFAULT NULL,
-  `impressions` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `target_url` text,
+  `impressions` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ads`
 --
 
 INSERT INTO `ads` (`id`, `type`, `image`, `title`, `code`, `size`, `target_url`, `impressions`, `created_at`, `updated_at`) VALUES
-(1, 0, '654b819632da31699447190.jpg', 'Test Ad', '', '728x90', 'https://www.facebook.com/', 321, '2023-11-08 02:09:50', '2023-11-28 02:28:40'),
-(2, 0, '654b83ac28ba81699447724.jpg', 'Test Ads', '', '728x90', 'https://stackoverflow.com/', 321, '2023-11-08 01:13:49', '2023-11-28 02:28:40');
+(1, 0, '654b819632da31699447190.jpg', 'Test Ad', '', '728x90', 'https://www.facebook.com/', 162, '2023-11-08 02:09:50', '2023-11-27 08:06:31'),
+(2, 0, '654b83ac28ba81699447724.jpg', 'Test Ads', '', '728x90', 'https://stackoverflow.com/', 162, '2023-11-08 01:13:49', '2023-11-27 08:06:31');
 
 -- --------------------------------------------------------
 
@@ -135,11 +131,11 @@ CREATE TABLE `blogs` (
   `feature_image` varchar(255) DEFAULT NULL,
   `blog_body` varchar(10000) DEFAULT NULL,
   `category` varchar(255) DEFAULT NULL,
-  `seo_data` longtext DEFAULT NULL,
+  `seo_data` longtext,
   `deleted_at` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `blogs`
@@ -163,7 +159,7 @@ CREATE TABLE `blog_category` (
   `slug` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `blog_category`
@@ -181,10 +177,10 @@ INSERT INTO `blog_category` (`id`, `blog_category`, `slug`, `created_at`, `updat
 
 CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `slug` varchar(40) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -206,12 +202,12 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `image`, `status`, `created_at`,
 
 CREATE TABLE `collections` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `title` varchar(40) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
-  `is_public` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
-  `is_featured` tinyint(1) NOT NULL DEFAULT 0,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `title` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `is_public` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `is_featured` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -224,8 +220,8 @@ CREATE TABLE `collections` (
 
 CREATE TABLE `collection_images` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `collection_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `image_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `collection_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `image_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -238,8 +234,8 @@ CREATE TABLE `collection_images` (
 
 CREATE TABLE `colors` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `color_code` varchar(40) DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color_code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -262,24 +258,24 @@ INSERT INTO `colors` (`id`, `name`, `color_code`, `created_at`, `updated_at`) VA
 
 CREATE TABLE `deposits` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `plan_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `donation_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `period` varchar(40) DEFAULT NULL,
-  `method_code` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `method_currency` varchar(40) DEFAULT NULL,
-  `charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `rate` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `final_amo` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `detail` text DEFAULT NULL,
-  `btc_amo` varchar(255) DEFAULT NULL,
-  `btc_wallet` varchar(255) DEFAULT NULL,
-  `trx` varchar(40) DEFAULT NULL,
-  `try` int(11) NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=>success, 2=>pending, 3=>cancel',
-  `from_api` tinyint(1) NOT NULL DEFAULT 0,
-  `admin_feedback` varchar(255) DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `plan_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `donation_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `period` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `method_code` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `method_currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `rate` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `final_amo` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `detail` text COLLATE utf8mb4_unicode_ci,
+  `btc_amo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `btc_wallet` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `try` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=>success, 2=>pending, 3=>cancel',
+  `from_api` tinyint(1) NOT NULL DEFAULT '0',
+  `admin_feedback` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -289,27 +285,25 @@ CREATE TABLE `deposits` (
 --
 
 INSERT INTO `deposits` (`id`, `user_id`, `plan_id`, `donation_id`, `period`, `method_code`, `amount`, `method_currency`, `charge`, `rate`, `final_amo`, `detail`, `btc_amo`, `btc_wallet`, `trx`, `try`, `status`, `from_api`, `admin_feedback`, `created_at`, `updated_at`) VALUES
-(1, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', '191E6GH1P7NN', 0, 0, 0, NULL, '2023-11-25 16:01:41', '2023-11-25 16:01:41'),
-(2, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', '4HY8HG7SHJE9', 0, 0, 0, NULL, '2023-11-25 16:06:56', '2023-11-25 16:06:56'),
-(3, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', '156E23KAUCEB', 0, 0, 0, NULL, '2023-11-25 16:07:08', '2023-11-25 16:07:08'),
-(4, 1, 0, 0, NULL, 113, '23.00000000', 'USD', '1.23000000', '1.00000000', '24.23000000', NULL, '0', '', '3J1BKBKRJDHC', 0, 0, 0, NULL, '2023-11-25 16:11:03', '2023-11-25 16:11:03'),
-(5, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', '2OQDE3E9WPF9', 0, 0, 0, NULL, '2023-11-25 16:14:10', '2023-11-25 16:14:10'),
-(6, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'R9QQQJMV6424', 0, 0, 0, NULL, '2023-11-25 16:19:15', '2023-11-25 16:19:15'),
-(7, 1, 0, 0, NULL, 113, '45.00000000', 'USD', '1.45000000', '1.00000000', '46.45000000', NULL, '0', '', 'M5F1484OTOP9', 0, 0, 0, NULL, '2023-11-25 16:23:34', '2023-11-25 16:23:34'),
-(8, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', '6A47SWKJU3OK', 0, 0, 0, NULL, '2023-11-25 16:28:12', '2023-11-25 16:28:12'),
-(9, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'TB41O9SN7QX9', 0, 0, 0, NULL, '2023-11-25 16:46:27', '2023-11-25 16:46:27'),
-(10, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'AJMCB7WCX549', 0, 0, 0, NULL, '2023-11-25 16:48:14', '2023-11-25 16:48:14'),
-(11, 1, 0, 0, NULL, 113, '122.00000000', 'USD', '2.22000000', '1.00000000', '124.22000000', NULL, '0', '', '1O1ONV3ESZTV', 0, 0, 0, NULL, '2023-11-25 20:09:01', '2023-11-25 20:09:01'),
-(12, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'QU6WFJ985QFY', 0, 0, 0, NULL, '2023-11-25 20:20:24', '2023-11-25 20:20:24'),
-(13, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'QFS9KVAD41OX', 0, 0, 0, NULL, '2023-11-25 20:21:37', '2023-11-25 20:21:37'),
-(14, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', '59MJ2S3W748C', 0, 0, 0, NULL, '2023-11-25 20:21:58', '2023-11-25 20:21:58'),
-(15, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'TXOGNUB1J385', 0, 0, 0, NULL, '2023-11-26 16:19:02', '2023-11-26 16:19:02'),
-(16, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'Y7PMYUPJC89G', 0, 0, 0, NULL, '2023-11-26 16:29:09', '2023-11-26 16:29:09'),
-(17, 1, 0, 0, NULL, 113, '56.00000000', 'USD', '1.56000000', '1.00000000', '57.56000000', NULL, '0', '', 'FNG6RKVBS2RT', 0, 0, 0, NULL, '2023-11-26 16:32:46', '2023-11-26 16:32:46'),
-(18, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', '87UZ5DZ55P65', 0, 0, 0, NULL, '2023-11-27 07:53:22', '2023-11-27 07:53:22'),
-(19, 1, 0, 0, NULL, 113, '12.00000000', 'USD', '1.12000000', '1.00000000', '13.12000000', NULL, '0', '', 'RG29VFRKAOV8', 0, 0, 0, NULL, '2023-11-27 08:03:51', '2023-11-27 08:03:51'),
-(20, 1, 1, 0, 'yearly', 113, '350.00000000', 'USD', '4.50000000', '1.00000000', '354.50000000', NULL, '0', '3R498107B9930404C', 'E3V2K7515FH8', 0, 0, 0, NULL, '2023-11-28 02:20:34', '2023-11-28 02:20:39'),
-(21, 1, 1, 0, 'yearly', 113, '350.00000000', 'USD', '4.50000000', '1.00000000', '354.50000000', '{\"name\":{\"given_name\":\"Test\",\"surname\":\"Test\"},\"email_address\":\"test@personal.example.com\",\"payer_id\":\"EVNVH8BY2B5HE\",\"address\":{\"country_code\":\"US\"}}', '0', '1LM330022R293511B', '6TFSKCU3T3O5', 0, 1, 0, NULL, '2023-11-28 02:23:37', '2023-11-28 02:26:01');
+(1, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', '191E6GH1P7NN', 0, 0, 0, NULL, '2023-11-25 16:01:41', '2023-11-25 16:01:41'),
+(2, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', '4HY8HG7SHJE9', 0, 0, 0, NULL, '2023-11-25 16:06:56', '2023-11-25 16:06:56'),
+(3, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', '156E23KAUCEB', 0, 0, 0, NULL, '2023-11-25 16:07:08', '2023-11-25 16:07:08'),
+(4, 1, 0, 0, NULL, 113, 23.00000000, 'USD', 1.23000000, 1.00000000, 24.23000000, NULL, '0', '', '3J1BKBKRJDHC', 0, 0, 0, NULL, '2023-11-25 16:11:03', '2023-11-25 16:11:03'),
+(5, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', '2OQDE3E9WPF9', 0, 0, 0, NULL, '2023-11-25 16:14:10', '2023-11-25 16:14:10'),
+(6, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'R9QQQJMV6424', 0, 0, 0, NULL, '2023-11-25 16:19:15', '2023-11-25 16:19:15'),
+(7, 1, 0, 0, NULL, 113, 45.00000000, 'USD', 1.45000000, 1.00000000, 46.45000000, NULL, '0', '', 'M5F1484OTOP9', 0, 0, 0, NULL, '2023-11-25 16:23:34', '2023-11-25 16:23:34'),
+(8, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', '6A47SWKJU3OK', 0, 0, 0, NULL, '2023-11-25 16:28:12', '2023-11-25 16:28:12'),
+(9, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'TB41O9SN7QX9', 0, 0, 0, NULL, '2023-11-25 16:46:27', '2023-11-25 16:46:27'),
+(10, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'AJMCB7WCX549', 0, 0, 0, NULL, '2023-11-25 16:48:14', '2023-11-25 16:48:14'),
+(11, 1, 0, 0, NULL, 113, 122.00000000, 'USD', 2.22000000, 1.00000000, 124.22000000, NULL, '0', '', '1O1ONV3ESZTV', 0, 0, 0, NULL, '2023-11-25 20:09:01', '2023-11-25 20:09:01'),
+(12, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'QU6WFJ985QFY', 0, 0, 0, NULL, '2023-11-25 20:20:24', '2023-11-25 20:20:24'),
+(13, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'QFS9KVAD41OX', 0, 0, 0, NULL, '2023-11-25 20:21:37', '2023-11-25 20:21:37'),
+(14, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', '59MJ2S3W748C', 0, 0, 0, NULL, '2023-11-25 20:21:58', '2023-11-25 20:21:58'),
+(15, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'TXOGNUB1J385', 0, 0, 0, NULL, '2023-11-26 16:19:02', '2023-11-26 16:19:02'),
+(16, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'Y7PMYUPJC89G', 0, 0, 0, NULL, '2023-11-26 16:29:09', '2023-11-26 16:29:09'),
+(17, 1, 0, 0, NULL, 113, 56.00000000, 'USD', 1.56000000, 1.00000000, 57.56000000, NULL, '0', '', 'FNG6RKVBS2RT', 0, 0, 0, NULL, '2023-11-26 16:32:46', '2023-11-26 16:32:46'),
+(18, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', '87UZ5DZ55P65', 0, 0, 0, NULL, '2023-11-27 07:53:22', '2023-11-27 07:53:22'),
+(19, 1, 0, 0, NULL, 113, 12.00000000, 'USD', 1.12000000, 1.00000000, 13.12000000, NULL, '0', '', 'RG29VFRKAOV8', 0, 0, 0, NULL, '2023-11-27 08:03:51', '2023-11-27 08:03:51');
 
 -- --------------------------------------------------------
 
@@ -319,12 +313,12 @@ INSERT INTO `deposits` (`id`, `user_id`, `plan_id`, `donation_id`, `period`, `me
 
 CREATE TABLE `donations` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `receiver_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `image_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(10,0) UNSIGNED NOT NULL DEFAULT 0,
-  `payment_info` text DEFAULT NULL,
-  `sender` longtext DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1 - paid, 0 - initiate, 2 = pending ',
+  `receiver_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `image_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(10,0) UNSIGNED NOT NULL DEFAULT '0',
+  `payment_info` text COLLATE utf8mb4_unicode_ci,
+  `sender` longtext COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 - paid, 0 - initiate, 2 = pending ',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -337,11 +331,11 @@ CREATE TABLE `donations` (
 
 CREATE TABLE `downloads` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `image_file_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `ip` text DEFAULT NULL,
-  `contributor_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `premium` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
+  `image_file_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `ip` text COLLATE utf8mb4_unicode_ci,
+  `contributor_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `premium` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -354,9 +348,9 @@ CREATE TABLE `downloads` (
 
 CREATE TABLE `earning_logs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `contributor_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `image_file_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
+  `contributor_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `image_file_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `earning_date` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -370,14 +364,14 @@ CREATE TABLE `earning_logs` (
 
 CREATE TABLE `extensions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `act` varchar(40) DEFAULT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `script` text DEFAULT NULL,
-  `shortcode` text DEFAULT NULL COMMENT 'object',
-  `support` text DEFAULT NULL COMMENT 'help section',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=>enable, 2=>disable',
+  `act` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `script` text COLLATE utf8mb4_unicode_ci,
+  `shortcode` text COLLATE utf8mb4_unicode_ci COMMENT 'object',
+  `support` text COLLATE utf8mb4_unicode_ci COMMENT 'help section',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=>enable, 2=>disable',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -400,8 +394,8 @@ INSERT INTO `extensions` (`id`, `act`, `name`, `description`, `image`, `script`,
 
 CREATE TABLE `follows` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `following_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `following_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -414,8 +408,8 @@ CREATE TABLE `follows` (
 
 CREATE TABLE `forms` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `act` varchar(40) DEFAULT NULL,
-  `form_data` text DEFAULT NULL,
+  `act` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `form_data` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -428,8 +422,8 @@ CREATE TABLE `forms` (
 
 CREATE TABLE `frontends` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `data_keys` varchar(40) DEFAULT NULL,
-  `data_values` longtext DEFAULT NULL,
+  `data_keys` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `data_values` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -492,16 +486,16 @@ INSERT INTO `frontends` (`id`, `data_keys`, `data_values`, `created_at`, `update
 
 CREATE TABLE `gateways` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `form_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `form_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `code` int(11) DEFAULT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `alias` varchar(40) NOT NULL DEFAULT 'NULL',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=>enable, 2=>disable',
-  `gateway_parameters` text DEFAULT NULL,
-  `supported_currencies` text DEFAULT NULL,
-  `crypto` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: fiat currency, 1: crypto currency',
-  `extra` text DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alias` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'NULL',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=>enable, 2=>disable',
+  `gateway_parameters` text COLLATE utf8mb4_unicode_ci,
+  `supported_currencies` text COLLATE utf8mb4_unicode_ci,
+  `crypto` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: fiat currency, 1: crypto currency',
+  `extra` text COLLATE utf8mb4_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -549,18 +543,18 @@ INSERT INTO `gateways` (`id`, `form_id`, `code`, `name`, `alias`, `status`, `gat
 
 CREATE TABLE `gateway_currencies` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `currency` varchar(40) DEFAULT NULL,
-  `symbol` varchar(40) DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `symbol` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `method_code` int(11) DEFAULT NULL,
-  `gateway_alias` varchar(40) DEFAULT NULL,
-  `min_amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `max_amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `percent_charge` decimal(5,2) NOT NULL DEFAULT 0.00,
-  `fixed_charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `rate` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `image` varchar(255) DEFAULT NULL,
-  `gateway_parameter` text DEFAULT NULL,
+  `gateway_alias` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `min_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `max_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `percent_charge` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `fixed_charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `rate` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gateway_parameter` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -570,7 +564,7 @@ CREATE TABLE `gateway_currencies` (
 --
 
 INSERT INTO `gateway_currencies` (`id`, `name`, `currency`, `symbol`, `method_code`, `gateway_alias`, `min_amount`, `max_amount`, `percent_charge`, `fixed_charge`, `rate`, `image`, `gateway_parameter`, `created_at`, `updated_at`) VALUES
-(4, 'Paypal Express', 'USD', '$', 113, 'PaypalSdk', '1.00000000', '30000.00000000', '1.00', '1.00000000', '1.00000000', NULL, '{\"clientId\":\"AWxxkwJwfNDVYcio7rDYa2eW8eUp_o9yZeOnCifrGXIS6bORx0bgCnArwlJLIog_fGdy7W5srHDbgIlU\",\"clientSecret\":\"EB57BVgx9SGJYh-Fnz_oEHGsOvTvs7mHJfKxJLM0Q5HwM_aD5vGxIyRgpWe4lb547R2hfCWGrDpzt6y6\"}', '2023-11-26 16:14:34', '2023-11-26 16:14:34');
+(4, 'Paypal Express', 'USD', '$', 113, 'PaypalSdk', 1.00000000, 30000.00000000, 1.00, 1.00000000, 1.00000000, NULL, '{\"clientId\":\"AWxxkwJwfNDVYcio7rDYa2eW8eUp_o9yZeOnCifrGXIS6bORx0bgCnArwlJLIog_fGdy7W5srHDbgIlU\",\"clientSecret\":\"EB57BVgx9SGJYh-Fnz_oEHGsOvTvs7mHJfKxJLM0Q5HwM_aD5vGxIyRgpWe4lb547R2hfCWGrDpzt6y6\"}', '2023-11-26 16:14:34', '2023-11-26 16:14:34');
 
 -- --------------------------------------------------------
 
@@ -580,57 +574,57 @@ INSERT INTO `gateway_currencies` (`id`, `name`, `currency`, `symbol`, `method_co
 
 CREATE TABLE `general_settings` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `site_name` varchar(40) DEFAULT NULL,
-  `cur_text` varchar(40) DEFAULT NULL COMMENT 'currency text',
-  `cur_sym` varchar(40) DEFAULT NULL COMMENT 'currency symbol',
-  `email_from` varchar(40) DEFAULT NULL,
-  `email_template` text DEFAULT NULL,
-  `sms_body` varchar(255) DEFAULT NULL,
-  `sms_from` varchar(255) DEFAULT NULL,
-  `base_color` varchar(40) DEFAULT NULL,
-  `mail_config` text DEFAULT NULL COMMENT 'email configuration',
-  `sms_config` text DEFAULT NULL,
-  `global_shortcodes` text DEFAULT NULL,
-  `socialite_credentials` text DEFAULT NULL,
-  `kv` tinyint(1) NOT NULL DEFAULT 0,
-  `ev` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'email verification, 0 - dont check, 1 - check',
-  `en` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'email notification, 0 - dont send, 1 - send',
-  `sv` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'mobile verication, 0 - dont check, 1 - check',
-  `sn` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'sms notification, 0 - dont send, 1 - send',
-  `multi_language` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
-  `force_ssl` tinyint(1) NOT NULL DEFAULT 0,
-  `maintenance_mode` tinyint(1) NOT NULL DEFAULT 0,
-  `secure_password` tinyint(1) NOT NULL DEFAULT 0,
-  `agree` tinyint(1) NOT NULL DEFAULT 0,
-  `registration` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: Off	, 1: On',
-  `active_template` varchar(40) DEFAULT NULL,
-  `system_info` text DEFAULT NULL,
-  `system_customized` tinyint(1) NOT NULL DEFAULT 0,
-  `referral_system` tinyint(1) NOT NULL DEFAULT 0,
-  `referral_commission` float NOT NULL DEFAULT 0,
-  `instruction` text DEFAULT NULL,
-  `ins_file` varchar(255) DEFAULT NULL,
-  `per_download` decimal(18,8) NOT NULL DEFAULT 0.00000000,
-  `auto_approval` tinyint(1) NOT NULL DEFAULT 1,
-  `upload_limit` int(11) NOT NULL DEFAULT 0 COMMENT 'per day upload limit',
-  `ftp` text DEFAULT NULL,
-  `image_maximum_price` decimal(28,8) DEFAULT 0.00000000,
-  `is_invoice_active` tinyint(1) NOT NULL DEFAULT 1,
-  `wasabi` text DEFAULT NULL,
-  `digital_ocean` text DEFAULT NULL,
-  `vultr` text DEFAULT NULL,
-  `storage_type` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '1 = local storage;\r\n2 = ftp;\r\n3 = Wasabi;\r\n4 = Digital Ocean;',
-  `watermark` tinyint(1) NOT NULL DEFAULT 0,
-  `ads_script` text DEFAULT NULL,
-  `ads_module` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `contact_system` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '1: Enable, 0:Disable',
-  `donation_module` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '1: Enable, 0:Disable',
-  `donation_setting` text DEFAULT NULL,
-  `homepage_promo_1` varchar(255) DEFAULT NULL,
-  `homepage_promo_2` varchar(255) DEFAULT NULL,
-  `hero_banner_1` text DEFAULT NULL,
-  `hero_banner_2` text DEFAULT NULL,
-  `photos_setting` text DEFAULT NULL,
+  `site_name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cur_text` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'currency text',
+  `cur_sym` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'currency symbol',
+  `email_from` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_template` text COLLATE utf8mb4_unicode_ci,
+  `sms_body` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sms_from` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `base_color` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mail_config` text COLLATE utf8mb4_unicode_ci COMMENT 'email configuration',
+  `sms_config` text COLLATE utf8mb4_unicode_ci,
+  `global_shortcodes` text COLLATE utf8mb4_unicode_ci,
+  `socialite_credentials` text COLLATE utf8mb4_unicode_ci,
+  `kv` tinyint(1) NOT NULL DEFAULT '0',
+  `ev` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'email verification, 0 - dont check, 1 - check',
+  `en` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'email notification, 0 - dont send, 1 - send',
+  `sv` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'mobile verication, 0 - dont check, 1 - check',
+  `sn` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'sms notification, 0 - dont send, 1 - send',
+  `multi_language` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
+  `force_ssl` tinyint(1) NOT NULL DEFAULT '0',
+  `maintenance_mode` tinyint(1) NOT NULL DEFAULT '0',
+  `secure_password` tinyint(1) NOT NULL DEFAULT '0',
+  `agree` tinyint(1) NOT NULL DEFAULT '0',
+  `registration` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Off	, 1: On',
+  `active_template` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `system_info` text COLLATE utf8mb4_unicode_ci,
+  `system_customized` tinyint(1) NOT NULL DEFAULT '0',
+  `referral_system` tinyint(1) NOT NULL DEFAULT '0',
+  `referral_commission` float NOT NULL DEFAULT '0',
+  `instruction` text COLLATE utf8mb4_unicode_ci,
+  `ins_file` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `per_download` decimal(18,8) NOT NULL DEFAULT '0.00000000',
+  `auto_approval` tinyint(1) NOT NULL DEFAULT '1',
+  `upload_limit` int(11) NOT NULL DEFAULT '0' COMMENT 'per day upload limit',
+  `ftp` text COLLATE utf8mb4_unicode_ci,
+  `image_maximum_price` decimal(28,8) DEFAULT '0.00000000',
+  `is_invoice_active` tinyint(1) NOT NULL DEFAULT '1',
+  `wasabi` text COLLATE utf8mb4_unicode_ci,
+  `digital_ocean` text COLLATE utf8mb4_unicode_ci,
+  `vultr` text COLLATE utf8mb4_unicode_ci,
+  `storage_type` tinyint(3) UNSIGNED NOT NULL DEFAULT '1' COMMENT '1 = local storage;\r\n2 = ftp;\r\n3 = Wasabi;\r\n4 = Digital Ocean;',
+  `watermark` tinyint(1) NOT NULL DEFAULT '0',
+  `ads_script` text COLLATE utf8mb4_unicode_ci,
+  `ads_module` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `contact_system` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '1: Enable, 0:Disable',
+  `donation_module` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '1: Enable, 0:Disable',
+  `donation_setting` text COLLATE utf8mb4_unicode_ci,
+  `homepage_promo_1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `homepage_promo_2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hero_banner_1` text COLLATE utf8mb4_unicode_ci,
+  `hero_banner_2` text COLLATE utf8mb4_unicode_ci,
+  `photos_setting` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -640,7 +634,7 @@ CREATE TABLE `general_settings` (
 --
 
 INSERT INTO `general_settings` (`id`, `site_name`, `cur_text`, `cur_sym`, `email_from`, `email_template`, `sms_body`, `sms_from`, `base_color`, `mail_config`, `sms_config`, `global_shortcodes`, `socialite_credentials`, `kv`, `ev`, `en`, `sv`, `sn`, `multi_language`, `force_ssl`, `maintenance_mode`, `secure_password`, `agree`, `registration`, `active_template`, `system_info`, `system_customized`, `referral_system`, `referral_commission`, `instruction`, `ins_file`, `per_download`, `auto_approval`, `upload_limit`, `ftp`, `image_maximum_price`, `is_invoice_active`, `wasabi`, `digital_ocean`, `vultr`, `storage_type`, `watermark`, `ads_script`, `ads_module`, `contact_system`, `donation_module`, `donation_setting`, `homepage_promo_1`, `homepage_promo_2`, `hero_banner_1`, `hero_banner_2`, `photos_setting`, `created_at`, `updated_at`) VALUES
-(1, 'GreenStock', 'USD', '$', 'info@greenstock.com', '<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title></title><style type=\"text/css\"> .ReadMsgBody{width: 100%; background-color: #ffffff;}.ExternalClass{width: 100%; background-color: #ffffff;}.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height: 100%;}html{width: 100%;}body{-webkit-text-size-adjust: none; -ms-text-size-adjust: none; margin: 0; padding: 0;}table{border-spacing: 0; table-layout: fixed; margin: 0 auto; border-collapse: collapse;}table table table{table-layout: auto;}.yshortcuts a{border-bottom: none !important;}img:hover{opacity: 0.9 !important;}a{color: #0087ff; text-decoration: none;}.textbutton a{font-family: \'open sans\', arial, sans-serif !important;}.btn-link a{color: #FFFFFF !important;}@media only screen and (max-width: 480px){body{width: auto !important;}*[class=\"table-inner\"]{width: 90% !important; text-align: center !important;}*[class=\"table-full\"]{width: 100% !important; text-align: center !important;}/* image */ img[class=\"img1\"]{width: 100% !important; height: auto !important;}}</style><table bgcolor=\"#414a51\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td height=\"50\"></td></tr><tr> <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\"> <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td align=\"center\" width=\"600\"> <table class=\"table-inner\" width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td bgcolor=\"#0087ff\" style=\"border-top-left-radius:6px; border-top-right-radius:6px;text-align:center;vertical-align:top;font-size:0;\" align=\"center\"> <table width=\"90%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td height=\"20\"></td></tr><tr> <td align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#FFFFFF; font-size:16px; font-weight: bold;\">This is a System Generated Email</td></tr><tr> <td height=\"20\"></td></tr></tbody> </table> </td></tr></tbody> </table> <table class=\"table-inner\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> <tbody> <tr> <td bgcolor=\"#FFFFFF\" align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\"> <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> <tbody> <tr> <td height=\"35\"></td></tr><tr> <td align=\"center\" style=\"vertical-align:top;font-size:0;\">G</td></tr><tr> <td height=\"40\"><img src=\"https://i.imgur.com/2OiEetW.png\" width=\"143\"></td></tr><tr> <td align=\"center\" style=\"font-family: \'Open Sans\', Arial, sans-serif; font-size: 22px;color:#414a51;font-weight: bold;\">Hello{{fullname}}({{username}})</td></tr><tr> <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\"> <table width=\"40\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td height=\"20\" style=\" border-bottom:3px solid #0087ff;\"></td></tr></tbody> </table> </td></tr><tr> <td height=\"20\"></td></tr><tr> <td align=\"left\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#7f8c8d; font-size:16px; line-height: 28px;\">{{message}}</td></tr><tr> <td height=\"40\"></td></tr></tbody> </table> </td></tr><tr> <td height=\"45\" align=\"center\" bgcolor=\"#f4f4f4\" style=\"border-bottom-left-radius:6px;border-bottom-right-radius:6px;\"> <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> <tbody> <tr> <td height=\"10\"></td></tr><tr> <td class=\"preference-link\" align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#95a5a6; font-size:14px;\"> © 2021 <a href=\"#\">{{site_name}}</a>&nbsp;. All Rights Reserved. </td></tr><tr> <td height=\"10\"></td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr><tr> <td height=\"60\"></td></tr></tbody></table>', 'hi {{fullname}} ({{username}}), {{message}}', 'GreenStockAdmin', '63a544', '{\"name\":\"smtp\",\"host\":\"mail.greenstockpro.com\",\"port\":\"465\",\"enc\":\"ssl\",\"username\":\"green@greenstockpro.com\",\"password\":\"Customerrep2023#\"}', '{\"name\":\"clickatell\",\"clickatell\":{\"api_key\":\"----------------\"},\"infobip\":{\"username\":\"--------------\",\"password\":\"-----------------\"},\"message_bird\":{\"api_key\":\"-------------------\"},\"nexmo\":{\"api_key\":\"----------------------\",\"api_secret\":\"----------------------\"},\"sms_broadcast\":{\"username\":\"----------------------\",\"password\":\"-----------------------------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"---------------------------\",\"from\":\"----------------------\"},\"text_magic\":{\"username\":\"-----------------------\",\"apiv2_key\":\"-------------------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\"],\"value\":[\"test_api 555\"]},\"body\":{\"name\":[\"from_number\"],\"value\":[\"5657545757\"]}}}', '{\n    \"site_name\":\"Name of your site\",\n    \"site_currency\":\"Currency of your site\",\n    \"currency_symbol\":\"Symbol of currency\"\n}', '{\"google\":{\"client_id\":\"--------------------\",\"client_secret\":\"--------------------\",\"status\":1},\"facebook\":{\"client_id\":\"--------------------\",\"client_secret\":\"--------------------\",\"status\":1},\"linkedin\":{\"client_id\":\"--------------------\",\"client_secret\":\"--------------------\",\"status\":1}}', 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 'basic', '[]', 0, 0, 1.55, '{\"heading\":\"Please read carefully before upload\",\"instruction\":\"For uploading please select or drop your original image into the drop zone. And also you have to wrap your picture with your PSD, Ai, XD etc, (if any) including this file below as a zip file. Then in the zip file section upload it. Otherwise, your image won\'t be approved\"}', 'license.txt', '30.00000000', 0, 100, NULL, '500.00000000', 1, '{\"driver\":\"S3\",\"key\":\"FJL9S664ES5E1YGCJ116\",\"secret\":\"AszSlYpAB5GQyTwPdCo2UeedAs4vEX7mApBGaAdu\",\"region\":\"us-east-1\",\"bucket\":\"greenstock-image\",\"endpoint\":\"https:\\/\\/s3.wasabisys.com\"}', '{\"driver\":\"--------------------\",\"key\":\"--------------------\",\"secret\":\"--------------------\",\"region\":\"--------------------\",\"bucket\":\"--------------------\",\"endpoint\":\"--------------------\"}', '{\"driver\":\"--------------------\",\"key\":\"--------------------\",\"secret\":\"--------------------\",\"bucket\":\"--------------------\",\"endpoint\":\"--------------------\"}', 3, 1, NULL, 1, 1, 1, '{\"item\":\"Coffee\",\"subtitle\":\"Support me on Buy Me a Coffee.\",\"icon\":\"<i class=\\\"las la-coffee\\\"><\\/i>\",\"amount\":\"50\"}', '{\"image\":\"20231114_2131941530_.png\",\"url\":\"http:\\/\\/jgg.sco.mybluehost.me\\/photos\"}', '{\"image\":\"20231114_2131941530_.png\",\"url\":\"http:\\/\\/jgg.sco.mybluehost.me\\/photos\"}', '{\"image\":\"20231116_1920705393_.jpg\",\"heading\":\"Find the best design resources for your project\",\"sub_heading\":\"Find Royalty-free photos and videos for your projects and social media content\",\"button_text\":\"Browse Stocks\",\"button_url\":\"http:\\/\\/localhost\\/image_stock\\/photos\"}', '{\"image\":\"20231114_1130948114_.jpg\",\"heading\":\"Browse our design resources we have for you\",\"sub_heading\":\"You can employ textured backgrounds and images to give users the impression that they are completely immersed in your designs.\",\"button_text\":\"Browse Stocks\",\"button_url\":\"http:\\/\\/localhost\\/image_stock\\/photos\"}', '{\"image\":\"20231116_1080749424_.jpg\",\"heading\":\"Photos\",\"sub_heading\":\"Good photos are vitalto express your message accurately.GreenStock provides the right stock photos for your projects , and social media posts and more.\"}', NULL, '2023-11-28 00:28:24');
+(1, 'GreenStock', 'USD', '$', 'info@greenstock.com', '<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title></title><style type=\"text/css\"> .ReadMsgBody{width: 100%; background-color: #ffffff;}.ExternalClass{width: 100%; background-color: #ffffff;}.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height: 100%;}html{width: 100%;}body{-webkit-text-size-adjust: none; -ms-text-size-adjust: none; margin: 0; padding: 0;}table{border-spacing: 0; table-layout: fixed; margin: 0 auto; border-collapse: collapse;}table table table{table-layout: auto;}.yshortcuts a{border-bottom: none !important;}img:hover{opacity: 0.9 !important;}a{color: #0087ff; text-decoration: none;}.textbutton a{font-family: \'open sans\', arial, sans-serif !important;}.btn-link a{color: #FFFFFF !important;}@media only screen and (max-width: 480px){body{width: auto !important;}*[class=\"table-inner\"]{width: 90% !important; text-align: center !important;}*[class=\"table-full\"]{width: 100% !important; text-align: center !important;}/* image */ img[class=\"img1\"]{width: 100% !important; height: auto !important;}}</style><table bgcolor=\"#414a51\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td height=\"50\"></td></tr><tr> <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\"> <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td align=\"center\" width=\"600\"> <table class=\"table-inner\" width=\"95%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td bgcolor=\"#0087ff\" style=\"border-top-left-radius:6px; border-top-right-radius:6px;text-align:center;vertical-align:top;font-size:0;\" align=\"center\"> <table width=\"90%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td height=\"20\"></td></tr><tr> <td align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#FFFFFF; font-size:16px; font-weight: bold;\">This is a System Generated Email</td></tr><tr> <td height=\"20\"></td></tr></tbody> </table> </td></tr></tbody> </table> <table class=\"table-inner\" width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> <tbody> <tr> <td bgcolor=\"#FFFFFF\" align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\"> <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> <tbody> <tr> <td height=\"35\"></td></tr><tr> <td align=\"center\" style=\"vertical-align:top;font-size:0;\">G</td></tr><tr> <td height=\"40\"><img src=\"https://i.imgur.com/2OiEetW.png\" width=\"143\"></td></tr><tr> <td align=\"center\" style=\"font-family: \'Open Sans\', Arial, sans-serif; font-size: 22px;color:#414a51;font-weight: bold;\">Hello{{fullname}}({{username}})</td></tr><tr> <td align=\"center\" style=\"text-align:center;vertical-align:top;font-size:0;\"> <table width=\"40\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\"> <tbody> <tr> <td height=\"20\" style=\" border-bottom:3px solid #0087ff;\"></td></tr></tbody> </table> </td></tr><tr> <td height=\"20\"></td></tr><tr> <td align=\"left\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#7f8c8d; font-size:16px; line-height: 28px;\">{{message}}</td></tr><tr> <td height=\"40\"></td></tr></tbody> </table> </td></tr><tr> <td height=\"45\" align=\"center\" bgcolor=\"#f4f4f4\" style=\"border-bottom-left-radius:6px;border-bottom-right-radius:6px;\"> <table align=\"center\" width=\"90%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"> <tbody> <tr> <td height=\"10\"></td></tr><tr> <td class=\"preference-link\" align=\"center\" style=\"font-family: \'Open sans\', Arial, sans-serif; color:#95a5a6; font-size:14px;\"> © 2021 <a href=\"#\">{{site_name}}</a>&nbsp;. All Rights Reserved. </td></tr><tr> <td height=\"10\"></td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr></tbody> </table> </td></tr><tr> <td height=\"60\"></td></tr></tbody></table>', 'hi {{fullname}} ({{username}}), {{message}}', 'GreenStockAdmin', '63a544', '{\"name\":\"smtp\",\"host\":\"mail.greenstockpro.com\",\"port\":\"465\",\"enc\":\"ssl\",\"username\":\"green@greenstockpro.com\",\"password\":\"Customerrep2023#\"}', '{\"name\":\"clickatell\",\"clickatell\":{\"api_key\":\"----------------\"},\"infobip\":{\"username\":\"--------------\",\"password\":\"-----------------\"},\"message_bird\":{\"api_key\":\"-------------------\"},\"nexmo\":{\"api_key\":\"----------------------\",\"api_secret\":\"----------------------\"},\"sms_broadcast\":{\"username\":\"----------------------\",\"password\":\"-----------------------------\"},\"twilio\":{\"account_sid\":\"-----------------------\",\"auth_token\":\"---------------------------\",\"from\":\"----------------------\"},\"text_magic\":{\"username\":\"-----------------------\",\"apiv2_key\":\"-------------------------------\"},\"custom\":{\"method\":\"get\",\"url\":\"https:\\/\\/hostname\\/demo-api-v1\",\"headers\":{\"name\":[\"api_key\"],\"value\":[\"test_api 555\"]},\"body\":{\"name\":[\"from_number\"],\"value\":[\"5657545757\"]}}}', '{\n    \"site_name\":\"Name of your site\",\n    \"site_currency\":\"Currency of your site\",\n    \"currency_symbol\":\"Symbol of currency\"\n}', '{\"google\":{\"client_id\":\"--------------------\",\"client_secret\":\"--------------------\",\"status\":1},\"facebook\":{\"client_id\":\"--------------------\",\"client_secret\":\"--------------------\",\"status\":1},\"linkedin\":{\"client_id\":\"--------------------\",\"client_secret\":\"--------------------\",\"status\":1}}', 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 'basic', '[]', 0, 0, 1.55, '{\"heading\":\"Please read carefully before upload\",\"instruction\":\"For uploading please select or drop your original image into the drop zone. And also you have to wrap your picture with your PSD, Ai, XD etc, (if any) including this file below as a zip file. Then in the zip file section upload it. Otherwise, your image won\'t be approved\"}', 'license.txt', 30.00000000, 0, 100, NULL, 500.00000000, 1, '{\"driver\":\"S3\",\"key\":\"FJL9S664ES5E1YGCJ116\",\"secret\":\"AszSlYpAB5GQyTwPdCo2UeedAs4vEX7mApBGaAdu\",\"region\":\"us-east-1\",\"bucket\":\"greenstock-image\",\"endpoint\":\"https:\\/\\/s3.wasabisys.com\"}', '{\"driver\":\"--------------------\",\"key\":\"--------------------\",\"secret\":\"--------------------\",\"region\":\"--------------------\",\"bucket\":\"--------------------\",\"endpoint\":\"--------------------\"}', '{\"driver\":\"--------------------\",\"key\":\"--------------------\",\"secret\":\"--------------------\",\"bucket\":\"--------------------\",\"endpoint\":\"--------------------\"}', 3, 1, NULL, 1, 1, 1, '{\"item\":\"Coffee\",\"subtitle\":\"Support me on Buy Me a Coffee.\",\"icon\":\"<i class=\\\"las la-coffee\\\"><\\/i>\",\"amount\":\"50\"}', '{\"image\":\"20231114_2131941530_.png\",\"url\":\"http:\\/\\/jgg.sco.mybluehost.me\\/photos\"}', '{\"image\":\"20231114_2131941530_.png\",\"url\":\"http:\\/\\/jgg.sco.mybluehost.me\\/photos\"}', '{\"image\":\"20231116_1920705393_.jpg\",\"heading\":\"Find the best design resources for your project\",\"sub_heading\":\"Find Royalty-free photos and videos for your projects and social media content\",\"button_text\":\"Browse Stocks\",\"button_url\":\"http:\\/\\/localhost\\/image_stock\\/photos\"}', '{\"image\":\"20231114_1130948114_.jpg\",\"heading\":\"Browse our design resources we have for you\",\"sub_heading\":\"You can employ textured backgrounds and images to give users the impression that they are completely immersed in your designs.\",\"button_text\":\"Browse Stocks\",\"button_url\":\"http:\\/\\/localhost\\/image_stock\\/photos\"}', '{\"image\":\"20231116_1080749424_.jpg\",\"heading\":\"Photos\",\"sub_heading\":\"Good photos are vitalto express your message accurately.GreenStock provides the right stock photos for your projects , and social media posts and more.\"}', NULL, '2023-11-27 11:22:53');
 
 -- --------------------------------------------------------
 
@@ -650,27 +644,27 @@ INSERT INTO `general_settings` (`id`, `site_name`, `cur_text`, `cur_sym`, `email
 
 CREATE TABLE `images` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `category_id` varchar(255) DEFAULT '[]',
-  `image_name` varchar(40) DEFAULT NULL,
-  `thumb` varchar(255) DEFAULT NULL,
-  `track_id` varchar(255) DEFAULT NULL,
-  `title` varchar(40) DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `category_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `image_name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `thumb` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `track_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `upload_date` date DEFAULT NULL,
-  `image_width` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `image_height` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `extensions` varchar(255) DEFAULT '[]',
-  `description` text DEFAULT NULL,
-  `tags` text DEFAULT NULL,
-  `colors` varchar(255) DEFAULT NULL,
-  `total_like` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `is_featured` tinyint(1) NOT NULL DEFAULT 0,
-  `attribution` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `total_view` int(11) NOT NULL DEFAULT 0,
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'pending => 0 , approved => 1, rejected => 3\r\n',
-  `reason` text DEFAULT NULL,
-  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `reviewer_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `image_width` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `image_height` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `extensions` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '[]',
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `tags` text COLLATE utf8mb4_unicode_ci,
+  `colors` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_like` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `is_featured` tinyint(1) NOT NULL DEFAULT '0',
+  `attribution` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `total_view` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT 'pending => 0 , approved => 1, rejected => 3\r\n',
+  `reason` text COLLATE utf8mb4_unicode_ci,
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `reviewer_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -680,8 +674,7 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `user_id`, `category_id`, `image_name`, `thumb`, `track_id`, `title`, `upload_date`, `image_width`, `image_height`, `extensions`, `description`, `tags`, `colors`, `total_like`, `is_featured`, `attribution`, `total_view`, `status`, `reason`, `admin_id`, `reviewer_id`, `created_at`, `updated_at`) VALUES
-(10, 1, '[\"2\",\"3\"]', '2023/11/21/655c8147b2aff1700561223.jpg', '2023/11/21/thumb_655c8147b2aff1700561223.jpg', 'WO8T3WQWNOSF', 'Mahindra Thar', '2023-11-21', 600, 400, '[\"jpg\",\"jpeg\"]', 'Test Description Test Description Test Description Test Description Test Description Test Description Test Description Test Description', '[\"New\",\"Test\"]', '[\"0665f8\"]', 0, 0, 0, 10, 1, NULL, 1, 0, '2023-11-21 12:07:12', '2023-11-27 19:47:20'),
-(11, 1, '[\"1\",\"2\"]', '2023/11/28/6565842e68a201701151790.jpg', '2023/11/28/thumb_6565842e68a201701151790.jpg', 'JKFVO2JJ9PYY', 'Bugatti Divo', '2023-11-28', 600, 338, '[\"jpg\",\"jpeg\"]', 'Description Description Description Description Description Description Description', '[\"New\",\"Test\"]', NULL, 0, 0, 1, 6, 1, NULL, 1, 0, '2023-11-27 19:40:06', '2023-11-28 02:34:35');
+(10, 1, 2, '2023/11/21/655c8147b2aff1700561223.jpg', '2023/11/21/thumb_655c8147b2aff1700561223.jpg', 'WO8T3WQWNOSF', 'Mahindra Thar', '2023-11-21', 600, 400, '[\"jpg\",\"jpeg\"]', 'Test Description Test Description Test Description Test Description Test Description Test Description Test Description Test Description', '[\"New\",\"Test\"]', '[\"0665f8\"]', 0, 0, 0, 9, 1, NULL, 1, 0, '2023-11-21 12:07:12', '2023-11-27 08:00:21');
 
 -- --------------------------------------------------------
 
@@ -692,24 +685,23 @@ INSERT INTO `images` (`id`, `user_id`, `category_id`, `image_name`, `thumb`, `tr
 CREATE TABLE `image_files` (
   `id` bigint(20) NOT NULL,
   `track_id` varchar(255) DEFAULT NULL,
-  `image_id` int(11) NOT NULL DEFAULT 0,
+  `image_id` int(11) NOT NULL DEFAULT '0',
   `file` varchar(255) DEFAULT NULL,
   `resolution` varchar(255) DEFAULT NULL,
-  `is_free` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1=free, 0=premium',
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  `total_downloads` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `price` decimal(28,8) NOT NULL DEFAULT 0.00000000,
+  `is_free` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1=free, 0=premium',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `total_downloads` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `price` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `image_files`
 --
 
 INSERT INTO `image_files` (`id`, `track_id`, `image_id`, `file`, `resolution`, `is_free`, `status`, `total_downloads`, `price`, `created_at`, `updated_at`) VALUES
-(10, 'H7PMVSYKOVR8', 10, '2023/11/21/655c81500373a1700561232.zip', '6000*4000', 0, 1, 0, '10.00000000', '2023-11-21 12:07:12', '2023-11-21 12:07:58'),
-(11, 'KCQU7QTJUDMF', 11, '2023/11/28/6565843b4cddc1701151803.zip', '1200*2400', 0, 1, 0, '10.00000000', '2023-11-27 19:40:06', '2023-11-27 20:24:04');
+(10, 'H7PMVSYKOVR8', 10, '2023/11/21/655c81500373a1700561232.zip', '6000*4000', 0, 1, 0, 10.00000000, '2023-11-21 12:07:12', '2023-11-21 12:07:58');
 
 -- --------------------------------------------------------
 
@@ -719,9 +711,9 @@ INSERT INTO `image_files` (`id`, `track_id`, `image_id`, `file`, `resolution`, `
 
 CREATE TABLE `languages` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `code` varchar(40) DEFAULT NULL,
-  `is_default` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: not default language, 1: default language',
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_default` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: not default language, 1: default language',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -744,8 +736,8 @@ INSERT INTO `languages` (`id`, `name`, `code`, `is_default`, `created_at`, `upda
 
 CREATE TABLE `likes` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `image_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `image_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -758,7 +750,7 @@ CREATE TABLE `likes` (
 
 CREATE TABLE `migrations` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -770,13 +762,13 @@ CREATE TABLE `migrations` (
 
 CREATE TABLE `notification_logs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `sender` varchar(40) DEFAULT NULL,
-  `sent_from` varchar(40) DEFAULT NULL,
-  `sent_to` varchar(40) DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `notification_type` varchar(40) DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `sender` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sent_from` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sent_to` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci,
+  `notification_type` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -813,14 +805,14 @@ INSERT INTO `notification_logs` (`id`, `user_id`, `sender`, `sent_from`, `sent_t
 
 CREATE TABLE `notification_templates` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `act` varchar(40) DEFAULT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `subj` varchar(255) DEFAULT NULL,
-  `email_body` text DEFAULT NULL,
-  `sms_body` text DEFAULT NULL,
-  `shortcodes` text DEFAULT NULL,
-  `email_status` tinyint(1) NOT NULL DEFAULT 1,
-  `sms_status` tinyint(1) NOT NULL DEFAULT 1,
+  `act` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subj` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_body` text COLLATE utf8mb4_unicode_ci,
+  `sms_body` text COLLATE utf8mb4_unicode_ci,
+  `shortcodes` text COLLATE utf8mb4_unicode_ci,
+  `email_status` tinyint(1) NOT NULL DEFAULT '1',
+  `sms_status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -869,11 +861,11 @@ INSERT INTO `notification_templates` (`id`, `act`, `name`, `subj`, `email_body`,
 
 CREATE TABLE `pages` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `slug` varchar(40) DEFAULT NULL,
-  `tempname` varchar(40) DEFAULT NULL COMMENT 'template name',
-  `secs` text DEFAULT NULL,
-  `is_default` tinyint(1) NOT NULL DEFAULT 0,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tempname` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'template name',
+  `secs` text COLLATE utf8mb4_unicode_ci,
+  `is_default` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -892,8 +884,8 @@ INSERT INTO `pages` (`id`, `name`, `slug`, `tempname`, `secs`, `is_default`, `cr
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(40) DEFAULT NULL,
-  `token` varchar(40) DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -905,24 +897,16 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `plans` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `monthly_price` decimal(28,8) DEFAULT 0.00000000,
-  `yearly_price` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `daily_limit` int(11) NOT NULL DEFAULT 0,
-  `monthly_limit` int(11) DEFAULT 0,
-  `image` varchar(255) DEFAULT NULL,
-  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `monthly_price` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `yearly_price` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `daily_limit` int(11) NOT NULL DEFAULT '0',
+  `monthly_limit` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `plans`
---
-
-INSERT INTO `plans` (`id`, `name`, `title`, `monthly_price`, `yearly_price`, `daily_limit`, `monthly_limit`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Test Plan 1', 'Description Description Description Description Description', NULL, '350.00000000', 20, 500, '[\"20231128_1065791817.svg\"]', 1, '2023-11-28 02:19:26', '2023-11-28 02:19:26');
 
 -- --------------------------------------------------------
 
@@ -932,24 +916,17 @@ INSERT INTO `plans` (`id`, `name`, `title`, `monthly_price`, `yearly_price`, `da
 
 CREATE TABLE `plan_purchases` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `plan_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `daily_limit` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `monthly_limit` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `trx` varchar(40) DEFAULT NULL,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `plan_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `daily_limit` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `monthly_limit` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `purchase_date` date DEFAULT NULL,
   `expired_at` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `plan_purchases`
---
-
-INSERT INTO `plan_purchases` (`id`, `user_id`, `plan_id`, `daily_limit`, `monthly_limit`, `trx`, `amount`, `purchase_date`, `expired_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 20, 500, '6TFSKCU3T3O5', '350.00000000', '2023-11-28', '2024-11-28', '2023-11-28 02:26:01', '2023-11-28 02:26:01');
 
 -- --------------------------------------------------------
 
@@ -959,8 +936,8 @@ INSERT INTO `plan_purchases` (`id`, `user_id`, `plan_id`, `daily_limit`, `monthl
 
 CREATE TABLE `reasons` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -973,9 +950,9 @@ CREATE TABLE `reasons` (
 
 CREATE TABLE `referral_logs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `referee_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `referee_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -988,13 +965,13 @@ CREATE TABLE `referral_logs` (
 
 CREATE TABLE `reports` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED DEFAULT 0,
-  `image_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `reason` text DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT 0,
-  `reviewer_id` int(10) UNSIGNED DEFAULT 0,
-  `admin_id` int(10) UNSIGNED DEFAULT 0,
+  `user_id` int(10) UNSIGNED DEFAULT '0',
+  `image_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `reason` text COLLATE utf8mb4_unicode_ci,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  `reviewer_id` int(10) UNSIGNED DEFAULT '0',
+  `admin_id` int(10) UNSIGNED DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1007,15 +984,15 @@ CREATE TABLE `reports` (
 
 CREATE TABLE `reviewers` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(40) DEFAULT NULL,
-  `username` varchar(40) DEFAULT NULL,
-  `email` varchar(40) NOT NULL,
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `address` text DEFAULT NULL COMMENT 'contains full address',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0: banned, 1: active',
-  `remember_token` varchar(255) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci COMMENT 'contains full address',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: banned, 1: active',
+  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1028,9 +1005,9 @@ CREATE TABLE `reviewers` (
 
 CREATE TABLE `reviewer_password_resets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `token` varchar(20) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1043,11 +1020,11 @@ CREATE TABLE `reviewer_password_resets` (
 
 CREATE TABLE `social_links` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `facebook` varchar(255) DEFAULT NULL,
-  `linkedin` varchar(255) DEFAULT NULL,
-  `instagram` varchar(255) DEFAULT NULL,
-  `twitter` varchar(255) DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `facebook` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `linkedin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `instagram` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `twitter` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1063,7 +1040,7 @@ CREATE TABLE `subscribers` (
   `email` varchar(50) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subscribers`
@@ -1086,7 +1063,7 @@ INSERT INTO `subscribers` (`id`, `email`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `support_attachments` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `support_message_id` int(10) UNSIGNED DEFAULT NULL,
-  `attachment` varchar(255) DEFAULT NULL,
+  `attachment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1099,9 +1076,9 @@ CREATE TABLE `support_attachments` (
 
 CREATE TABLE `support_messages` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `support_ticket_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `message` longtext DEFAULT NULL,
+  `support_ticket_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `admin_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `message` longtext COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1125,14 +1102,14 @@ INSERT INTO `support_messages` (`id`, `support_ticket_id`, `admin_id`, `message`
 
 CREATE TABLE `support_tickets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(11) DEFAULT 0,
-  `name` varchar(40) DEFAULT NULL,
-  `email` varchar(40) DEFAULT NULL,
+  `user_id` int(11) DEFAULT '0',
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` int(20) DEFAULT NULL,
-  `ticket` varchar(40) DEFAULT NULL,
-  `subject` varchar(255) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: Open, 1: Answered, 2: Replied, 3: Closed',
-  `priority` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1 = Low, 2 = medium, 3 = heigh',
+  `ticket` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Open, 1: Answered, 2: Replied, 3: Closed',
+  `priority` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1 = Low, 2 = medium, 3 = heigh',
   `last_reply` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1159,25 +1136,17 @@ INSERT INTO `support_tickets` (`id`, `user_id`, `name`, `email`, `phone`, `ticke
 
 CREATE TABLE `transactions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `post_balance` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `trx_type` varchar(40) DEFAULT NULL,
-  `trx` varchar(40) DEFAULT NULL,
-  `details` varchar(255) DEFAULT NULL,
-  `remark` varchar(40) DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `post_balance` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `trx_type` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `details` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remark` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`id`, `user_id`, `amount`, `charge`, `post_balance`, `trx_type`, `trx`, `details`, `remark`, `created_at`, `updated_at`) VALUES
-(1, 1, '350.00000000', '4.50000000', '350.00000000', '+', '6TFSKCU3T3O5', 'Deposit via Paypal Express', 'deposit', '2023-11-28 02:26:01', '2023-11-28 02:26:01'),
-(2, 1, '350.00000000', '0.00000000', '0.00000000', '-', '6TFSKCU3T3O5', 'Payment for the \'Test Plan 1\' plan.', 'payment', '2023-11-28 02:26:01', '2023-11-28 02:26:01');
 
 -- --------------------------------------------------------
 
@@ -1187,8 +1156,8 @@ INSERT INTO `transactions` (`id`, `user_id`, `amount`, `charge`, `post_balance`,
 
 CREATE TABLE `update_logs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `version` varchar(40) DEFAULT NULL,
-  `update_log` text DEFAULT NULL,
+  `version` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `update_log` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1201,37 +1170,37 @@ CREATE TABLE `update_logs` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `firstname` varchar(40) DEFAULT NULL,
-  `lastname` varchar(40) DEFAULT NULL,
-  `username` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `role` int(1) NOT NULL DEFAULT 1 COMMENT '1 = user , 2 = contributor',
-  `user_status` varchar(255) DEFAULT NULL,
-  `country_code` varchar(40) DEFAULT NULL,
-  `mobile` varchar(40) DEFAULT NULL,
-  `website` varchar(255) DEFAULT NULL,
-  `ref_by` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `balance` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `password` varchar(255) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `cover_photo` varchar(255) DEFAULT NULL,
-  `address` text DEFAULT NULL COMMENT 'contains full address',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0: banned, 1: active',
-  `kyc_data` text DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `kv` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: KYC Unverified, 2: KYC pending, 1: KYC verified',
-  `ev` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: email unverified, 1: email verified',
-  `sv` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: mobile unverified, 1: mobile verified',
-  `profile_complete` tinyint(1) NOT NULL DEFAULT 0,
-  `ver_code` varchar(40) DEFAULT NULL COMMENT 'stores verification code',
+  `firstname` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `lastname` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` int(1) NOT NULL DEFAULT '1' COMMENT '1 = user , 2 = contributor',
+  `user_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `website` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ref_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `balance` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci COMMENT 'contains full address',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: banned, 1: active',
+  `kyc_data` text COLLATE utf8mb4_unicode_ci,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `kv` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: KYC Unverified, 2: KYC pending, 1: KYC verified',
+  `ev` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: email unverified, 1: email verified',
+  `sv` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: mobile unverified, 1: mobile verified',
+  `profile_complete` tinyint(1) NOT NULL DEFAULT '0',
+  `ver_code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'stores verification code',
   `ver_code_send_at` datetime DEFAULT NULL COMMENT 'verification send time',
-  `ts` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0: 2fa off, 1: 2fa on',
-  `tv` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0: 2fa unverified, 1: 2fa verified',
-  `tsc` varchar(255) DEFAULT NULL,
-  `ban_reason` varchar(255) DEFAULT NULL,
-  `is_featured` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `login_by` varchar(40) DEFAULT NULL,
-  `remember_token` varchar(255) DEFAULT NULL,
+  `ts` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: 2fa off, 1: 2fa on',
+  `tv` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0: 2fa unverified, 1: 2fa verified',
+  `tsc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ban_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_featured` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `login_by` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1241,8 +1210,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `role`, `user_status`, `country_code`, `mobile`, `website`, `ref_by`, `balance`, `password`, `image`, `cover_photo`, `address`, `status`, `kyc_data`, `description`, `kv`, `ev`, `sv`, `profile_complete`, `ver_code`, `ver_code_send_at`, `ts`, `tv`, `tsc`, `ban_reason`, `is_featured`, `login_by`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Jhon Doe', '', 'jhondoe', 'jhondoe@gmail.com', 2, '1', NULL, '909090909', 'www.jhondoe.com', 0, '0.00000000', '$2y$10$vE/MTe2KWfdjDneTEa1RDer8DHrNAhf1L6w/GLCsAz0Tb9HLQB/aW', NULL, NULL, '{\"country\":\"India\",\"address\":\"L108 , BHB Colony, Baramunda\",\"state\":\"Odish\",\"zip\":\"751003\",\"city\":\"Bhubaneswar\"}', 1, NULL, 'This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description', 1, 1, 1, 1, '123456', NULL, 0, 1, NULL, NULL, 0, NULL, NULL, '2023-11-02 21:05:08', '2023-11-28 02:26:01'),
-(2, 'Green', 'Stock', 'greenstock', 'greenstockpro@gmail.com', 1, '1', NULL, '7272192805', NULL, 0, '0.00000000', '$2y$10$xuae7IM01mWlhNKp9H6CT.1bZzkAj6U/lvKgogyulnVxxOQ0MO1Ke', NULL, NULL, '{\"address\":\"1444 S Belcher Rd Suite 104\",\"state\":\"FL\",\"zip\":\"33764\",\"country\":null,\"city\":\"CLEARWATER\"}', 1, NULL, 'Green Stock', 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, '2023-11-19 20:12:20', '2023-11-25 21:38:42');
+(1, 'Jhon Doe', '', 'jhondoe', 'jhondoe@gmail.com', 2, '1', NULL, '909090909', 'www.jhondoe.com', 0, 0.00000000, '$2y$10$vE/MTe2KWfdjDneTEa1RDer8DHrNAhf1L6w/GLCsAz0Tb9HLQB/aW', NULL, NULL, '{\"country\":\"India\",\"address\":\"L108 , BHB Colony, Baramunda\",\"state\":\"Odish\",\"zip\":\"751003\",\"city\":\"Bhubaneswar\"}', 1, NULL, 'This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description  This is test description', 1, 1, 1, 1, '123456', NULL, 0, 1, NULL, NULL, 0, NULL, NULL, '2023-11-02 21:05:08', '2023-11-21 12:05:29'),
+(2, 'Green', 'Stock', 'greenstock', 'greenstockpro@gmail.com', 1, '1', NULL, '7272192805', NULL, 0, 0.00000000, '$2y$10$xuae7IM01mWlhNKp9H6CT.1bZzkAj6U/lvKgogyulnVxxOQ0MO1Ke', NULL, NULL, '{\"address\":\"1444 S Belcher Rd Suite 104\",\"state\":\"FL\",\"zip\":\"33764\",\"country\":null,\"city\":\"CLEARWATER\"}', 1, NULL, 'Green Stock', 1, 1, 1, 1, NULL, NULL, 0, 1, NULL, NULL, 0, NULL, NULL, '2023-11-19 20:12:20', '2023-11-25 21:38:42');
 
 -- --------------------------------------------------------
 
@@ -1252,15 +1221,15 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `username`, `email`, `role`,
 
 CREATE TABLE `user_logins` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `user_ip` varchar(40) DEFAULT NULL,
-  `city` varchar(40) DEFAULT NULL,
-  `country` varchar(40) DEFAULT NULL,
-  `country_code` varchar(40) DEFAULT NULL,
-  `longitude` varchar(40) DEFAULT NULL,
-  `latitude` varchar(40) DEFAULT NULL,
-  `browser` varchar(40) DEFAULT NULL,
-  `os` varchar(40) DEFAULT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `user_ip` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `longitude` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `browser` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `os` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1288,8 +1257,7 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 (16, 2, '24.96.50.39', 'St. Petersburg', 'United States', 'US', '-82.6761', '27.787', 'Chrome', 'Mac OS X', '2023-11-25 21:36:28', '2023-11-25 21:36:28'),
 (17, 1, '223.229.200.226', 'Mumbai', 'India', 'IN', '72.8856', '19.0748', 'Chrome', 'Windows 10', '2023-11-26 16:18:44', '2023-11-26 16:18:44'),
 (18, 1, '49.37.116.253', 'Bhubaneswar', 'India', 'IN', '85.8334', '20.2706', 'Chrome', 'Windows 10', '2023-11-27 07:53:00', '2023-11-27 07:53:00'),
-(19, 1, '49.37.116.253', 'Bhubaneswar', 'India', 'IN', '85.8334', '20.2706', 'Chrome', 'Windows 10', '2023-11-27 11:11:57', '2023-11-27 11:11:57'),
-(20, 1, '127.0.0.1', '', '', '', '', '', 'Chrome', 'Windows 10', '2023-11-27 18:43:54', '2023-11-27 18:43:54');
+(19, 1, '49.37.116.253', 'Bhubaneswar', 'India', 'IN', '85.8334', '20.2706', 'Chrome', 'Windows 10', '2023-11-27 11:11:57', '2023-11-27 11:11:57');
 
 -- --------------------------------------------------------
 
@@ -1299,18 +1267,18 @@ INSERT INTO `user_logins` (`id`, `user_id`, `user_ip`, `city`, `country`, `count
 
 CREATE TABLE `withdrawals` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `method_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `user_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `currency` varchar(40) DEFAULT NULL,
-  `rate` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `trx` varchar(40) DEFAULT NULL,
-  `final_amount` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `after_charge` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `withdraw_information` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '1=>success, 2=>pending, 3=>cancel,  ',
-  `admin_feedback` text DEFAULT NULL,
+  `method_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `user_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `rate` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `trx` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `final_amount` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `after_charge` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `withdraw_information` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=>success, 2=>pending, 3=>cancel,  ',
+  `admin_feedback` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1323,16 +1291,16 @@ CREATE TABLE `withdrawals` (
 
 CREATE TABLE `withdraw_methods` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `form_id` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `name` varchar(40) DEFAULT NULL,
-  `min_limit` decimal(28,8) DEFAULT 0.00000000,
-  `max_limit` decimal(28,8) NOT NULL DEFAULT 0.00000000,
-  `fixed_charge` decimal(28,8) DEFAULT 0.00000000,
-  `rate` decimal(28,8) DEFAULT 0.00000000,
+  `form_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `name` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `min_limit` decimal(28,8) DEFAULT '0.00000000',
+  `max_limit` decimal(28,8) NOT NULL DEFAULT '0.00000000',
+  `fixed_charge` decimal(28,8) DEFAULT '0.00000000',
+  `rate` decimal(28,8) DEFAULT '0.00000000',
   `percent_charge` decimal(5,2) DEFAULT NULL,
-  `currency` varchar(40) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `currency` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1646,7 +1614,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `admin_password_resets`
@@ -1700,7 +1668,7 @@ ALTER TABLE `colors`
 -- AUTO_INCREMENT for table `deposits`
 --
 ALTER TABLE `deposits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `donations`
@@ -1766,13 +1734,13 @@ ALTER TABLE `general_settings`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `image_files`
 --
 ALTER TABLE `image_files`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `languages`
@@ -1814,13 +1782,13 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `plan_purchases`
 --
 ALTER TABLE `plan_purchases`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reasons`
@@ -1886,7 +1854,7 @@ ALTER TABLE `support_tickets`
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `update_logs`
@@ -1904,7 +1872,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_logins`
 --
 ALTER TABLE `user_logins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `withdrawals`

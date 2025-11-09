@@ -14,7 +14,7 @@ class Image extends Model
     protected $casts = [
         'tags'        => 'array',
         'extensions'  => 'array',
-        'colors'      => 'array',
+        'category_id' => 'array',
     ];
 
     public function user()
@@ -29,6 +29,11 @@ class Image extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function categoryName($ids)
+    {
+       return Category::whereIn('id', $ids)->pluck('name')->toArray();
     }
 
     public function likes()

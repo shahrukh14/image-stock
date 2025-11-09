@@ -52,11 +52,9 @@
                                             <div class="col-12 mb-3">
                                                 <label class="form-label required">@lang('Category')</label>
                                                 <div class="form--select">
-                                                    <select class="form-select" name="category" required>
-                                                        <option value="">@lang('Select One')</option>
+                                                    <select class="form-select form--control select2-tokenize" name="category[]" multiple="multiple" required>
                                                         @foreach ($categories as $category)
-                                                            <option value="{{ $category->id }}" @selected($category->id == old('category', @$image->category_id))>
-                                                                {{ __($category->name) }}</option>
+                                                            <option value="{{ $category->id }}"  @selected(@$image &&  in_array($category->id, $image->category_id))> {{ __($category->name) }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -65,32 +63,36 @@
                                             
                                             <div class="col-12 mb-3">
                                                 <label class="form-label">@lang('Extensions')</label>
-                                                <select class="form-select form--control select2-tokenize" name="extensions[]" multiple="multiple" required>
-                                                    @foreach ($extensions as $ext)
-                                                        <option value="{{ $ext }}" @selected(@$image && in_array($ext, $image->extensions))>
-                                                            {{ __(strtoupper($ext)) }}</option>
-                                                    @endforeach
-
-                                                    @if (old('extensions'))
-                                                        @foreach (old('extensions') as $oldExtension)
-                                                            <option value="{{ $oldExtension }}" selected>
-                                                                {{ __(ucfirst($oldExtension)) }}
-                                                            </option>
+                                                <div class="form--select">
+                                                    <select class="form-select form--control select2-tokenize" name="extensions[]" multiple="multiple" required>
+                                                        @foreach ($extensions as $ext)
+                                                            <option value="{{ $ext }}" @selected(@$image && in_array($ext, $image->extensions))>
+                                                                {{ __(strtoupper($ext)) }}</option>
                                                         @endforeach
-                                                    @endif
-                                                </select>
+
+                                                        @if (old('extensions'))
+                                                            @foreach (old('extensions') as $oldExtension)
+                                                                <option value="{{ $oldExtension }}" selected>
+                                                                    {{ __(ucfirst($oldExtension)) }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
                                             </div>
 
                                             <div class="col-12 mb-3">
                                                 <label class="form-label">@lang('Tags (maximum 10 tags)')</label>
-                                                <select class="form-select form--control select2-auto-tokenize" name="tags[]" multiple="multiple" required>
-                                                    @foreach (old('tags', $image->tags ?? []) as $oldTag)
-                                                        <option value="{{ $oldTag }}" selected> {{ __(ucfirst($oldTag)) }} </option>
-                                                    @endforeach
-                                                    @foreach ($tags ?? [] as $tag)
-                                                        <option value="{{ $tag }}"> {{ __(ucfirst($tag)) }} </option>
-                                                    @endforeach
-                                                </select>
+                                                <div class="form--select">
+                                                    <select class="form-select form--control select2-auto-tokenize" name="tags[]" multiple="multiple" required>
+                                                        @foreach (old('tags', $image->tags ?? []) as $oldTag)
+                                                            <option value="{{ $oldTag }}" selected> {{ __(ucfirst($oldTag)) }} </option>
+                                                        @endforeach
+                                                        @foreach ($tags ?? [] as $tag)
+                                                            <option value="{{ $tag }}"> {{ __(ucfirst($tag)) }} </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -402,10 +404,10 @@
                 error = true;
                 notify('error', `@lang('The title field is required')`);
             }
-            if (!$('select[name=category]').val()) {
-                error = true;
-                notify('error', `@lang('The category field is required')`);
-            }
+            // if (!$('select[name=category]').val()) {
+            //     error = true;
+            //     notify('error', `@lang('The category field is required')`);
+            // }
             if ($('select[name=is_free]').val() == '') {
                 error = true;
                 notify('error', `@lang('The is free field is required')`);

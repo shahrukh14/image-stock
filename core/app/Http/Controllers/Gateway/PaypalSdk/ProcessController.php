@@ -27,7 +27,7 @@ class ProcessController extends Controller
         // Creating an environment
         $clientId = $paypalAcc->clientId;
         $clientSecret = $paypalAcc->clientSecret;
-        $environment = new ProductionEnvironment($clientId, $clientSecret);
+        $environment = new SandboxEnvironment($clientId, $clientSecret);
         $client = new PayPalHttpClient($environment);
         $request = new OrdersCreateRequest();
         $request->prefer('return=representation');
@@ -36,7 +36,7 @@ class ProcessController extends Controller
             "purchase_units" => [[
                 "reference_id" => $deposit->trx,
                 "amount" => [
-                    "value" => round($deposit->final_amo, 2),
+                    "value" => (string) round($deposit->final_amo, 2),
                     "currency_code" => $deposit->method_currency
                 ]
             ]],
@@ -55,28 +55,28 @@ class ProcessController extends Controller
             $send['redirect'] = true;
             $send['redirect_url'] = $response->result->links[1]->href;
         } catch (HttpException $ex) {
+            dd($ex);
             $send['error'] = true;
             $send['message'] = 'Failed to process with api';
         }
 
         return json_encode($send);
     }
+    
 
     public function ipn()
     {
         $request = new OrdersCaptureRequest($_GET['token']);
         $request->prefer('return=representation');
-
         try {
             $deposit = Deposit::where('btc_wallet', $_GET['token'])->where('status', Status::PAYMENT_INITIATE)->orderBy('id', 'DESC')->with('donation.image')->first();
-
             $failedRedirectUrl  = $deposit->gatewayRedirectUrl();
             $successRedirectUrl = $deposit->gatewayRedirectUrl(true);
 
             $paypalAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
             $clientId = $paypalAcc->clientId;
             $clientSecret = $paypalAcc->clientSecret;
-            $environment = new ProductionEnvironment($clientId, $clientSecret);
+            $environment = new SandboxEnvironment($clientId, $clientSecret);
             $client = new PayPalHttpClient($environment);
 
             $response = $client->execute($request);
@@ -86,7 +86,6 @@ class ProcessController extends Controller
                 $deposit->save();
 
                 PaymentController::userDataUpdate($deposit);
-
                if($deposit->donation_id){
                         $notify[] = ['success', 'Donation successfully sent'];
                     }else{
