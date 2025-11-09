@@ -51,12 +51,13 @@ class ImageController extends Controller
     {
         $pageTitle  = "Upload Image";
         $categories = Category::active()->orderBy('name')->get();
+        $colors     = Color::all();
         $images = Image::approved()
             ->inrandomOrder()
             ->pluck('tags')
             ->toArray();
         $tags = array_slice(array_unique(array_merge(...$images)), 0, 50);
-        return view($this->activeTemplate . 'user.image.upload', compact('pageTitle', 'categories', 'tags'));
+        return view($this->activeTemplate . 'user.image.upload', compact('pageTitle', 'categories', 'colors', 'tags'));
     }
 
 
@@ -82,13 +83,13 @@ class ImageController extends Controller
             ]);
         }
 
-        // $category = Category::active()->find($request->category);
-        // if (!$category) {
-        //     return response()->json([
-        //         'status' => false,
-        //         'error' => 'Category not found'
-        //     ]);
-        // }
+        $category = Category::active()->find($request->category);
+        if (!$category) {
+            return response()->json([
+                'status' => false,
+                'error' => 'Category not found'
+            ]);
+        }
 
         $tagCount =  count($request->tags);
 
@@ -274,7 +275,7 @@ class ImageController extends Controller
             $images = $images->$scope();
         }
 
-        return $images->withSum('files as total_downloads', 'total_downloads')->orderBy('id', 'desc')->paginate(getPaginate(21));
+        return $images->withSum('files as total_downloads', 'total_downloads')->with('category')->orderBy('id', 'desc')->paginate(getPaginate(21));
     }
 
     protected function processImageData($image, $request, $isUpdate = false)
@@ -393,7 +394,7 @@ class ImageController extends Controller
         if ($isUpdate) {
             $image->status      = Status::IMAGE_PENDING;
         }
-        $image->status     = $general->auto_approval ? Status::IMAGE_APPROVED : Status::IMAGE_PENDING;
+        $image->status      = $general->auto_approval ? Status::IMAGE_APPROVED : Status::IMAGE_PENDING;
         $image->tags       = $request->tags;
         $image->extensions = $request->extensions;
         $image->colors     = $request->colors;
@@ -438,7 +439,7 @@ class ImageController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'category'       => 'required|array',
+            'category'       => 'required|integer|gt:0',
             'photo'          => [$photoValidation, new FileTypeValidate(['jpg', 'png', 'jpeg'])],
             'file'           => 'nullable|array',
             'file.*'         => [$fileValidation, new FileTypeValidate(['zip'])],

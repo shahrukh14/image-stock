@@ -20,7 +20,7 @@ style="opacity: 1">
                 </form>
                 <ul role="list" class="header-nav-menu-list">
                     <li class="header-nav-list-item"><a href="{{ route('home') }}" aria-current="page" class="header-nav-link w-nav-link w--current" style="max-width: 1364px">Home</a></li>
-                    <li class="header-nav-list-item"><a href="{{ route('search', ['type'=>'image'])}}" class="header-nav-link w-nav-link"  style="max-width: 1364px">Search</a></li>
+                    <li class="header-nav-list-item"><a href="{{ route('search')}}" class="header-nav-link w-nav-link"  style="max-width: 1364px">Search</a></li>
                     <li class="header-nav-list-item"><a href="{{ route('photos')}}" class="header-nav-link w-nav-link" style="max-width: 1364px">Photos</a></li>
                     <li class="header-nav-list-item"><a href="#" class="header-nav-link w-nav-link" style="max-width: 1364px">Vectors</a></li>
                     <li class="header-nav-list-item"><a href="#" class="header-nav-link w-nav-link" style="max-width: 1364px">Videos</a></li>

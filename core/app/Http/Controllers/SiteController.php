@@ -481,14 +481,12 @@ class SiteController extends Controller
         $imageCount = $getImages['imageCount'];
         $getCollections = $this->getCollections($request, true);
         $collectionCount = $getCollections['collectionCount'];
-        $categories = Category::active()->get();
-        $colors = Color::orderBy('id', 'DESC')->get();
-        
-        // $categories = Category::active()->whereHas('images', function ($query) {
-        //     $query->approved()->hasActiveFiles();
-        // })->get();
 
-        return view($this->activeTemplate . 'photos', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
+        $colors = Color::orderBy('id', 'DESC')->get();
+        $categories = Category::active()->whereHas('images', function ($query) {
+            $query->approved()->hasActiveFiles();
+        })->get();
+        return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
     }
 
     private function getPhotos($request, $onlyCount = false){
@@ -510,17 +508,11 @@ class SiteController extends Controller
             $file->active()->premium();
         }]);
 
-        // if ($request->category) {
-        //     $category = $request->category;
-        //     $images = $images->whereHas('category', function ($query) use ($category) {
-        //         $query->where('slug', $category)->where('status', Status::ENABLE);
-        //     });
-        // }
-
         if ($request->category) {
-            $categoryId = Category::where('slug', $request->category)->first();
-            $category = $categoryId->id;
-            $images->whereJsonContains('category_id', (string)$category);
+            $category = $request->category;
+            $images = $images->whereHas('category', function ($query) use ($category) {
+                $query->where('slug', $category)->where('status', Status::ENABLE);
+            });
         }
 
         if ($request->has('tag') && $request->tag != 'all') {
@@ -593,7 +585,12 @@ class SiteController extends Controller
     }
 
     public function search(Request $request){
-        
+        if($request->page){
+            $page = $request->page+1;
+        }else{
+            $page = 2;
+        }
+
         $pageTitle = "Search";
         $images = collect([]);
         $collections = collect([]);
@@ -610,8 +607,11 @@ class SiteController extends Controller
             $collections = $getCollections['collections'];
             $collectionCount = $getCollections['collectionCount'];
         }
-        $categories = Category::active()->get();
-        return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories'));
+        $colors = Color::orderBy('id', 'DESC')->get();
+        $categories = Category::active()->whereHas('images', function ($query) {
+            $query->approved()->hasActiveFiles();
+        })->get();
+        return view($this->activeTemplate . 'image_search', compact('pageTitle','page' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
     }
 
     private function getImages($request, $onlyCount = false)
@@ -626,7 +626,6 @@ class SiteController extends Controller
 
     private function searchImages($request)
     {
-
         $images = Image::approved()->where(function ($q) {
             $q->where('user_id', auth()->id())->orWhereHas('category', function ($category) {
                 $category->active();
@@ -634,20 +633,12 @@ class SiteController extends Controller
         })->with('likes', 'user')->withCount(['files as premium' => function ($file) {
             $file->active()->premium();
         }]);
-        
-
-        // if ($request->category) {
-        //     $category = $request->category;
-        //     $images = $images->whereHas('category', function ($query) use ($category) {
-        //         $query->where('slug', $category)->where('status', Status::ENABLE);
-        //     });
-        // }
-
 
         if ($request->category) {
-            $categoryId = Category::where('slug', $request->category)->first();
-            $category = $categoryId->id;
-            $images->whereJsonContains('category_id', (string)$category);
+            $category = $request->category;
+            $images = $images->whereHas('category', function ($query) use ($category) {
+                $query->where('slug', $category)->where('status', Status::ENABLE);
+            });
         }
 
         if ($request->has('tag') && $request->tag != 'all') {

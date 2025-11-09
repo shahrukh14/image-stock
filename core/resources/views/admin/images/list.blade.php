@@ -37,10 +37,8 @@
 
                                         <td>
                                             <span class="fw-bold">
-                                                {{-- {{ __(@$image->category->name) }} --}}
-                                                {{ (implode(' | ', $image->categoryName($image->category_id))) }}
+                                                {{ __(@$image->category->name) }}
                                             </span>
-                                            
                                         </td>
                                         <td>
                                             <span class="d-block">{{ __(@$image->user->fullname) }}</span>

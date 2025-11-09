@@ -27,9 +27,10 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>@lang('Category')</label>
-                                            <select class="form-control select2-tokenize" name="category[]"  multiple="multiple" required>
+                                            <select class="form-control" name="category" required>
+                                                <option value="" disabled>@lang('Select One')</option>
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}" @selected($image->category_id && in_array($category->id, $image->category_id))>{{ __($category->name) }}</option>
+                                                    <option value="{{ $category->id }}" @selected($category->id == $image->category_id)>{{ __($category->name) }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
