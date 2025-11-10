@@ -84,7 +84,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="loginBtn planSubmitConfirm" type="submit">@lang('Buy Now') <span class="plan_id"></span> </button>
-                            <button class="btn btn--dark closeButton" data-bs-dismiss="modal" type="button">@lang('Close')</button>
+                            <button class="loginBtn closeButton" data-bs-dismiss="modal" type="button">@lang('Close')</button>
                         </div>
                     </form>
                 @else

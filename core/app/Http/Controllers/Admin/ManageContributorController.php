@@ -14,7 +14,13 @@ class ManageContributorController extends Controller
     public function all()
     {
         $pageTitle = 'All Contributor';
-        $contributors = User::where('user_status', 0)->orderBy('id', 'desc')->paginate(getPaginate());
+        $contributors = User::where('role', 2)->where('user_status', 2)->orderBy('id', 'desc')->paginate(getPaginate());
+        return view('admin.contributors', compact('pageTitle', 'contributors'));
+    }
+
+    public function pending(){
+        $pageTitle = 'Pening Applications';
+        $contributors = User::where('user_status', 1)->where('role',1)->orderBy('id', 'desc')->paginate(getPaginate());
         return view('admin.contributors', compact('pageTitle', 'contributors'));
     }
 
@@ -26,13 +32,20 @@ class ManageContributorController extends Controller
         }else{
             $role = 1;
         }
-        $contributor->user_status = $contributor->user_status ? 0 : 1;
+
+        if($contributor->user_status == 1){
+            $user_status = 2;
+        }else{
+            $user_status = 1;
+        }
+
+        $contributor->user_status = $user_status;
         $contributor->role = $role;
         $contributor->save();
 
         $notification = 'Contributor Approved successfully';
-        if ($contributor->status) {
-            $notification = 'contributor UnApproved Successfully';
+        if ($contributor->user_status == 1) {
+            $notification = 'contributor Rejected Successfully';
         }
 
         $notify[] = ['success', $notification];

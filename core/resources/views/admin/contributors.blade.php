@@ -20,7 +20,7 @@
                                 @forelse($contributors as $contributor)
                                     <tr>
                                         <td>{{ $contributors->firstItem() + $loop->index }}</td>
-                                        <td>{{ __($contributor->name) }}</td>
+                                        <td>{{ __($contributor->firstname ." ".$contributor->lastname) }}</td>
                                         <td>
                                             {{ $contributor->username }}
                                         </td>
@@ -29,7 +29,7 @@
                                         </td>
                                         <td>
                                             <span>
-                                                @if($contributor->user_status == 0)
+                                                @if($contributor->user_status == 1)
                                                 <span class="badge badge--warning">Pending</span>
                                                 @else
                                                 <span class="badge badge--success">Approved</span>
@@ -37,22 +37,21 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-outline--dark" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="las la-ellipsis-v"></i>@lang('Action')</button>
+                                            @if($contributor->user_status == 1)
+                                            <button  class="btn btn-sm btn-outline--success confirmationBtn" data-question="@lang('Are you sure, you want to Approve this Application?')" data-action="{{ route('admin.contributors.status', $contributor->id) }}">
+                                                <i class="las la-check"></i>@lang('Approve')
+                                            </button>
 
-                                            <div class="dropdown-menu">
-                                                <a href="javascript:void(0)" class="dropdown-item cuModalBtn editBtn" data-modal_title="@lang('Update Reason')" data-resource="{{ $contributor }}"><i class="las la-pencil-alt"></i> @lang('Edit')</a>
+                                            <button  class="btn btn-sm btn-outline--danger confirmationBtn" data-question="@lang('Are you sure, you want to Reject this Application?')" data-action="{{ route('admin.contributors.status', $contributor->id) }}">
+                                                <i class="las la-ban"></i>@lang('Reject')
+                                            </button>
+                                            @endif
 
-                                                @if ($contributor->user_status == 0)
-                                                    <a href="javascript:void(0)" class="dropdown-item confirmationBtn" data-question="@lang('Are you sure, you want to Approve this contributor?')" data-action="{{ route('admin.contributors.status', $contributor->id) }}"><i class="las la-check"></i> @lang('Approve')</a>
-
-                                                    {{-- <a href="{{ route('admin.contributors.login', $contributor->id) }}" class="dropdown-item" target="_blank"><i class="las la-sign-in-alt"></i> @lang('Login')</a> --}}
-                                                @else
-                                                    <a href="javascript:void(0)" class="dropdown-item confirmationBtn" data-question="@lang('Are you sure, you want to Un Approve this contributor?')" data-action="{{ route('admin.contributors.status', $contributor->id) }}"><i class="las la-check-circle"></i> @lang('UnApprove')</a>
-                                                @endif
-
-                                            </div>
-
+                                            @if($contributor->user_status == 2)
+                                            <a href="{{ route('admin.users.detail', $contributor->id) }}" class="btn btn-sm btn-outline--primary">
+                                                <i class="la la-desktop"></i>@lang('Details')
+                                            </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
@@ -115,9 +114,9 @@
     <x-confirmation-modal />
 @endsection
 
-@push('breadcrumb-plugins')
-    <button class="btn btn-outline--primary btn-sm cuModalBtn addBtn" data-modal_title="@lang('Add Reason')"><i class="las la-plus"></i>@lang('Add New')</button>
-@endpush
+{{-- @push('breadcrumb-plugins')
+    <button class="btn btn-outline--primary btn-sm cuModalBtn addBtn" data-modal_title="@lang('Add New')"><i class="las la-plus"></i>@lang('Add New')</button>
+@endpush --}}
 
 @push('style')
     <style>

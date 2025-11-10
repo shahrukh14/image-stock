@@ -481,12 +481,13 @@ class SiteController extends Controller
         $imageCount = $getImages['imageCount'];
         $getCollections = $this->getCollections($request, true);
         $collectionCount = $getCollections['collectionCount'];
-
+        $categories = Category::active()->get();
         $colors = Color::orderBy('id', 'DESC')->get();
-        $categories = Category::active()->whereHas('images', function ($query) {
-            $query->approved()->hasActiveFiles();
-        })->get();
-        return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
+        
+        // $categories = Category::active()->whereHas('images', function ($query) {
+        //     $query->approved()->hasActiveFiles();
+        // })->get();
+        return view($this->activeTemplate . 'photos', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
     }
 
     private function getPhotos($request, $onlyCount = false){
@@ -500,19 +501,21 @@ class SiteController extends Controller
 
     private function searcPhotos($request)
     {
-        $images = Image::approved()->where(function ($q) {
-            $q->where('user_id', auth()->id())->orWhereHas('category', function ($category) {
-                $category->active();
-            });
-        })->with('likes', 'user')->withCount(['files as premium' => function ($file) {
+        $images = Image::approved()->with('likes', 'user')->withCount(['files as premium' => function ($file) {
             $file->active()->premium();
         }]);
 
+        // if ($request->category) {
+        //     $category = $request->category;
+        //     $images = $images->whereHas('category', function ($query) use ($category) {
+        //         $query->where('slug', $category)->where('status', Status::ENABLE);
+        //     });
+        // }
+
         if ($request->category) {
-            $category = $request->category;
-            $images = $images->whereHas('category', function ($query) use ($category) {
-                $query->where('slug', $category)->where('status', Status::ENABLE);
-            });
+            $categoryId = Category::where('slug', $request->category)->first();
+            $category = $categoryId->id;
+            $images->whereJsonContains('category_id', (string)$category);
         }
 
         if ($request->has('tag') && $request->tag != 'all') {
@@ -585,12 +588,7 @@ class SiteController extends Controller
     }
 
     public function search(Request $request){
-        if($request->page){
-            $page = $request->page+1;
-        }else{
-            $page = 2;
-        }
-
+        
         $pageTitle = "Search";
         $images = collect([]);
         $collections = collect([]);
@@ -607,11 +605,8 @@ class SiteController extends Controller
             $collections = $getCollections['collections'];
             $collectionCount = $getCollections['collectionCount'];
         }
-        $colors = Color::orderBy('id', 'DESC')->get();
-        $categories = Category::active()->whereHas('images', function ($query) {
-            $query->approved()->hasActiveFiles();
-        })->get();
-        return view($this->activeTemplate . 'image_search', compact('pageTitle','page' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
+        $categories = Category::active()->get();
+        return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories'));
     }
 
     private function getImages($request, $onlyCount = false)
@@ -626,19 +621,24 @@ class SiteController extends Controller
 
     private function searchImages($request)
     {
-        $images = Image::approved()->where(function ($q) {
-            $q->where('user_id', auth()->id())->orWhereHas('category', function ($category) {
-                $category->active();
-            });
-        })->with('likes', 'user')->withCount(['files as premium' => function ($file) {
+
+        $images = Image::approved()->with('likes', 'user')->withCount(['files as premium' => function ($file) {
             $file->active()->premium();
         }]);
+        
+
+        // if ($request->category) {
+        //     $category = $request->category;
+        //     $images = $images->whereHas('category', function ($query) use ($category) {
+        //         $query->where('slug', $category)->where('status', Status::ENABLE);
+        //     });
+        // }
+
 
         if ($request->category) {
-            $category = $request->category;
-            $images = $images->whereHas('category', function ($query) use ($category) {
-                $query->where('slug', $category)->where('status', Status::ENABLE);
-            });
+            $categoryId = Category::where('slug', $request->category)->first();
+            $category = $categoryId->id;
+            $images->whereJsonContains('category_id', (string)$category);
         }
 
         if ($request->has('tag') && $request->tag != 'all') {
@@ -665,14 +665,20 @@ class SiteController extends Controller
         }
 
         if ($request->has('filter')) {
+
+            $category = Category::where('slug', $request->filter)->first();
+            if($category){
+                $categoryId = $category->id;
+            }else{
+                $categoryId = '';
+            }
+
             $filter = $request->filter;
-            $images = $images->where(function ($query) use ($filter) {
-                $query->where('title', 'like', "%$filter%")->orWhere(function ($query) use ($filter) {
+            $images = $images->where(function ($query) use ($filter, $categoryId) {
+                $query->where('title', 'like', "%$filter%")->orWhere(function ($query) use ($filter, $categoryId) {
                     $query->whereJsonContains('tags', $filter);
-                })->orWhere(function ($query) use ($filter) {
-                    $query->whereHas('category', function ($category) use ($filter) {
-                        $category->where('name', 'like', "%$filter%");
-                    })->orWhereHas('user', function ($user) use ($filter) {
+                })->orWhere(function ($query) use ($filter, $categoryId) {
+                    $query->orWhereJsonContains('category_id',(string)$categoryId)->orWhereHas('user', function ($user) use ($filter) {
                         $user->where('username', 'like', "%$filter%")
                             ->orWhere('firstname', 'like', "%$filter%")
                             ->orWhere('lastname', 'like', "%$filter%");

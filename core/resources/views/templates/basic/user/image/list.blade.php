@@ -34,7 +34,8 @@
                                                 @lang('Category :')
                                             </div>
                                             <div class="image-information__item-right">
-                                                {{ __($image->category->name) }}
+                                                {{-- {{ __($image->category->name) }} --}}
+                                                {{ (implode(' | ', $image->categoryName($image->category_id))) }}
                                             </div>
                                         </div>
                                     </li>

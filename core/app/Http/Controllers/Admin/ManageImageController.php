@@ -66,7 +66,7 @@ class ManageImageController extends Controller
 
     public function details($id)
     {
-        $image      = Image::with('category', 'user', 'files')->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
+        $image      = Image::with('user', 'files')->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
         $pageTitle  = 'Image Details - ' . $image->title;
         $categories = Category::active()->orderBy('name', 'asc')->get();
         $colors      = Color::orderBy('name', 'desc')->get();
@@ -89,7 +89,7 @@ class ManageImageController extends Controller
         $colors = Color::select('color_code')->pluck('color_code')->toArray() ?? [];
 
         $request->validate([
-            'category'      => 'required|integer|gt:0',
+            'category'      => 'required|array',
             'title'         => 'required|string|max:40',
             'resolution'    => 'required|array',
             'resolution.*'    => 'required|string|max:40',
@@ -112,12 +112,12 @@ class ManageImageController extends Controller
         ]);
 
         $category = Category::active()->find($request->category);
+
         if (!$category) {
             $notify[] = ['error', 'Category not found'];
             return back()->withNotify($notify);
         }
-
-        $image = Image::with('category')->findOrFail($id);
+        $image = Image::findOrFail($id);
         $image->category_id   = $request->category;
         $image->title         = $request->title;
         $image->tags          = $request->tags;
@@ -173,6 +173,6 @@ class ManageImageController extends Controller
         if ($scope) {
             $images = Image::$scope();
         }
-        return  $images->searchAble(['title', 'category:name', 'user:username,firstname,lastname', 'collections:title', 'admin:username,name', 'reviewer:username,name'])->withSum('files as total_downloads', 'total_downloads')->orderBy('id', 'desc')->with('category', 'user')->paginate(getPaginate());
+        return  $images->searchAble(['title', 'category:name', 'user:username,firstname,lastname', 'collections:title', 'admin:username,name', 'reviewer:username,name'])->withSum('files as total_downloads', 'total_downloads')->orderBy('id', 'desc')->with('user')->paginate(getPaginate());
     }
 }

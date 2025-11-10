@@ -14,11 +14,27 @@
                     </a>
                 </li>
 
-                <li class="sidebar-menu-item {{ menuActive('admin.contributors.*') }}">
-                    <a class="nav-link" href="{{ route('admin.contributors.all') }}">
-                        <i class="menu-icon las la-user-cog"></i>
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a class="{{ menuActive('admin.contributors*', 3) }}" href="javascript:void(0)">
+                        <i class="menu-icon la la-server"></i>
                         <span class="menu-title">@lang('Manage Contributor')</span>
                     </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.contributors*', 2) }}">
+                        <ul>
+                            <li class="sidebar-menu-item {{ menuActive('admin.contributors.all') }}">
+                                <a class="nav-link" href="{{ route('admin.contributors.all') }}">
+                                    <i class="menu-icon las la-list"></i>
+                                    <span class="menu-title">@lang('All Contributors')</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-menu-item {{ menuActive('admin.contributors.pending') }}">
+                                <a class="nav-link" href="{{ route('admin.contributors.pending') }}">
+                                    <i class="menu-icon las la-list"></i>
+                                    <span class="menu-title">@lang('Peding Applications')</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="sidebar-menu-item {{ menuActive('admin.ads.all') }}">

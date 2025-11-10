@@ -42,11 +42,6 @@ Route::middleware('admin')->group(function () {
         Route::post('request-report', 'reportSubmit');
 
         Route::get('download-attachments/{file_hash}', 'downloadAttachment')->name('download.attachment');
-       
-        
-
-
-
 
     });
 
@@ -61,6 +56,7 @@ Route::middleware('admin')->group(function () {
 
     Route::controller('ManageContributorController')->name('contributors.')->prefix('contributors')->group(function () {
         Route::get('all', 'all')->name('all');
+        Route::get('pending', 'pending')->name('pending');
         Route::post('status/{id}', 'updateStatus')->name('status');
         Route::post('save/{id?}', 'save')->name('save');
 

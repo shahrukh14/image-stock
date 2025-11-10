@@ -1,13 +1,3 @@
-@php
-    $extensions = getFileExt('file_extensions');
-    $imgs = App\Models\Image::approved()
-        ->inrandomOrder()
-        ->limit(6)
-        ->pluck('tags')
-        ->toArray();
-    $tags = array_slice(array_unique(array_merge(...$imgs)), 0, 6);
-    
-@endphp
 @extends($activeTemplate . 'layouts.frontend')
 @section('content')
 <div class="page-wrapper">
@@ -52,54 +42,20 @@
                     </div>
                   </div>
                 </div>
-
-                {{-- Category Filter start --}}
                 <h3>Category <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
                 <div>
                   @if ($categories->count())
                     <div>
                       @foreach ($categories as $category)
                       <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param"  data-param="category" data-search_type="single" data-param_value="{{ $category->slug}}" >{{ $category->name }}</span>
-                        {{-- <a href="{{ route('search', ['type' => 'image', 'category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a> --}}
+                        <span class="color-badge color-selector search-param" ></span>
+                        <a href="{{ route('photos', ['category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
                       </div>
+                        {{-- <span class="color-selector search-param" id="color-{{ $color->id }}" data-param="color" data-param_value="{{ $color->color_code }}" data-search_type="single" border: 1px solid @if ($color->color_code != 'ffffff' && $color->color_code != 'fff') #{{ $color->color_code }}; @else #bac8d3 @endif">{{ $color->name }}</span> --}}
                       @endforeach
                     </div>
                   @endif
-                </div> 
-                {{-- Category Filter end --}}
-                
-                {{-- Tags Filter start --}}
-                <h3>Tags <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
-                <div>
-                    <div>
-                      @if (request()->tag && !in_array(request()->tag, $tags))
-                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param"data-param="tag" data-search_type="single" data-param_value="{{ request()->tag }}">{{ __(request()->tag) }}</span>
-                      </div>
-                      @endif
-
-                      @foreach ($tags as $tag)
-                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param" data-param="tag" data-search_type="single"  data-param_value="{{ $tag }}" >{{ $tag }}</span>
-                      </div>
-                      @endforeach
-                    </div>
-                </div> 
-                {{-- Tags Filter end --}}
-
-                {{-- Extenstion Filter start --}}
-                {{-- <h3>Extenstions <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
-                <div>
-                    <div>
-                      @foreach ($extensions as $exts)
-                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param" data-param="extension" data-search_type="single"  data-param_value="{{ $exts }}" >{{ $exts }}</span>
-                      </div>
-                      @endforeach
-                    </div>
-                </div> --}}
-                {{-- Extenstion Filter end --}}
+                </div>              
               </div>
             
             @php echo getAds('728x90', 2);@endphp
@@ -179,20 +135,7 @@
                 </div>
                 <div role="navigation"  aria-label="List" class="w-pagination-wrapper pagination-wrapper"></div>
               </div>
-              
-              
-                 
-              {{-- <div style="text-align: right">
-                @if($page > 2)
-                  <a href="{{$previousUrl}}" class="btn-btn"><< Previous</a>
-                @endif
-
-                @if(count($images) > 0)
-                  <a href="{{$nextUrl}}" class="btn-btn">Next >></a>
-                @endif
-              </div> --}}
             </div>
-           
           </div>
         </div>
       </div>
@@ -205,13 +148,6 @@
 @endsection
 
 <style>
-
-.loginBtn{
-      padding: 2px 12px;
-      border-radius: 20px;
-      border: 2px solid;
-      text-decoration: none;
-  }
 
 .btn-btn{
   text-decoration: none;
