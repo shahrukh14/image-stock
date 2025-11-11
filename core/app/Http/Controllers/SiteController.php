@@ -44,7 +44,7 @@ class SiteController extends Controller
             $file->active()->premium();
         }])->with('user', 'likes')->limit(24)->get();
 
-        $blogs = Blog::with('Category')->orderBy('id','DESC')->limit(3)->get();
+        $blogs = Blog::with('Category')->orderBy('date','DESC')->limit(3)->get();
         return view($this->activeTemplate . 'home', compact('pageTitle', 'sections', 'images','blogs'));
     }
 

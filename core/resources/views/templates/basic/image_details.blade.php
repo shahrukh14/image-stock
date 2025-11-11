@@ -39,15 +39,9 @@
                 <div class="w-layout-grid grid-2-columns product-page">
                     <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="inner-container _896px _100---tablet">
                         <div style="opacity: 1;" class="position-relative">
-                            <div class="image-wrapper product-image"><img alt="{{$image->title}}" 
-                                    src="{{ imageUrl(getFilePath('stockImage'), $image->image_name) }}"
-                                    style="transform: translate3d(0px, 0px, 0px) scale3d(1.1, 1.1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" sizes="(max-width: 479px) 92vw, (max-width: 991px) 94vw, (max-width: 1439px) 66vw, 895.9896240234375px"
-                                    class="image background-image">
+                            <div class="image-wrapper product-image">
+                                <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $image->image_name) }}" class="image background-image">
                             </div>
-                            <a href="https://stocktemplate.webflow.io/product/3d-render-of-beautiful-black-waves-background#" class="media-ligthbox w-inline-block w-lightbox" aria-label="open lightbox"  aria-haspopup="dialog"></a>
-                            <a href="https://stocktemplate.webflow.io/product/3d-render-of-beautiful-black-waves-background#" class="video-ligthbox-wrapper w-inline-block w-condition-invisible w-dyn-bind-empty w-lightbox" aria-label="open lightbox" aria-haspopup="dialog">
-                                <img src="./3D render of beautiful black waves background - Stock X - Webflow Ecommerce website template_files/6434d7296fe32077080d737b_play-button-large-icon-stock-x-webflow-template.svg" alt="Play Button - Stock X Webflow Template">
-                            </a>
                         </div>
                     </div>
                     <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;" class="product-page-main-content">

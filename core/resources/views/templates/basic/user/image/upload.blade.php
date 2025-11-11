@@ -155,7 +155,7 @@
                                                         </div>
 
                                                         <div class="price-div col-md-6 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
-                                                            <label class="form-label">@lang('Standard Price')
+                                                            <label class="form-label">@lang('Standard License')
                                                                 (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
                                                                 @lang(' in each download'))
@@ -172,7 +172,7 @@
                                                         </div>
 
                                                         <div class="price-div col-md-6 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
-                                                            <label class="form-label">@lang('Extended Price')
+                                                            <label class="form-label">@lang('Extended License')
                                                                 (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
                                                                 @lang(' in each download'))
@@ -238,7 +238,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="price-div col-6 mb-3">
-                                                            <label class="form-label">@lang('Standard Price')
+                                                            <label class="form-label">@lang('Standard License')
                                                                 (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
                                                                 @lang(' in each download'))
@@ -253,7 +253,7 @@
                                                         </div>
 
                                                         <div class="price-div col-6 mb-3">
-                                                            <label class="form-label">@lang('Extended Price')
+                                                            <label class="form-label">@lang('Extended License')
                                                                 (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
                                                                 @lang(' in each download'))
@@ -620,7 +620,7 @@
                             </div>
                         </div>
                         <div class="price-div col-6 mb-3">
-                                <label class="form-label">@lang('Standard Price')
+                                <label class="form-label">@lang('Standard License')
                                     (@lang('You will get') <span class="commission-text fw-bold">
                                         {{ showAmount($general->per_download) . '%' }} </span>
                                     @lang(' in each download'))
@@ -638,7 +638,7 @@
                         </div>
 
                         <div class="price-div col-6 mb-3">
-                                <label class="form-label">@lang('Extended Price')
+                                <label class="form-label">@lang('Extended License')
                                     (@lang('You will get') <span class="commission-text fw-bold">
                                         {{ showAmount($general->per_download) . '%' }} </span>
                                     @lang(' in each download'))

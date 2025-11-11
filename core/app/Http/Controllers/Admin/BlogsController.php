@@ -146,7 +146,7 @@ class BlogsController extends Controller
             $formatData = explode(" ", Str::lower($request->title));
             array_push($formatData, $sl);
             $join = Arr::join($formatData,'-');
-            $blog->slug = $join;
+            // $blog->slug = $join;
         }
 
         $blog->title = $request->title;
