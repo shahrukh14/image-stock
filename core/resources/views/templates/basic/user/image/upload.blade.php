@@ -33,13 +33,13 @@
                                                 <div class="image-upload-wrap @if (@$image) d-none @endif">
                                                     <input class="file-upload-input validate" id="image-lavel" name="photo" type='file' @if (!@$image) required @endif accept=".png,.jpeg,.jpg" onchange="readURL(this);">
                                                     <div class="drag-text">
-                                                        <label class="title" for="image-lavel">@lang('Drag and drop a file or select add Image')</label>
+                                                        <label class="title" for="image-lavel">@lang('Drag and drop a file or click the button below')</label>
                                                     </div>
                                                 </div>
                                                 <div class="file-upload-content @if (@$image) d-block @endif">
                                                     <img class="file-upload-image" src="{{ @$image ? imageUrl(getFilePath('stockImage'), $image->image_name) : '' }}" alt="@lang('your image')">
                                                 </div>
-                                                <button class="base-btn w-100 upload-btn mt-3" type="button">@lang('Add Image')</button>
+                                                <button class="base-btn w-100 upload-btn mt-3" type="button">@lang('Upload Thumb Image Here')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                                             @forelse (@$image->files ?? []  as $key => $file)
                                                 <div class="extraPriceElement border-bottom py-3">
                                                     <div class="d-flex justify-content-between align-items-center py-3">
-                                                        <h5 class="pb-sm-0 my-0">@lang('Pricing Set') - <span class="pricing-set-number"></span></h5>
+                                                        <h5 class="pb-sm-0 my-0">@lang('Element') - <span class="pricing-set-number"></span></h5>
                                                         <div class="removeButton">
                                                             <button class="btn btn-danger btn-sm removePrice d-flex align-items-center" data-id="{{ $file->id }}" type="button">
                                                                 <i class="las la-minus-circle"></i>
@@ -154,8 +154,8 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="price-div col-md-12 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
-                                                            <label class="form-label">@lang('Price')
+                                                        <div class="price-div col-md-6 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
+                                                            <label class="form-label">@lang('Standard Price')
                                                                 (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
                                                                 @lang(' in each download'))
@@ -170,12 +170,29 @@
                                                                       class="fw-bold">{{ showAmount($general->image_maximum_price) }}
                                                                     {{ __($general->cur_text) }}</span></small>
                                                         </div>
+
+                                                        <div class="price-div col-md-6 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
+                                                            <label class="form-label">@lang('Extended Price')
+                                                                (@lang('You will get') <span class="commission-text fw-bold">
+                                                                    {{ showAmount($general->per_download) . '%' }} </span>
+                                                                @lang(' in each download'))
+                                                            </label>
+                                                            <div class="input-group input--group">
+                                                                <input class="form-control form--control image-price priceInput" name="old_file[{{ $file->id }}][ex_price]" type="number" value="{{ old('old_file.' . $file->id . '.price', showAmount(@$file->ex_price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
+                                                                <span class="input-group-text">
+                                                                    {{ __($general->cur_text) }}
+                                                                </span>
+                                                            </div>
+                                                            <small class="d-block maximum-price">@lang('Maximum price') <span
+                                                                      class="fw-bold">{{ showAmount($general->image_maximum_price) }}
+                                                                    {{ __($general->cur_text) }}</span></small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             @empty
                                                 <div class="extraPriceElement border-bottom">
                                                     <div class="d-flex justify-content-between align-items-center py-3">
-                                                        <h5 class="pb-sm-0 my-0">@lang('Pricing Set') - <span class="pricing-set-number"></span></h5>
+                                                        <h5 class="pb-sm-0 my-0">@lang('Element') - <span class="pricing-set-number"></span></h5>
                                                         <div class="removeButton">
                                                             <button class="btn btn-danger btn-sm removePrice d-flex align-items-center" type="button">
                                                                 <i class="las la-minus-circle"></i>
@@ -220,14 +237,29 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="price-div col-12 mb-3">
-                                                            <label class="form-label">@lang('Price')
+                                                        <div class="price-div col-6 mb-3">
+                                                            <label class="form-label">@lang('Standard Price')
                                                                 (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
                                                                 @lang(' in each download'))
                                                             </label>
                                                             <div class="input-group input--group">
                                                                 <input class="form-control form--control image-price priceInput" name="price[]" type="number" value="{{ old('price', showAmount(@$image->price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
+                                                                <span class="input-group-text">
+                                                                    {{ __($general->cur_text) }}
+                                                                </span>
+                                                            </div>
+                                                            <small class="d-block maximum-price">@lang('Maximum price') <span class="fw-bold">{{ showAmount($general->image_maximum_price) }} {{ __($general->cur_text) }}</span></small>
+                                                        </div>
+
+                                                        <div class="price-div col-6 mb-3">
+                                                            <label class="form-label">@lang('Extended Price')
+                                                                (@lang('You will get') <span class="commission-text fw-bold">
+                                                                    {{ showAmount($general->per_download) . '%' }} </span>
+                                                                @lang(' in each download'))
+                                                            </label>
+                                                            <div class="input-group input--group">
+                                                                <input class="form-control form--control image-price priceInput" name="ex_price[]" type="number" value="{{ old('ex_price', showAmount(@$image->price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
                                                                 <span class="input-group-text">
                                                                     {{ __($general->cur_text) }}
                                                                 </span>
@@ -247,7 +279,7 @@
 
                                 <div class="col-12 mb-3">
                                     <label class="form-label">@lang('Description')</label>
-                                    <textarea class="form-control form--control" id="description" name="description" required rows="6">{{ old('description', @$image->description) }}</textarea>
+                                    <textarea class="form-control form--control nicEdit" id="description" name="description" rows="6">{{ old('description', @$image->description) }}</textarea>
 
                                 </div>
 
@@ -543,7 +575,7 @@
             var html = `
                 <div class="extraPriceElement border-bottom">
                     <div class="py-3 d-flex justify-content-between align-items-center">
-                        <h5 class="my-0 pb-sm-0 pb-3">@lang('Pricing Set') - <span class="pricing-set-number"></span></h5>
+                        <h5 class="my-0 pb-sm-0 pb-3">@lang('Element') - <span class="pricing-set-number"></span></h5>
                         <div class="removeButton">
                                 <button  type ="button" class="btn btn-danger btn-sm removePrice d-flex align-items-center" >
                                     <i class="las la-minus-circle"></i>
@@ -587,8 +619,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="price-div col-12 mb-3">
-                                <label class="form-label">@lang('Price')
+                        <div class="price-div col-6 mb-3">
+                                <label class="form-label">@lang('Standard Price')
                                     (@lang('You will get') <span class="commission-text fw-bold">
                                         {{ showAmount($general->per_download) . '%' }} </span>
                                     @lang(' in each download'))
@@ -602,8 +634,26 @@
                                         {{ __($general->cur_text) }}
                                     </span>
                                 </div>
-                                <small class="d-block maximum-price">@lang('Maximum price') <span class="fw-bold">{{ showAmount($general->image_maximum_price) }} {{ __($general->cur_text) }}</span></small>
-                            </div>
+                            <small class="d-block maximum-price">@lang('Maximum price') <span class="fw-bold">{{ showAmount($general->image_maximum_price) }} {{ __($general->cur_text) }}</span></small>
+                        </div>
+
+                        <div class="price-div col-6 mb-3">
+                                <label class="form-label">@lang('Extended Price')
+                                    (@lang('You will get') <span class="commission-text fw-bold">
+                                        {{ showAmount($general->per_download) . '%' }} </span>
+                                    @lang(' in each download'))
+                                </label>
+                                <div class="input-group input--group">
+                                    <input class="form-control form--control image-price priceInput"
+                                        max="{{ $general->image_maximum_price }}" min="0"
+                                        name="ex_price[]" step="any" type="number"
+                                        value="{{ old('ex_price') }}">
+                                    <span class="input-group-text">
+                                        {{ __($general->cur_text) }}
+                                    </span>
+                                </div>
+                            <small class="d-block maximum-price">@lang('Maximum price') <span class="fw-bold">{{ showAmount($general->image_maximum_price) }} {{ __($general->cur_text) }}</span></small>
+                        </div>
 
                             
                         </div>

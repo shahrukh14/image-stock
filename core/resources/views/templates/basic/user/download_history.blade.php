@@ -7,6 +7,7 @@
                     <th class="sm-text">@lang('Image')</th>
                     <th class="sm-text">@lang('Category')</th>
                     <th class="sm-text">@lang('Last Download')</th>
+                    <th class="sm-text">@lang('Type')</th>
                     <th class="sm-text">@lang('Action')</th>
                 </tr>
             </thead>
@@ -23,13 +24,17 @@
                            </div>
                             
                         </td>
+                        
                         <td class="sm-text">
-                            {{ __($download->imageFile->image->category->name) }}
+                            {{ (implode(' | ', $download->imageFile->image->categoryName($download->imageFile->image->category_id))) }}
                         </td>
+                      
                         <td class="sm-text">
                             {{ showDateTime($download->updated_at) }}
                         </td>
-
+                        <td class="sm-text">
+                            {{ $download->type }}
+                        </td>
                         <td>
                             <a href="{{ route('user.image.download.file', $download->imageFile->id) }}" class="btn btn--base btn-sm">
                                 <i class="las la-download"></i>

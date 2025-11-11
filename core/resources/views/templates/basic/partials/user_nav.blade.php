@@ -81,11 +81,11 @@
                                                 @lang('Upload images')
                                             </a>
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.pending') }}" href="{{ route('user.image.pending') }}">
                                                 @lang('Pending images')
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.rejected') }}" href="{{ route('user.image.rejected') }}">
                                                 @lang('Rejected images')

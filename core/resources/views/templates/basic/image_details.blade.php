@@ -53,7 +53,7 @@
                     <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;" class="product-page-main-content">
                         <div class="product-page-main-content---top">
                             <h1 class="display-3 mg-bottom-4px">{{ __($image->title) }}</h1>
-                            <p class="mg-bottom-0">{{ __($image->description) }}</p>
+                            <p class="mg-bottom-0" style="word-wrap: break-word;">@php echo $image->description; @endphp</p>
                         </div>
                         <div class="product-page-main-content---bottom">
                             <div class="mg-bottom-24px keep">
@@ -66,18 +66,55 @@
                                         $downloadActionClass = 'confirmationBtn';
                                     }
                                 @endphp
-                               
-                                    {{-- <div class="heading-h2-size mg-right-22px">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }}</div> --}}
-                                    {{-- <div class="heading-h2-size compare-at-price">{{ showAmount($imageFile->price + 5) }} {{ __($general->cur_text) }}</div> --}}
-                                    <div class="spanDiv">
-                                        <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
-                                        <span class="download-span">|<span>
-                                        <span class="download-span">{{ $imageFile->resolution }}</span>
-                                        <span class="download-span">|<span>
-                                        <span class="download-span {{ $downloadActionClass }}" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')">
-                                            <i class="fa-solid fa-download"></i> Download
-                                        </span>
-                                    </div>
+                                    
+                                        
+                                            @if($imageFile->price != 0  && $imageFile->ex_price != 0)
+                                                @for($i=0; $i < 2; $i++)
+                                                <div class="spanDiv">
+                                                    @if($i == 0)
+                                                        <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
+                                                    @else
+                                                        <span class="download-span">{{ showAmount($imageFile->ex_price) }} {{ __($general->cur_text) }} </span>
+                                                    @endif
+
+                                                    <span class="download-span">|<span>
+                                                    <span class="download-span">{{ $imageFile->resolution }}</span>
+                                                    <span class="download-span">|<span>
+
+                                                    @if($i == 0)
+                                                        <span class="download-span">Standard<span>
+                                                    @else
+                                                        <span class="download-span">Extended<span>
+                                                    @endif
+
+                                                    <span class="download-span">|<span>
+
+                                                    @if($i == 0)
+                                                    <span class="download-span {{ $downloadActionClass }}" data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                        <i class="fa-solid fa-download"></i>
+                                                    </span>
+                                                    @else
+                                                    <span class="download-span {{ $downloadActionClass }}" data-type="extended" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                        <i class="fa-solid fa-download"></i>
+                                                    </span>
+                                                    @endif
+                                                </div>
+                                                @endfor
+
+                                            @else
+                                            <div class="spanDiv">
+                                                <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
+                                                <span class="download-span">|<span>
+                                                <span class="download-span">{{ $imageFile->resolution }}</span>
+                                                <span class="download-span">|<span>
+                                                <span class="download-span">Standard<span>
+                                                <span class="download-span">|<span>
+                                                <span class="download-span {{ $downloadActionClass }}"  data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')"  style="cursor: pointer;">
+                                                    <i class="fa-solid fa-download"></i>
+                                                </span>
+                                            </div>
+                                            @endif
+                                           
                                 @endforeach
                                 </div>
                             </div>

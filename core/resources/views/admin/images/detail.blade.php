@@ -131,7 +131,7 @@
                                         <li class="list-group-item d-flex justify-content-between flex-wrap">
                                             <div class="col-12 extraPriceElement">
                                                 <div class="row align-items-center">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
                                                             <div class="d-flex justify-content-between">
                                                                 <label>@lang('Resolution')</label>
@@ -145,7 +145,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
                                                             <label>@lang('Status')</label>
 
@@ -157,7 +157,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-2">
                                                         <div class="form-group">
                                                             <label>@lang('Premium/Free')</label>
                                                             <select class="form-control is_free_select" name="is_free[]" required>
@@ -170,9 +170,18 @@
 
                                                     <div class="col-md-3 price {{ $value->is_free == Status::FREE ? 'd-none' : '' }}">
                                                         <div class="form-group">
-                                                            <label>@lang('Price')</label>
+                                                            <label>@lang('Standard Price')</label>
                                                             <div class="input-group">
                                                                 <input class="form-control" name="price[]" type="number" value="{{ @$value->price ? showAmount(@$value->price) : '' }}" step="any" @if (!$value->is_free) required @endif>
+                                                                <span class="input-group-text">{{ __($general->cur_text) }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 price {{ $value->is_free == Status::FREE ? 'd-none' : '' }}">
+                                                        <div class="form-group">
+                                                            <label>@lang('Extended Price')</label>
+                                                            <div class="input-group">
+                                                                <input class="form-control" name="ex_price[]" type="number" value="{{ @$value->ex_price ? showAmount(@$value->ex_price) : '' }}" step="any" @if (!$value->is_free) required @endif>
                                                                 <span class="input-group-text">{{ __($general->cur_text) }}</span>
                                                             </div>
                                                         </div>
@@ -187,7 +196,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>@lang('Description')</label>
-                                    <textarea class="form-control" name="description" rows="5" required>{{ $image->description }}</textarea>
+                                    <textarea class="form-control nicEdit" name="description" rows="5" required>{{ $image->description }}</textarea>
                                 </div>
                             </div>
 

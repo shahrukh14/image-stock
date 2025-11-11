@@ -24,7 +24,28 @@
 
 @endsection
 @push('script')
+<script src="{{ asset('assets/admin_reviewer/js/nicEdit.js') }}"></script>
+
 <script src="{{ asset('assets/global/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset($activeTemplateTrue . 'js/slick.js') }}"></script>
 <script src="{{ asset($activeTemplateTrue . 'js/app.js') }}"></script>
+
+<script>
+    "use strict";
+    bkLib.onDomLoaded(function() {
+        $(".nicEdit").each(function(index) {
+            $(this).attr("id", "nicEditor" + index);
+            new nicEditor({
+                fullPanel: true
+            }).panelInstance('nicEditor' + index, {
+                hasPanel: true
+            });
+        });
+    });
+    (function($) {
+        $(document).on('mouseover ', '.nicEdit-main,.nicEdit-panelContain', function() {
+            $('.nicEdit-main').focus();
+        });
+    })(jQuery);
+</script>
 @endpush

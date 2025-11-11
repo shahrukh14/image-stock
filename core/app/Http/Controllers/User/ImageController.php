@@ -407,6 +407,7 @@ class ImageController extends Controller
             $imageFile->is_free = $request->is_free[$key];
             $imageFile->status = $request->status[$key];
             $imageFile->price = $request->price[$key];
+            $imageFile->ex_price = $request->ex_price[$key];
             $imageFile->file = $storeFileArr[$key];
             $imageFile->save();
         }

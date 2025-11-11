@@ -40,11 +40,7 @@ class SiteController extends Controller
         }
         $pageTitle = 'Home';
         $sections  = Page::where('tempname', $this->activeTemplate)->where('slug', '/')->first();
-        $images = Image::approved()->hasActiveFiles()->where(function ($q) {
-            $q->where('user_id', auth()->id())->orWhereHas('category', function ($category) {
-                $category->active();
-            });
-        })->orderBy('id', 'DESC')->withCount(['files as premium' => function ($file) {
+        $images = Image::approved()->hasActiveFiles()->orderBy('id', 'DESC')->withCount(['files as premium' => function ($file) {
             $file->active()->premium();
         }])->with('user', 'likes')->limit(24)->get();
 
@@ -365,11 +361,7 @@ class SiteController extends Controller
 
     public function imageDetail($slug, $id)
     {
-        $image = Image::hasActiveFiles()->with(['user'])->where(function ($q) {
-            $q->where('user_id', auth()->id())->orWhereHas('category', function ($category) {
-                $category->active();
-            });
-        })->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
+        $image = Image::hasActiveFiles()->with(['user'])->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
 
         abort_if($image->status != Status::ENABLE && @auth()->user()->id != @$image->user_id, 404);
 
@@ -678,10 +670,11 @@ class SiteController extends Controller
                 $query->where('title', 'like', "%$filter%")->orWhere(function ($query) use ($filter, $categoryId) {
                     $query->whereJsonContains('tags', $filter);
                 })->orWhere(function ($query) use ($filter, $categoryId) {
-                    $query->orWhereJsonContains('category_id',(string)$categoryId)->orWhereHas('user', function ($user) use ($filter) {
-                        $user->where('username', 'like', "%$filter%")
-                            ->orWhere('firstname', 'like', "%$filter%")
-                            ->orWhere('lastname', 'like', "%$filter%");
+                    $query->orWhereJsonContains('category_id',(string)$categoryId)
+                          ->orWhereHas('user', function ($user) use ($filter) {
+                    $user->where('username', 'like', "%$filter%")
+                         ->orWhere('firstname', 'like', "%$filter%")
+                         ->orWhere('lastname', 'like', "%$filter%");
                     })->orWhereHas('collections', function ($collections) use ($filter) {
                         $collections->where('title', 'like', "%$filter%");
                     });

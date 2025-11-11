@@ -16,19 +16,20 @@ use Illuminate\Validation\ValidationException;
 
 class ImageController extends Controller
 {
-    public function download($id)
+    public function download(Request $request, $id)
     {
+        $type =  $request->type;
         $file = ImageFile::with('image')->findOrFail(decrypt($id));
         $user    = auth()->user();
         if ($file->is_free == Status::PREMIUM && @$user->id != $file->image->user_id) {
-            $this->premiumDownloadProcess($file);
+            $this->premiumDownloadProcess($file, $type);
         }
-        $this->downloadData($file, $user);
+        $this->downloadData($file, $user, $type);
         return DownloadFile::download($file);
     }
 
     //save download data
-    protected function downloadData($file, $user)
+    protected function downloadData($file, $user, $type)
     {
         $general = gs();
 
@@ -51,18 +52,25 @@ class ImageController extends Controller
             $download->contributor_id =  $file->image->user_id;
             $download->ip = request()->ip();
             $download->premium = $file->is_free == Status::PREMIUM;
+            $download->type = $type;
 
             if (!$file->is_free && !$isDownloaded) {
-                $amount = $file->price * $general->per_download / 100;
+
+                if($type == "extended"){
+                    $amount = $file->ex_price * $general->per_download / 100;
+                }else{
+                    $amount = $file->price * $general->per_download / 100;
+                }
+                
                 $contributor = $file->image->user;
                 $contributor->balance +=  $amount;
                 $contributor->update();
 
-                $earn                 = new EarningLog();
-                $earn->contributor_id = $contributor->id;
-                $earn->image_file_id       = $file->id;
-                $earn->amount         = $amount;
-                $earn->earning_date           = now()->format('Y-m-d');
+                $earn                   = new EarningLog();
+                $earn->contributor_id   = $contributor->id;
+                $earn->image_file_id    = $file->id;
+                $earn->amount           = $amount;
+                $earn->earning_date     = now()->format('Y-m-d');
                 $earn->save();
 
                 $transaction               = new Transaction();
@@ -81,7 +89,7 @@ class ImageController extends Controller
         }
     }
 
-    private function premiumDownloadProcess($file){
+    private function premiumDownloadProcess($file, $type){
         $user = auth()->user();
         if (!$user) {
             throw ValidationException::withMessages(['user' => 'Please login to download this image']);
@@ -97,15 +105,15 @@ class ImageController extends Controller
         if ($user->purchasedPlan && $user->purchasedPlan->expired_at > Carbon::now()->format('Y-m-d')) {
 
            
-            $this->purchaseProcessByPlan($file, $user);
+            $this->purchaseProcessByPlan($file, $user, $type);
             
         } else {
 
-            $this->purchaseProcessByBalance($file, $user);
+            $this->purchaseProcessByBalance($file, $user, $type);
         }
     }
     
-    private function purchaseProcessByPlan($file, $user)
+    private function purchaseProcessByPlan($file, $user, $type)
     {
    
         $downloads       = Download::where('user_id', $user->id)->where('premium', Status::YES);
@@ -116,14 +124,18 @@ class ImageController extends Controller
        
         if ($user->purchasedPlan->daily_limit <= $todayDownload || $user->purchasedPlan->monthly_limit <= $monthlyDownload) {
             
-            $this->purchaseProcessByBalance($file, $user);
+            $this->purchaseProcessByBalance($file, $user, $type);
            
         }
     }
     
-    private function purchaseProcessByBalance($file, $user)
+    private function purchaseProcessByBalance($file, $user, $type)
     {
-        $price = $file->price;
+        if($type == "extended"){
+            $price = $file->ex_price;
+        }else{
+            $price = $file->price;
+        }
         if ($user->balance < $price) {
             throw ValidationException::withMessages(['limit_over' => 'Inefficient Balance']);
         }

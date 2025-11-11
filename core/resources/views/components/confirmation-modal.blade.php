@@ -12,6 +12,7 @@
                 <div class="modal-body">
                     <p class="question"></p>
                 </div>
+                <input type="hidden" id="type" name="type" value="">
                 <div class="modal-footer">
                     <button type="button" class="btnBtn" data-bs-dismiss="modal">@lang('No')</button>
                     <button type="submit" class="btnBtn" data-bs-dismiss="modal">@lang('Yes')</button>
@@ -42,6 +43,7 @@
             let data    = $(this).data();
             modal.find('.question').text(`${data.question}`);
             modal.find('form').attr('action', `${data.action}`);
+            modal.find('#type').val( `${data.type}`);
             modal.modal('show');
         });
     })(jQuery);

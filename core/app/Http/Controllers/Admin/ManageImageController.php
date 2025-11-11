@@ -139,6 +139,7 @@ class ManageImageController extends Controller
             $imageFile->is_free = $request->is_free[$key];
             $imageFile->status = $request->statusFile[$key];
             $imageFile->price = $request->price[$key];
+            $imageFile->ex_price = $request->ex_price[$key];
             if ($request->price[$key] == 0) $imageFile->is_free = 1;
             $imageFile->save();
         }

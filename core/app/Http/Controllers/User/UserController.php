@@ -316,7 +316,7 @@ class UserController extends Controller
     public function downloadHistory()
     {
         $pageTitle = 'Download History';
-        $downloads = Download::where('user_id', auth()->id())->with('imageFile.image:title,id,category_id', 'imageFile.image.category:id,name', 'contributor', 'imageFile')->orderBy('id', 'desc')->paginate(getPaginate());
+        $downloads = Download::where('user_id', auth()->id())->with('imageFile.image:title,id,category_id', 'contributor', 'imageFile')->orderBy('id', 'desc')->paginate(getPaginate());
         return view($this->activeTemplate . 'user.download_history', compact('pageTitle', 'downloads'));
     }
 
