@@ -211,7 +211,7 @@ function getImage($image, $size = null, $type = null)
     return asset('assets/images/default.png');
 }
 
-function imageUrl($directory = null, $image = null, $size = null)
+function imageUrl($directory = null, $image = null, $size = null, $thumbRes = false)
 {
     if (!$image) {
         return getImage('/', $size);
@@ -222,12 +222,19 @@ function imageUrl($directory = null, $image = null, $size = null)
     if ($general->storage_type == 2) {
         return $general->ftp->host_domain . '/images/' . $image;
     } elseif ($general->storage_type == 3 || $general->storage_type == 4 || $general->storage_type == 5) {
-        return getS3FileUri($image);
+
+        if($thumbRes){
+            return getS3FileUriThumb($image);
+        }else{
+            return getS3FileUri($image);
+        }
+        
     } else {
         $image = $directory ? $directory . '/' . $image : $image;
         return getImage($image, $size);
     }
 }
+
 
 function getS3FileUri($fileName, $type = "image")
 {
@@ -240,6 +247,35 @@ function getS3FileUri($fileName, $type = "image")
     $bucketName = @$general?->{$server}?->bucket;
 
     $objectKey = $type == 'image' ? 'images/' . $fileName : 'files/' . $fileName;
+    $endpoint = $general->{$server}->endpoint;
+
+    $credentials = new Credentials($accessKey, $secretKey);
+    $s3Client = new S3Client([
+        'version'     => 'latest',
+        'region'      => @$general?->{$server}?->region ?? '',
+        'endpoint'    => $endpoint,
+        'credentials' => $credentials
+    ]);
+
+    $command = $s3Client->getCommand('GetObject', [
+        'Bucket' => $bucketName,
+        'Key' => $objectKey,
+    ]);
+
+    return (string) $s3Client->createPresignedRequest($command, '+1 hour')->getUri();
+}
+
+function getS3FileUriThumb($fileName, $type = "image")
+{
+    $general = gs();
+    $servers = [3 => "wasabi", 4 => "digital_ocean", 5 => "vultr"];
+    $server  = $servers[$general->storage_type];
+
+    $accessKey  = @$general?->{$server}?->key;
+    $secretKey  = @$general?->{$server}?->secret;
+    $bucketName = @$general?->{$server}?->bucket;
+
+    $objectKey = $type == 'image' ? 'thumb_resource/' . $fileName : 'files/' . $fileName;
     $endpoint = $general->{$server}->endpoint;
 
     $credentials = new Credentials($accessKey, $secretKey);
@@ -627,10 +663,16 @@ function isHtml($string)
 
 function adSizes()
 {
+    // return [
+    //     "970x250",
+    //     "728x90",
+    //     "300x250",
+    // ];
+
     return [
-        "970x250",
-        "728x90",
-        "300x250",
+        "250x250",
+        "120x240",
+        "160x600",
     ];
 }
 function getAds($size, $count = 1)

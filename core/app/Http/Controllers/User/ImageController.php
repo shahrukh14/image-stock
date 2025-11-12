@@ -375,7 +375,7 @@ class ImageController extends Controller
                         $servers = [2 => "ftp", 3 => "wasabi", 4 => "do", 5 => "vultr"];
                         $server = $servers[$general->storage_type];
                         $storageManager       = new StorageManager($server);
-                        $storageManager->path = 'images/' . $directory;
+                        $storageManager->path = 'thumb_resource/' . $directory;
                         $storageManager->old  = @$image->image_name;
 
                         $storageManager->uploadImage($thumbPhoto, $thumbName, false, true);
@@ -447,6 +447,7 @@ class ImageController extends Controller
             $imageFile->price = $request->price[$key];
             $imageFile->ex_price = $request->ex_price[$key];
             $imageFile->exclued_package = $request->exclued_package[$key];
+            $imageFile->dpi = $request->dpi[$key];
             $imageFile->file = $storeFileArr[$key];
             $imageFile->save();
         }

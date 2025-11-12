@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ imageUrl(getFilePath('stockImage'), $image->thumb) }}" alt="@lang('Image')">
+                                    <img src="{{ imageUrl(getFilePath('stockImage'), $image->image_name) }}" alt="@lang('Image')">
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -200,6 +200,25 @@
                                             </div>
                                         </li>
                                     @endforeach
+                                </ul>
+                            </div>
+
+                            <div class="col-12">
+                                <ul class="list-group my-3">
+                                    <li class="list-group-item bg--primary border--primary text-center">
+                                        <span class="fw-bold text--white">@lang('Thumb Images')</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between flex-wrap">
+                                        <div class="col-12 extraPriceElement">
+                                            <div class="row align-items-center">
+                                                @foreach ($image->thumb_resource ?? [] as $thumb)
+                                                <div class="col-md-2">
+                                                    <img alt="{{$image->title}}"    src="{{ imageUrl(getFilePath('stockImage'), $thumb, null, true) }}" class="image background-image">
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
 

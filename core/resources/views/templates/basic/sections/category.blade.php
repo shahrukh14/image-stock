@@ -137,9 +137,9 @@
                   </div>
                 </a>
               </div>
-             @empty
-                 
-             @endforelse
+            @empty
+            
+            @endforelse
              
           </div>
       </div>

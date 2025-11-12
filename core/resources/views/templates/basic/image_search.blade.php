@@ -115,7 +115,7 @@
                     $photos_setting_image = "photos_default_banner.jpg";
                 }
             @endphp
-            <div class="inner-container _981px width-100">
+            {{-- <div class="inner-container _981px width-100">
               <div class="mg-bottom-80px">
                 <div style=" background-image: url({{ asset('core/public/assets/image/photos_setting/'.$photos_setting_image)}});  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="category-banner">
                   <div class="inner-container _635px center">
@@ -129,7 +129,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               @php
                   $defaultImageContent = getContent('default_images.content', true);
                   $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
@@ -281,9 +281,9 @@ $( function() {
   $( "#accordion" ).accordion();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelector('.header-search-bar').style.display="none";
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   document.querySelector('.header-search-bar').style.display="none";
+// });
 
 	//lazy loading image
 	let images = document.querySelectorAll(".lazy-loading-img");

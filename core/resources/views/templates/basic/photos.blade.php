@@ -58,7 +58,11 @@
                 </div>              
               </div>
             
-            @php echo getAds('728x90', 2);@endphp
+            @php
+             echo getAds('120x240', 1);
+             echo getAds('250x250', 1);
+             echo getAds('160x600', 1);
+            @endphp
 
             </div>
           </div>
@@ -217,9 +221,9 @@ $( function() {
   $( "#accordion" ).accordion();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelector('.header-search-bar').style.display="none";
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   document.querySelector('.header-search-bar').style.display="none";
+// });
 
 	//lazy loading image
 	let images = document.querySelectorAll(".lazy-loading-img");

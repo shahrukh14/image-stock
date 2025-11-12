@@ -37,16 +37,33 @@
                     </div>
                 </div>
                 <div class="w-layout-grid grid-2-columns product-page">
-                    <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="inner-container _896px _100---tablet">
+                    <div class="inner-container _896px _100---tablet">
                         <div style="opacity: 1;" class="position-relative">
-                            <div class="image-wrapper product-image">
-                                <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $image->thumb) }}" class="image background-image">
-                            </div>
-                            <div class="image-wrapper product-image">
-                                @foreach ($image->thumb_resource ?? [] as $thumb)
-                                <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $thumb) }}" class="image background-image">
-                                @endforeach
-                            </div>
+                            @if($image->thumb_resource)
+                                <div class="flexslider" id="slider">
+                                    <ul class="slides">
+                                        @foreach ($image->thumb_resource ?? [] as $thumb)
+                                        <li>
+                                            <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $thumb, null, true) }}" class="image background-image">
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+
+                                <div class="flexslider" id="carousel">
+                                    <ul class="slides">
+                                        @foreach ($image->thumb_resource ?? [] as $thumb)
+                                        <li>
+                                            <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $thumb, null, true) }}" class="image background-image">
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @else
+                                <div class="image-wrapper product-image">
+                                    <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $image->image_name) }}" class="image background-image">
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;" class="product-page-main-content">
@@ -80,9 +97,9 @@
                                             <span class="download-span">|<span>
 
                                             @if($i == 0)
-                                                <span class="download-span">Standard<span>
+                                                <span class="download-span">Standard License<span>
                                             @else
-                                                <span class="download-span">Extended<span>
+                                                <span class="download-span">Extended License<span>
                                             @endif
 
                                             <span class="download-span">|<span>
@@ -109,7 +126,7 @@
                                         <span class="download-span">|<span>
                                         <span class="download-span">{{ $imageFile->resolution }}</span>
                                         <span class="download-span">|<span>
-                                        <span class="download-span">Standard<span>
+                                        <span class="download-span">Standard License<span>
                                         <span class="download-span">|<span>
                                         <span class="download-span {{ $downloadActionClass }}"  data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')"  style="cursor: pointer;">
                                             <i class="fa-solid fa-download"></i>
@@ -163,9 +180,13 @@
                                 </div>
                                 <div class="flex-horizontal start gap-6px">
                                     <img src="{{ asset('assets\images\app_images\resolution-icon-stock-x-webflow-template.svg') }}" alt="Resolution">
-                                    @foreach ($imageFiles as $key => $imageFile)
-                                        <div class="text-100 medium color-neutral-700">{{ $imageFile->resolution }}</div>
-                                    @endforeach
+                                    @php 
+                                        $resolutions=[];
+                                        foreach ($imageFiles as $key => $imageFile){
+                                            array_push($resolutions, $imageFile->resolution);
+                                        }
+                                    @endphp
+                                    <div class="text-100 medium color-neutral-700">{{ __(strtoupper(implode(' | ', $resolutions))) }}</div>
                                 </div>
                             </div>
                             <div>
@@ -184,8 +205,24 @@
                                 <div class="flex-horizontal start gap-6px">
                                     <img src="{{ asset('assets\images\app_images\_type-icon-stock-x-webflow-template.svg') }}" alt="Type">
                                     @if ($image->extensions)
-                                        <div class="text-100 medium color-neutral-700">{{ __(strtoupper(implode(', ', $image->extensions))) }}</div>
+                                        <div class="text-100 medium color-neutral-700">{{ __(strtoupper(implode(' | ', $image->extensions))) }}</div>
                                     @endif
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="mg-bottom-8px">
+                                    <div class="text-100 bold color-neutral-800">DPI</div>
+                                </div>
+                                <div class="flex-horizontal start gap-6px">
+                                    <img src="{{ asset('assets\images\app_images\_type-icon-stock-x-webflow-template.svg') }}" alt="Type">
+                                    @php 
+                                        $dpi=[];
+                                        foreach ($imageFiles as $key => $imageFile){
+                                            array_push($dpi, $imageFile->dpi);
+                                        }
+                                    @endphp
+                                    <div class="text-100 medium color-neutral-700">{{ __(strtoupper(implode(' | ', $dpi))) }}</div>
                                 </div>
                             </div>
                         </div>
@@ -311,6 +348,7 @@
 
 @push('style')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.2/flexslider.min.css" />
 @endpush
 
 <style>
@@ -346,10 +384,42 @@
         border-radius: 10px;
     }
 
+    .flexslider {
+        margin: 0 0 0px !important; 
+    }
+
+    .flexslider:hover .flex-direction-nav .flex-prev {
+        opacity: 1 !important; 
+    }
+
+    .flexslider:hover .flex-direction-nav .flex-next {
+        opacity: 1 !important;
+    }
+
   </style>
 @push('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.2/jquery.flexslider-min.js" integrity="sha512-BmoWLYENsSaAfQfHszJM7cLiy9Ml4I0n1YtBQKfx8PaYpZ3SoTXfj3YiDNn0GAdveOCNbK8WqQQYaSb0CMjTHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-        //lazy loading image
+
+    $('#carousel').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 210,
+        itemMargin: 5,
+        asNavFor: '#slider'
+    });
+
+    $('#slider').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        sync: "#carousel"
+    });
+    
+    //lazy loading image
 	let images = document.querySelectorAll(".lazy-loading-img");
 	function preloadImage(image) {
 		const src = image.getAttribute("data-image_src");

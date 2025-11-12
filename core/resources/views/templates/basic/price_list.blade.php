@@ -143,13 +143,12 @@
 @endpush
 
 @push('script')
-<script src="http://localhost/viserstock/assets/global/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('assets/global/js/bootstrap.bundle.min.js') }}"></script>
     <script>
         (function($) {
             "use strict";
 
             $('.purchase-btn').on('click', function() {
-                console.log($(this).data());
                 let plan = $(this).data();
                 let plan_id = plan.id;
                 // let period = $('[name=plan_period]').val();

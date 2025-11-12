@@ -34,7 +34,7 @@
 @endpush
 
 @push('script')
-<script src="http://localhost/viserstock/assets/global/js/bootstrap.bundle.min.js"></script>
+<script src="{{ asset('assets/global/js/bootstrap.bundle.min.js') }}"></script>
 <script>
     (function ($) {
         "use strict";

@@ -107,6 +107,18 @@
                                         <div class="priceNewElement">
                                             <div class="removed_file"></div>
                                             @forelse (@$image->files ?? []  as $key => $file)
+                                            
+                                                @if($image->files)
+                                                <h5 class="pb-sm-1 my-1">@lang('Thumb Images')</h5>
+                                                <div class="row">
+                                                    @foreach ($image->thumb_resource ?? [] as $thumb)
+                                                    <div class="col-md-2">
+                                                        <img alt="{{$image->title}}"    src="{{ imageUrl(getFilePath('stockImage'), $thumb, null, true) }}" class="image background-image">
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                                @endif
+
                                                 <div class="extraPriceElement border-bottom py-3">
                                                     <div class="d-flex justify-content-between align-items-center py-3">
                                                         <h5 class="pb-sm-0 my-0">@lang('Element') - <span class="pricing-set-number"></span></h5>
@@ -160,9 +172,9 @@
 
                                                         <div class="price-div col-md-6 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
                                                             <label class="form-label">@lang('Standard License')
-                                                                (@lang('You will get') <span class="commission-text fw-bold">
+                                                                {{-- (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
-                                                                @lang(' in each download'))
+                                                                @lang(' in each download')) --}}
                                                             </label>
                                                             <div class="input-group input--group">
                                                                 <input class="form-control form--control image-price priceInput" name="old_file[{{ $file->id }}][price]" type="number" value="{{ old('old_file.' . $file->id . '.price', showAmount(@$file->price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
@@ -178,9 +190,9 @@
 
                                                         <div class="price-div col-md-6 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
                                                             <label class="form-label">@lang('Extended License')
-                                                                (@lang('You will get') <span class="commission-text fw-bold">
+                                                                {{-- (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
-                                                                @lang(' in each download'))
+                                                                @lang(' in each download')) --}}
                                                             </label>
                                                             <div class="input-group input--group">
                                                                 <input class="form-control form--control image-price priceInput" name="old_file[{{ $file->id }}][ex_price]" type="number" value="{{ old('old_file.' . $file->id . '.price', showAmount(@$file->ex_price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
@@ -201,6 +213,10 @@
                                                                     <option value="yes" @selected(old('old_file.' . $file->id . '.exclued_package', @$file->exclued_package) == 'yes')>@lang('Yes')</option>
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">@lang('DPI')</label>
+                                                            <input class="form-control form--control" name="old_file[{{ $file->id }}][dpi]" type="number" value="{{ old('old_file.' . $file->id . '.dpi', showAmount(@$file->dpi)) }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,9 +270,9 @@
                                                         </div>
                                                         <div class="price-div col-6 mb-3">
                                                             <label class="form-label">@lang('Standard License')
-                                                                (@lang('You will get') <span class="commission-text fw-bold">
+                                                                {{-- (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
-                                                                @lang(' in each download'))
+                                                                @lang(' in each download')) --}}
                                                             </label>
                                                             <div class="input-group input--group">
                                                                 <input class="form-control form--control image-price priceInput" name="price[]" type="number" value="{{ old('price', showAmount(@$image->price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
@@ -269,9 +285,9 @@
 
                                                         <div class="price-div col-6 mb-3">
                                                             <label class="form-label">@lang('Extended License')
-                                                                (@lang('You will get') <span class="commission-text fw-bold">
+                                                                {{-- (@lang('You will get') <span class="commission-text fw-bold">
                                                                     {{ showAmount($general->per_download) . '%' }} </span>
-                                                                @lang(' in each download'))
+                                                                @lang(' in each download')) --}}
                                                             </label>
                                                             <div class="input-group input--group">
                                                                 <input class="form-control form--control image-price priceInput" name="ex_price[]" type="number" value="{{ old('ex_price', showAmount(@$image->ex_price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
@@ -289,6 +305,10 @@
                                                                     <option value="yes">@lang('Yes')</option>
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">@lang('DPI')</label>
+                                                            <input class="form-control form--control" name="dpi[]" type="number" value="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -644,9 +664,6 @@
                         </div>
                         <div class="price-div col-6 mb-3">
                                 <label class="form-label">@lang('Standard License')
-                                    (@lang('You will get') <span class="commission-text fw-bold">
-                                        {{ showAmount($general->per_download) . '%' }} </span>
-                                    @lang(' in each download'))
                                 </label>
                                 <div class="input-group input--group">
                                     <input class="form-control form--control image-price priceInput"
@@ -662,9 +679,6 @@
 
                         <div class="price-div col-6 mb-3">
                                 <label class="form-label">@lang('Extended License')
-                                    (@lang('You will get') <span class="commission-text fw-bold">
-                                        {{ showAmount($general->per_download) . '%' }} </span>
-                                    @lang(' in each download'))
                                 </label>
                                 <div class="input-group input--group">
                                     <input class="form-control form--control image-price priceInput"
@@ -686,6 +700,11 @@
                                     <option value="yes">@lang('Yes')</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">@lang('DPI')</label>
+                            <input class="form-control form--control" name="dpi[]" type="number" value="">
                         </div>
                             
                         </div>
