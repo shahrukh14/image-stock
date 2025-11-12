@@ -94,6 +94,10 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-12 mb-3">
+                                                <label class="form-label">@lang('Add thumbs')</label>
+                                                <input class="form-control form--control" name="thumb_resource[]" type="file" multiple  >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +172,8 @@
                                                             </div>
                                                             <small class="d-block maximum-price">@lang('Maximum price') <span
                                                                       class="fw-bold">{{ showAmount($general->image_maximum_price) }}
-                                                                    {{ __($general->cur_text) }}</span></small>
+                                                                    {{ __($general->cur_text) }}</span>
+                                                            </small>
                                                         </div>
 
                                                         <div class="price-div col-md-6 @if (old('old_file.' . $file->id . '.is_free', @$file->is_free) == Status::FREE) d-none @endif mb-3">
@@ -185,7 +190,17 @@
                                                             </div>
                                                             <small class="d-block maximum-price">@lang('Maximum price') <span
                                                                       class="fw-bold">{{ showAmount($general->image_maximum_price) }}
-                                                                    {{ __($general->cur_text) }}</span></small>
+                                                                    {{ __($general->cur_text) }}</span>
+                                                            </small>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">@lang('Excluded in Package Downloads')</label>
+                                                            <div class="form--select">
+                                                                <select class="form-select" name="old_file[{{ $file->id }}][exclued_package]" required>
+                                                                    <option value="no" @selected(old('old_file.' . $file->id . '.exclued_package', @$file->exclued_package) == 'no')>@lang('NO')</option>
+                                                                    <option value="yes" @selected(old('old_file.' . $file->id . '.exclued_package', @$file->exclued_package) == 'yes')>@lang('Yes')</option>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -259,14 +274,22 @@
                                                                 @lang(' in each download'))
                                                             </label>
                                                             <div class="input-group input--group">
-                                                                <input class="form-control form--control image-price priceInput" name="ex_price[]" type="number" value="{{ old('ex_price', showAmount(@$image->price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
+                                                                <input class="form-control form--control image-price priceInput" name="ex_price[]" type="number" value="{{ old('ex_price', showAmount(@$image->ex_price)) }}" max="{{ $general->image_maximum_price }}" min="0" step="any">
                                                                 <span class="input-group-text">
                                                                     {{ __($general->cur_text) }}
                                                                 </span>
                                                             </div>
                                                             <small class="d-block maximum-price">@lang('Maximum price') <span class="fw-bold">{{ showAmount($general->image_maximum_price) }} {{ __($general->cur_text) }}</span></small>
                                                         </div>
-
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label">@lang('Excluded in Package Downloads')</label>
+                                                            <div class="form--select">
+                                                                <select class="form-select" name="exclued_package[]" required>
+                                                                    <option value="no">@lang('No')</option>
+                                                                    <option value="yes">@lang('Yes')</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             @endforelse
@@ -654,7 +677,16 @@
                                 </div>
                             <small class="d-block maximum-price">@lang('Maximum price') <span class="fw-bold">{{ showAmount($general->image_maximum_price) }} {{ __($general->cur_text) }}</span></small>
                         </div>
-
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">@lang('Excluded in Package Downloads')</label>
+                            <div class="form--select">
+                                <select class="form-select" name="exclued_package[]" required>
+                                    <option value="no">@lang('No')</option>
+                                    <option value="yes">@lang('Yes')</option>
+                                </select>
+                            </div>
+                        </div>
                             
                         </div>
                     </div>

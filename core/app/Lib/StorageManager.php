@@ -62,6 +62,8 @@ class StorageManager
      */
     public $thumb;
 
+    public $thumbRes;
+
     /**
      * Old filename, which will be removed
      *
@@ -118,17 +120,31 @@ class StorageManager
         }
     }
 
-    public function uploadImage($image = null, $filename = null, $isThumb = false)
+    public function uploadImage($image = null, $filename = null, $isThumb = false, $isThumbRes = false)
     {
         if ($filename) {
             $this->filename = $filename;
         }
 
-        if ($isThumb) {
+        // if ($isThumb) {
+        //     $this->thumb = true;
+        //     $separator = '/thumb_';
+        // } else {
+        //     $this->thumb = false;
+        //     $separator = '/';
+        // }
+
+        if($isThumbRes){
+            $this->thumbRes = true;
+            $separator = '/thumb_res_';
+
+        }elseif($isThumb){
             $this->thumb = true;
             $separator = '/thumb_';
-        } else {
+
+        }else{
             $this->thumb = false;
+            $this->thumbRes = false;
             $separator = '/';
         }
 

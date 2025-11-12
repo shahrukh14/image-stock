@@ -15,6 +15,7 @@ class Image extends Model
         'tags'        => 'array',
         'extensions'  => 'array',
         'category_id' => 'array',
+        'thumb_resource' => 'array',
     ];
 
     public function user()

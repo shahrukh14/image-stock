@@ -40,7 +40,12 @@
                     <div style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="inner-container _896px _100---tablet">
                         <div style="opacity: 1;" class="position-relative">
                             <div class="image-wrapper product-image">
-                                <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $image->image_name) }}" class="image background-image">
+                                <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $image->thumb) }}" class="image background-image">
+                            </div>
+                            <div class="image-wrapper product-image">
+                                @foreach ($image->thumb_resource ?? [] as $thumb)
+                                <img alt="{{$image->title}}"   src="{{ imageUrl(getFilePath('stockImage'), $thumb) }}" class="image background-image">
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -60,54 +65,60 @@
                                         $downloadActionClass = 'confirmationBtn';
                                     }
                                 @endphp
-                                    
                                         
-                                            @if($imageFile->price != 0  && $imageFile->ex_price != 0)
-                                                @for($i=0; $i < 2; $i++)
-                                                <div class="spanDiv">
-                                                    @if($i == 0)
-                                                        <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
-                                                    @else
-                                                        <span class="download-span">{{ showAmount($imageFile->ex_price) }} {{ __($general->cur_text) }} </span>
-                                                    @endif
-
-                                                    <span class="download-span">|<span>
-                                                    <span class="download-span">{{ $imageFile->resolution }}</span>
-                                                    <span class="download-span">|<span>
-
-                                                    @if($i == 0)
-                                                        <span class="download-span">Standard<span>
-                                                    @else
-                                                        <span class="download-span">Extended<span>
-                                                    @endif
-
-                                                    <span class="download-span">|<span>
-
-                                                    @if($i == 0)
-                                                    <span class="download-span {{ $downloadActionClass }}" data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
-                                                        <i class="fa-solid fa-download"></i>
-                                                    </span>
-                                                    @else
-                                                    <span class="download-span {{ $downloadActionClass }}" data-type="extended" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
-                                                        <i class="fa-solid fa-download"></i>
-                                                    </span>
-                                                    @endif
-                                                </div>
-                                                @endfor
-
-                                            @else
-                                            <div class="spanDiv">
+                                    @if($imageFile->price != 0  && $imageFile->ex_price != 0)
+                                        @for($i=0; $i < 2; $i++)
+                                        <div class="spanDiv">
+                                            @if($i == 0)
                                                 <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
-                                                <span class="download-span">|<span>
-                                                <span class="download-span">{{ $imageFile->resolution }}</span>
-                                                <span class="download-span">|<span>
-                                                <span class="download-span">Standard<span>
-                                                <span class="download-span">|<span>
-                                                <span class="download-span {{ $downloadActionClass }}"  data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')"  style="cursor: pointer;">
-                                                    <i class="fa-solid fa-download"></i>
-                                                </span>
-                                            </div>
+                                            @else
+                                                <span class="download-span">{{ showAmount($imageFile->ex_price) }} {{ __($general->cur_text) }} </span>
                                             @endif
+
+                                            <span class="download-span">|<span>
+                                            <span class="download-span">{{ $imageFile->resolution }}</span>
+                                            <span class="download-span">|<span>
+
+                                            @if($i == 0)
+                                                <span class="download-span">Standard<span>
+                                            @else
+                                                <span class="download-span">Extended<span>
+                                            @endif
+
+                                            <span class="download-span">|<span>
+
+                                            @if($i == 0)
+                                            <span class="download-span {{ $downloadActionClass }}" data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                <i class="fa-solid fa-download"></i>
+                                            </span>
+                                            @else
+                                            <span class="download-span {{ $downloadActionClass }}" data-type="extended" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                <i class="fa-solid fa-download"></i>
+                                            </span>
+                                            @endif
+
+                                            @if($imageFile->exclued_package == "yes")
+                                            <span style="color: red;">Note* : Can't download through package</span>
+                                            @endif
+                                        </div>
+                                        @endfor
+
+                                    @else
+                                    <div class="spanDiv">
+                                        <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
+                                        <span class="download-span">|<span>
+                                        <span class="download-span">{{ $imageFile->resolution }}</span>
+                                        <span class="download-span">|<span>
+                                        <span class="download-span">Standard<span>
+                                        <span class="download-span">|<span>
+                                        <span class="download-span {{ $downloadActionClass }}"  data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')"  style="cursor: pointer;">
+                                            <i class="fa-solid fa-download"></i>
+                                        </span>
+                                        @if($imageFile->exclued_package == "yes")
+                                        <span style="color: red;">Note* : Can't download through package</span>
+                                        @endif
+                                    </div>
+                                    @endif
                                            
                                 @endforeach
                                 </div>

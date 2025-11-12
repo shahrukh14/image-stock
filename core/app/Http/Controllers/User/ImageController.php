@@ -329,7 +329,7 @@ class ImageController extends Controller
                     $storageManager->path = 'images/' . $directory;
                     $storageManager->old  = @$image->image_name;
 
-                    $storageManager->uploadImage($photo, $filename);
+                    $storageManager->uploadImage($photo, $filename, false, false);
                     $storageManager->uploadImage($thumb, $filename, true);
                 }
 
@@ -352,6 +352,44 @@ class ImageController extends Controller
                 return ['error' => $exp->getMessage()];
             }
         }
+
+        $thumbResource = [];
+        if ($request->hasFile('thumb_resource')) {
+            try {
+                foreach ($request->thumb_resource as $thumb) {
+                    $thumbName  = uniqid() . time() . '.' . $thumb->getClientOriginalExtension();
+                    $thumbPhoto = ImageFacade::make($thumb);
+
+                    if ($general->watermark == Status::ENABLE) {
+                        $watermark = ImageFacade::make('assets/images/watermark.png')->opacity(45)->rotate(45)->greyscale()->fit($thumbPhoto->width(), $thumbPhoto->height());
+                        $thumbPhoto->insert($watermark, 'center');
+                    }
+
+                    if ($general->storage_type == 1) {
+                        if (!file_exists($imageLocation)) {
+                            mkdir($imageLocation, 0755, true);
+                        }
+
+                        $thumbPhoto->save($imageLocation . '/' . $thumbName);
+                    } else {
+                        $servers = [2 => "ftp", 3 => "wasabi", 4 => "do", 5 => "vultr"];
+                        $server = $servers[$general->storage_type];
+                        $storageManager       = new StorageManager($server);
+                        $storageManager->path = 'images/' . $directory;
+                        $storageManager->old  = @$image->image_name;
+
+                        $storageManager->uploadImage($thumbPhoto, $thumbName, false, true);
+                    }
+
+                    $thumbResource[] = $directory . '/thumb_res_' . $thumbName;
+                }
+                $image->thumb_resource = $thumbResource;
+
+            } catch (\Exception $exp) {
+                return ['error' => $exp->getMessage()];
+            }
+        }
+        
         if ($isUpdate) {
             foreach ($request->removed_file ?? [] as $fileId) {
                 $removedFile = ImageFile::where('id', $fileId)->where('image_id', $image->id)->first();
@@ -408,6 +446,7 @@ class ImageController extends Controller
             $imageFile->status = $request->status[$key];
             $imageFile->price = $request->price[$key];
             $imageFile->ex_price = $request->ex_price[$key];
+            $imageFile->exclued_package = $request->exclued_package[$key];
             $imageFile->file = $storeFileArr[$key];
             $imageFile->save();
         }

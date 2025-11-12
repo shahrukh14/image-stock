@@ -102,7 +102,7 @@ class ImageController extends Controller
             return;
         }
        
-        if ($user->purchasedPlan && $user->purchasedPlan->expired_at > Carbon::now()->format('Y-m-d')) {
+        if ($user->purchasedPlan && $user->purchasedPlan->expired_at > Carbon::now()->format('Y-m-d') && $file->exclued_package == "no") {
 
            
             $this->purchaseProcessByPlan($file, $user, $type);

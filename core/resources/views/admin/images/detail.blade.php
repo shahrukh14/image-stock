@@ -10,7 +10,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ imageUrl(getFilePath('stockImage'), $image->image_name) }}" alt="@lang('Image')">
+                                    <img src="{{ imageUrl(getFilePath('stockImage'), $image->thumb) }}" alt="@lang('Image')">
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -168,7 +168,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3 price {{ $value->is_free == Status::FREE ? 'd-none' : '' }}">
+                                                    <div class="col-md-2 price {{ $value->is_free == Status::FREE ? 'd-none' : '' }}">
                                                         <div class="form-group">
                                                             <label>@lang('Standard Price')</label>
                                                             <div class="input-group">
@@ -177,13 +177,23 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-3 price {{ $value->is_free == Status::FREE ? 'd-none' : '' }}">
+                                                    <div class="col-md-2 price {{ $value->is_free == Status::FREE ? 'd-none' : '' }}">
                                                         <div class="form-group">
                                                             <label>@lang('Extended Price')</label>
                                                             <div class="input-group">
                                                                 <input class="form-control" name="ex_price[]" type="number" value="{{ @$value->ex_price ? showAmount(@$value->ex_price) : '' }}" step="any" @if (!$value->is_free) required @endif>
                                                                 <span class="input-group-text">{{ __($general->cur_text) }}</span>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label>@lang('Excluded Package')</label>
+                                                            <select class="form-control" name="exclued_package[]" required>
+                                                                <option value="">@lang('Select One')</option>
+                                                                <option value="no" @selected($value->exclued_package == "no")>@lang('No')</option>
+                                                                <option value="yes" @selected($value->exclued_package == "yes")>@lang('Yes')</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
