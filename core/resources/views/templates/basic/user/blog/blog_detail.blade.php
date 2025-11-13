@@ -65,7 +65,7 @@
             <div data-w-id="d364559a-e203-26f7-e49c-904189ad4522" style="opacity: 1" class="inner-container _765px center">
                 <div class="rich-text---paragraph-mg-fix">
                     <div class="rich-text-v2 w-richtext">
-                       @php echo $blog->blog_body; @endphp
+                        @php echo $blog->blog_body; @endphp
                     </div>
                 </div>
             </div>

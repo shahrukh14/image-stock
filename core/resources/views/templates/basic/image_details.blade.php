@@ -121,7 +121,7 @@
                                         @endfor
 
                                     @else
-                                    <div class="spanDiv">
+                                    <div class="spanDiv confirmationBtn">
                                         <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
                                         <span class="download-span">|<span>
                                         <span class="download-span">{{ $imageFile->resolution }}</span>
@@ -382,6 +382,7 @@
         border: 1px solid #ccc;
         margin-bottom: 10px;
         border-radius: 10px;
+        font-size: 14px;
     }
 
     .flexslider {
