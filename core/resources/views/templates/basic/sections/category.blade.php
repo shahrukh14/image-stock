@@ -21,14 +21,14 @@
                   <div class="blur-sibling-item w-dyn-item" style="opacity: 1">
                       <a href="{{ route('photos') }}" class="w-inline-block">
                           <div class="resouce-collection photos">
-                            
+
                           </div>
                       </a>
                   </div>
                   <div class="blur-sibling-item w-dyn-item">
                       <a href="{{ route('vectors') }}" class="w-inline-block">
                         <div class="resouce-collection vectors">
-                            
+
                         </div>
                       </a>
                   </div>
@@ -36,7 +36,7 @@
                       class="blur-sibling-item w-dyn-item" style="opacity: 1">
                       <a href="{{ route('videos') }}"  class="w-inline-block">
                         <div class="resouce-collection videos">
-                            
+
                         </div>
                       </a>
                   </div>
@@ -70,7 +70,7 @@
       <div style=" transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; "
            class="title-left---content-rigth mg-bottom-32px keep">
           <div>
-              <h2 class="display-3 mg-bottom-6px">Latest Stock Assets</h2>
+              <h2 class="display-3 mg-bottom-6px">Browse Categories</h2>
           </div>
           <div class="categories-filter-wrapper">
               {{-- <div class="heading-h5-size no-wrap">Filter by:</div> --}}
@@ -101,31 +101,34 @@
                 $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
             @endphp
           <div role="list" class="grid-3-columns gap-38px latest-resources-grid w-dyn-items">
-            @forelse ($images as $image)
+            @forelse ($categories as $category)
             @php
-                $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
+                // $imageUrl = imageUrl(getFilePath('stockImage'), $category->latestImage($category->id)->thumb);
+                $imageUrl = getImage(getFilePath('category') . '/' . $category->image, getFileSize('category'));
             @endphp
              <div role="listitem" class="w-dyn-item">
-                <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
+              <b style="margin-left: 17%">{{ $category->name }}</b>
+                <a  href="{{ route('search', ['type' => 'image', 'category' => $category->slug]) }}" class="resource-card-wrapper w-inline-block">
                   <div class="image-wrapper">
                     <img alt="Image" class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
                   </div>
-                  <div class="resource-card-content v2">
+                  {{-- <div class="resource-card-content v2">
                     <div class="text-200 color-neutral-100 mg-bottom-24px">
-                      #{{$image->track_id}}
+                      {{$category->slug}}
+                      #{{$category->latestImage($category->id)->track_id}}
                     </div>
                     <div class="mg-top-auto">
                       <div class="flex-horizontal space-between gap-16px">
                         <div  class="flex-horizontal start gap-12px flex-wrap">
                           <div class="avatar-circle _02">
-                            <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
+                            <img src="{{ getImage(getFilePath('userProfile') . '/' . $category->latestImage($category->id)->user->image, null, 'user') }}" alt="{{$category->latestImage($category->id)->user->firstname}}" />
                           </div>
                           <div>
                             <div class="heading-h6-size color-neutral-100">
-                              {{$image->user->firstname}}
+                              {{$category->latestImage($category->id)->user->firstname}}
                             </div>
                             <div class="text-50 color-neutral-300">
-                              {{date('d-M-Y', strtotime($image->upload_date))}}
+                              {{date('d-M-Y', strtotime($category->latestImage($category->id)->upload_date))}}
                             </div>
                           </div>
                         </div>
@@ -134,13 +137,13 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
                 </a>
               </div>
             @empty
-            
+
             @endforelse
-             
+
           </div>
       </div>
   </div>
@@ -245,6 +248,31 @@
         </div>
     </div>
 </section>
+
+@push('style')
+
+<style>
+  .gallery__img {
+    width: 100%;
+    height: 180px;
+    border-radius: 2px;
+    object-fit: contain;
+    vertical-align: bottom;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    position: relative;
+    z-index: -1;
+}
+
+@media only screen and (max-width:450px) {
+  .gallery__img {
+    height: 100%;
+  }
+}
+</style>
+
+@endpush
+
 @push('script')
 <script>
 

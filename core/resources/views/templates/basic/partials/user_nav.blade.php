@@ -32,6 +32,45 @@
                         <span class="dashboard-menu__text"> @lang('Dashboard') </span>
                     </a>
                 </li>
+
+                <li>
+                    <div class="accordion" id="helpDesk">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#account" type="button" aria-expanded="false">
+                                    <span class="accordion-button__icon">
+                                        <i class="las la-address-card"></i>
+                                    </span>
+                                    <span class="accordion-button__text">
+                                        @lang('Account')
+                                    </span>
+                                </button>
+                            </h2>
+                            <div class="accordion-collapse collapse" id="account" data-bs-parent="#helpDesk">
+                                <div class="accordion-body">
+                                    <ul class="list dashboard-menu__inner">
+                                        <li>
+                                            <a class="dashboard-menu__inner-link" href="{{ route('member.images', $user->username) }}">
+                                                @lang('Profile Settings')
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.change.password') }}" href="{{ route('user.change.password') }}">
+                                                @lang('Change Password')
+                                            </a>
+                                        </li>
+                                        {{-- <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.twofactor') }}" href="{{ route('user.twofactor') }}">
+                                                @lang('2FA Security')
+                                            </a>
+                                        </li> --}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
                 <li>
                     <a class="dashboard-menu__link {{ menuActive('user.collection.all') }}" href="{{ route('user.collection.all') }}">
                         <span class="dashboard-menu__icon">
@@ -46,7 +85,15 @@
                         <span class="dashboard-menu__icon">
                             <i class="las la-cloud-download-alt"></i>
                         </span>
-                        <span class="dashboard-menu__text"> @lang('Download History') </span>
+                        <span class="dashboard-menu__text"> @lang('My Downloads') </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="dashboard-menu__link {{ menuActive('user.purchase.history') }}" href="{{ route('user.purchase.history') }}">
+                        <span class="dashboard-menu__icon">
+                            <i class="las la-history"></i>
+                        </span>
+                        <span class="dashboard-menu__text"> @lang('Purchase History') </span>
                     </a>
                 </li>
 
@@ -70,7 +117,7 @@
                                     <span class="accordion-button__icon">
                                         <i class="las la-image"></i>
                                     </span>
-                                    <span class="accordion-button__text"> @lang('Manage Images') </span>
+                                    <span class="accordion-button__text"> @lang('Manage Photos') </span>
                                 </button>
                             </h2>
                             <div class="accordion-collapse collapse" id="imageCollapse" data-bs-parent="#images">
@@ -78,27 +125,27 @@
                                     <ul class="list dashboard-menu__inner">
                                         <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.add') }}" href="{{ route('user.image.add') }}">
-                                                @lang('Upload images')
+                                                @lang('Upload Photos')
                                             </a>
                                         </li>
                                         {{-- <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.pending') }}" href="{{ route('user.image.pending') }}">
-                                                @lang('Pending images')
+                                                @lang('Pending Photos')
                                             </a>
                                         </li> --}}
                                         <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.rejected') }}" href="{{ route('user.image.rejected') }}">
-                                                @lang('Rejected images')
+                                                @lang('Rejected Photos')
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.approved') }}" href="{{ route('user.image.approved') }}">
-                                                @lang('Approved images')
+                                                @lang('Approved Photos')
                                             </a>
                                         </li>
                                         <li>
                                             <a class="dashboard-menu__inner-link {{ menuActive('user.image.all') }}" href="{{ route('user.image.all') }}">
-                                                @lang('All images')
+                                                @lang('All Photos')
                                             </a>
                                         </li>
                                     </ul>
@@ -108,6 +155,97 @@
                     </div>
                 </li>
 
+                <li>
+                    <div class="accordion" id="vector">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#vectorCollapse" type="button" aria-expanded="false">
+                                    <span class="accordion-button__icon">
+                                        <i class="las la-image"></i>
+                                    </span>
+                                    <span class="accordion-button__text"> @lang('Manage Vectors & Graphics') </span>
+                                </button>
+                            </h2>
+                            <div class="accordion-collapse collapse" id="vectorCollapse" data-bs-parent="#vector">
+                                <div class="accordion-body">
+                                    <ul class="list dashboard-menu__inner">
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.vector.add') }}" href="{{ route('user.vector.add') }}">
+                                                @lang('Upload Vector & Graphics')
+                                            </a>
+                                        </li>
+                                        {{-- <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.vector.pending') }}" href="{{ route('user.vector.pending') }}">
+                                                @lang('Pending vectors & Graphics')
+                                            </a>
+                                        </li> --}}
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.vector.rejected') }}" href="{{ route('user.vector.rejected') }}">
+                                                @lang('Rejected Vectors & Graphics')
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.vector.approved') }}" href="{{ route('user.vector.approved') }}">
+                                                @lang('Approved vectors & Graphics')
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.vector.all') }}" href="{{ route('user.vector.all') }}">
+                                                @lang('All Vectors & Graphics')
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordion" id="video">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#videoCollapse" type="button" aria-expanded="false">
+                                    <span class="accordion-button__icon">
+                                        <i class="las la-image"></i>
+                                    </span>
+                                    <span class="accordion-button__text"> @lang('Manage Videos') </span>
+                                </button>
+                            </h2>
+                            <div class="accordion-collapse collapse" id="videoCollapse" data-bs-parent="#video">
+                                <div class="accordion-body">
+                                    <ul class="list dashboard-menu__inner">
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.video.add') }}" href="{{ route('user.video.add') }}">
+                                                @lang('Upload Videos')
+                                            </a>
+                                        </li>
+                                        {{-- <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.video.pending') }}" href="{{ route('user.video.pending') }}">
+                                                @lang('Pending Videos')
+                                            </a>
+                                        </li> --}}
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.video.rejected') }}" href="{{ route('user.video.rejected') }}">
+                                                @lang('Rejected Videos')
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.video.approved') }}" href="{{ route('user.video.approved') }}">
+                                                @lang('Approved Videos')
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dashboard-menu__inner-link {{ menuActive('user.video.all') }}" href="{{ route('user.video.all') }}">
+                                                @lang('All Videos')
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                @endif
                 <li>
                     <div class="accordion" id="finances">
                         <div class="accordion-item">
@@ -163,8 +301,6 @@
                         </div>
                     </div>
                 </li>
-                @endif
-
                 @if ($general->referral_system)
                     <li>
                         <div class="accordion" id="referrals">
@@ -230,44 +366,6 @@
                         </div>
                     </div>
                 </li>
-                <li>
-                    <div class="accordion" id="helpDesk">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#account" type="button" aria-expanded="false">
-                                    <span class="accordion-button__icon">
-                                        <i class="las la-address-card"></i>
-                                    </span>
-                                    <span class="accordion-button__text">
-                                        @lang('Account')
-                                    </span>
-                                </button>
-                            </h2>
-                            <div class="accordion-collapse collapse" id="account" data-bs-parent="#helpDesk">
-                                <div class="accordion-body">
-                                    <ul class="list dashboard-menu__inner">
-                                        <li>
-                                            <a class="dashboard-menu__inner-link" href="{{ route('member.images', $user->username) }}">
-                                                @lang('Profile Settings')
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dashboard-menu__inner-link {{ menuActive('user.change.password') }}" href="{{ route('user.change.password') }}">
-                                                @lang('Change Password')
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dashboard-menu__inner-link {{ menuActive('user.twofactor') }}" href="{{ route('user.twofactor') }}">
-                                                @lang('2FA Security')
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
          
             </ul>
 

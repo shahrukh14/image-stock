@@ -75,7 +75,7 @@
                     <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"></button>
                 </div>
                 @auth
-                    <form action="{{ route('user.plan.purchase') }}" method="post">
+                    <form action="{{ route('user.plan.purchase') }}" method="POST">
                         @csrf
                         <div class="modal-body">
                             <input name="period" type="hidden">
@@ -83,7 +83,7 @@
                             <div class="row gy-3">
 
                                 <h6 class="text-danger already_purchased text-center">
-                                    @lang('You already purchased the plan')
+                                    @lang('You already purchased this plan')
                                 </h6>
 
                                 <p class="plan-info text-center">@lang('By purchasing') <span class="fw-bold plan_name"></span> @lang(' plan, you will get ') <span class="daily_limit fw-bold"></span>@lang(' images download opurtunity per day and') <span class="monthly_limit fw-bold"></span> @lang(' images per month.')</p>
@@ -93,7 +93,7 @@
                                     <div class="form--select">
                                         <select class="form-select" id="payment_type" name="payment_type" required>
                                             <option value="">@lang('Select One')</option>
-                                            <option value="direct">@lang('Direct Payment')</option>
+                                            <option value="direct">@lang('Credit Card or Paypal')</option>
                                             <option value="wallet">@lang('From Wallet')</option>
                                         </select>
                                     </div>

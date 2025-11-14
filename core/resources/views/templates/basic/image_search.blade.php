@@ -6,7 +6,7 @@
         ->pluck('tags')
         ->toArray();
     $tags = array_slice(array_unique(array_merge(...$imgs)), 0, 6);
-    
+
 @endphp
 @extends($activeTemplate . 'layouts.frontend')
 @section('content')
@@ -17,7 +17,7 @@
           <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
             <div class="inner-container _222px _100---tablet" style="height: 100%">
               <div id="accordion">
-                <h3>Type <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
+                <h3>Type</h3>
                 <div>
                   <div role="list"  class="grid-1-column gap-row-24px w-dyn-items">
                     <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem"  class="collection-item w-dyn-item">
@@ -25,13 +25,13 @@
                         <div class="flex-horizontal start gap-8px">
                           <img src="{{ asset('assets\images\app_images\camera.svg') }}"  alt="Photography" class="image category-dropdown-link---icon" />
                           <div  class="text-100 medium color-neutral-700">
-                            Photography
+                            Photos
                           </div>
                         </div>
                       </a>
                     </div>
-                    <div id="{{ route('vectors') }}" role="listitem" class="collection-item w-dyn-item">
-                      <a href="https://stocktemplate.webflow.io/category/vectors-graphics" class="category-dropdown-link w-inline-block" tabindex="0">
+                    <div class="collection-item w-dyn-item">
+                      <a href="{{ route('vectors') }}" class="category-dropdown-link w-inline-block" tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                           <img src="{{ asset('assets\images\app_images\vector.svg') }}" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
                           <div class="text-100 medium color-neutral-700">
@@ -40,7 +40,7 @@
                         </div>
                       </a>
                     </div>
-                    <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1"  role="listitem" class="collection-item w-dyn-item">
+                    <div role="listitem" class="collection-item w-dyn-item">
                       <a href="{{ route('videos') }}" class="category-dropdown-link w-inline-block" tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                           <img src="{{ asset('assets\images\app_images\video.svg') }}" alt="Videos" class="image category-dropdown-link---icon" />
@@ -54,23 +54,23 @@
                 </div>
 
                 {{-- Category Filter start --}}
-                <h3>Category <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
+                <h3 style="margin-top: 10px;">Category</h3>
                 <div>
                   @if ($categories->count())
                     <div>
                       @foreach ($categories as $category)
-                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param"  data-param="category" data-search_type="single" data-param_value="{{ $category->slug}}" >{{ $category->name }}</span>
-                        {{-- <a href="{{ route('search', ['type' => 'image', 'category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a> --}}
+                      <div class="categoryFilter">
+                        <span class="search-param"  data-param="category" data-search_type="single" data-param_value="{{ $category->slug}}" >{{ $category->name }}</span>
+                        {{-- <a href="{{ route('photos', ['category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a> --}}
                       </div>
                       @endforeach
                     </div>
                   @endif
-                </div> 
+                </div>
                 {{-- Category Filter end --}}
-                
+
                 {{-- Tags Filter start --}}
-                <h3>Tags <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
+                {{-- <h3>Tags <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
                 <div>
                     <div>
                       @if (request()->tag && !in_array(request()->tag, $tags))
@@ -85,7 +85,7 @@
                       </div>
                       @endforeach
                     </div>
-                </div> 
+                </div> --}}
                 {{-- Tags Filter end --}}
 
                 {{-- Extenstion Filter start --}}
@@ -101,8 +101,12 @@
                 </div> --}}
                 {{-- Extenstion Filter end --}}
               </div>
-            
-            @php echo getAds('728x90', 2);@endphp
+
+            @php
+              echo getAds('300x1050', 'search', 1);
+              echo getAds('250x250', 'search', 1);
+              echo getAds('160x600', 'search', 1);
+            @endphp
 
             </div>
           </div>
@@ -134,7 +138,75 @@
                   $defaultImageContent = getContent('default_images.content', true);
                   $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
               @endphp
-              <div style="opacity: 1"  class="w-dyn-list">
+              <div class="grid">
+                <div class="grid-sizer"></div>
+                @foreach($images as $image)
+                    @php
+                        $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
+                        if($image->file_type == 'photo'){
+                          $detailPageUrl = route('image.detail', [slug($image->title), $image->id]);
+                        }else if($image->file_type == 'vector'){
+                          $detailPageUrl = route('vector.detail', [slug($image->title), $image->id]);
+                        }else{
+                          $detailPageUrl = route('video.detail', [slug($image->title), $image->id]);
+                        }
+                    @endphp
+                    <div class="grid-item1 {{ $image->imageOrientation }}">
+                      <a  href="{{ $detailPageUrl }}" class="resource-card-wrapper w-inline-block">
+                        
+                        @if($image->file_type == 'video')
+                          @php
+                            $url = $image->video_url;
+                            $firstParam = '';
+                            if (strpos($url, 'youtu.be') !== false) {
+                                // For 'youtu.be' URLs
+                                $parts = explode('/', $url);
+                                $firstParam = end($parts);
+                            } else if (strpos($url, 'youtube.com') !== false) {
+                                // For 'youtube.com' URLs
+                                $query = parse_url($url, PHP_URL_QUERY);
+                                parse_str($query, $queryParams);
+                                $firstParam = isset($queryParams['v']) ? $queryParams['v'] : '';
+                            }
+                            $video_url = "https://www.youtube.com/embed/".$firstParam;
+                          @endphp
+                          <object data="{{$video_url}}" height="250"></object>
+                        @else
+                          <img src="{{ $imageUrl }}">
+                        @endif
+                        <div class="resource-card---video-button w-condition-invisible">
+                          <img src="./Photography - Stock X - Webflow Ecommerce website template_files/64347e458126ad558f064a5e_play-button-small-icon-stock-x-webflow-template.svg" alt="Play Button - Stock X Webflow Template" class="play-button" />
+                        </div>
+                        <div class="resource-card-content v2">
+                          <div class="text-200 color-neutral-100 mg-bottom-24px">
+                            #{{$image->track_id}}
+                          </div>
+                          <div class="mg-top-auto">
+                            <div class="flex-horizontal space-between gap-16px">
+                              <div  class="flex-horizontal start gap-12px flex-wrap">
+                                <div class="avatar-circle _02">
+                                  <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
+                                </div>
+                                <div>
+                                  <div class="heading-h6-size color-neutral-100">
+                                    {{$image->user->firstname}}
+                                  </div>
+                                  <div class="text-50 color-neutral-300">
+                                    {{date('d-M-Y', strtotime($image->upload_date))}}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="resource-card-arrow">
+                                <div class="line-square-icon"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                @endforeach
+              </div>
+              {{-- <div style="opacity: 1"  class="w-dyn-list">
                 <div role="list"  class="grid-3-columns latest-resources-grid---page w-dyn-items">
                   @foreach($images as $image)
                   @php
@@ -178,33 +250,32 @@
                   @endforeach
                 </div>
                 <div role="navigation"  aria-label="List" class="w-pagination-wrapper pagination-wrapper"></div>
-              </div>
-              
-              
-                 
-              {{-- <div style="text-align: right">
-                @if($page > 2)
-                  <a href="{{$previousUrl}}" class="btn-btn"><< Previous</a>
-                @endif
-
-                @if(count($images) > 0)
-                  <a href="{{$nextUrl}}" class="btn-btn">Next >></a>
-                @endif
               </div> --}}
             </div>
-           
           </div>
         </div>
       </div>
       @if (count($images) > 0)
-      {{ $images->links('pagination::bootstrap-5') }}
+      {{ $images->links('pagination::bootstrap-4') }}
       @endif
-      
+
     </section>
   </div>
 @endsection
 
 <style>
+span.search-param {
+    margin-left: 5px;
+    cursor: pointer;
+}
+span.search-param:hover{
+  margin-left: 10px;
+  color: #689F38 !important;
+  font-size: 110%;
+} 
+nav.d-flex.justify-items-center.justify-content-between .d-flex.justify-content-between.flex-fill.d-sm-none:nth-child(1) {
+  visibility: hidden;
+}
 
 .loginBtn{
       padding: 2px 12px;
@@ -229,15 +300,22 @@
 }
 .gallery__img {
     width: 100%;
-    height: 100%;
+    height: 180px;
     border-radius: 2px;
-    object-fit: cover;
+    object-fit: contain;
     vertical-align: bottom;
     transition: all 0.3s ease;
     transform-origin: center;
     position: relative;
     z-index: -1;
 }
+
+@media only screen and (max-width:450px) {
+  .gallery__img {
+    height: 100%;
+  }
+}
+
 .activearrow {
   float: right;
   display: none;
@@ -256,11 +334,40 @@
     margin-bottom: 15px;
     cursor: pointer;
 }
+
+.ui-accordion-content.ui-corner-bottom {
+    height: auto !important;
+}
+
+.grid {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.grid-item1 {
+    float: left;
+    margin-bottom: 5px;
+}
+
+.grid-sizer,.grid-item1 {
+    width: 30%;
+}
+
 </style>
 
 @push('script')
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.2.2/masonry.pkgd.min.js"></script>
+
 <script>
+  $(window).on('load', function(){
+    $('.grid').masonry({
+        itemSelector: '.grid-item1',
+        columnWidth: '.grid-sizer',
+        gutter: 10
+    });
+  });
+
   $('#price-link').click(function (event) {
         event.preventDefault(); // Prevent the default behavior of the anchor tag
 
@@ -277,9 +384,9 @@
         window.location.href = url.toString();
     });
 
-$( function() {
-  $( "#accordion" ).accordion();
-});
+// $( function() {
+//   $( "#accordion" ).accordion();
+// });
 
 // document.addEventListener('DOMContentLoaded', function() {
 //   document.querySelector('.header-search-bar').style.display="none";
@@ -434,4 +541,4 @@ $( function() {
         }
     </script>
     <script src="{{ asset($activeTemplateTrue . 'js/like.js') }}"></script> --}}
-@endpush 
+@endpush

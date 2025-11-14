@@ -60,7 +60,7 @@ class FrontendController extends Controller
         }
         $content = Frontend::where('data_keys', $key . '.content')->orderBy('id', 'desc')->first();
         $elements = Frontend::where('data_keys', $key . '.element')->orderBy('id')->orderBy('id', 'desc')->get();
-        $pageTitle = $section->name;
+        $pageTitle = $section->name; 
         return view('admin.frontend.index', compact('section', 'content', 'elements', 'key', 'pageTitle'));
     }
 

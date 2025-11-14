@@ -13,7 +13,8 @@
                         </div>
                     </div>
                     <div class="text-align-center margin-top-20px">
-                        <input type="submit" value="Submit" data-wait="Please wait..." id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-50 mg-top-16px w-button">
+                        {{-- <input type="submit"  data-wait="Please wait..." id="submitButton" class="submitButton"> --}}
+                        <button type="submit" id="submitButton" class="submitButton">Button</button>
                     </div>
                     <div class="text-align-center margin-top-20px">
                         <p> If you don't get any code, <a href="{{ route('user.send.verify.code', 'email') }}">Try again</a> </p>
@@ -23,4 +24,22 @@
         </div>
     </section>
 @endsection
+
+@push('style')
+<style>
+    .submitButton {
+        background: url("/core/public/assets/image/buttons/submit button black.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 10px 70px;
+        color: transparent;
+    }
+
+    .submitButton:hover {
+        background: url("/core/public/assets/image/buttons/submit button green.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 10px 70px;
+        color: transparent;
+    }
+</style>
+@endpush
 

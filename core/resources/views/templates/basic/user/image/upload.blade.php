@@ -48,6 +48,7 @@
                                             <div class="col-12 mb-3">
                                                 <label class="form-label">@lang('Title')</label>
                                                 <input class="form-control form--control" name="title" type="text" value="{{ old('title', @$image->title) }}" required>
+                                                <input name="file_type" type="hidden" value="photo">
                                             </div>
                                             <div class="col-12 mb-3">
                                                 <label class="form-label required">@lang('Category')</label>

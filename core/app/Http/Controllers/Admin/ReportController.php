@@ -10,6 +10,7 @@ use App\Models\NotificationLog;
 use App\Models\PlanPurchase;
 use App\Models\Transaction;
 use App\Models\UserLogin;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -52,6 +53,23 @@ class ReportController extends Controller
         $pageTitle = 'Contributor\'s Earning Log';
         $logs      = EarningLog::orderBy('id', 'desc')->with('contributor', 'imageFile.image')->paginate(getPaginate());
         return view('admin.reports.contributor_earning_log', compact('pageTitle', 'logs'));
+    }
+
+    public function contributorEarningLogDelete($id){
+        $log = EarningLog::find($id);
+        $user = User::findOrFail($log->contributor_id);
+
+        if ($log->amount >  $user->balance) {
+            $notify[] = ['error', $user->username . ' doesn\'t have sufficient balance.'];
+            return back()->withNotify($notify);
+        }
+        $user->balance -= $log->amount;
+        $user->save();
+        $log->delete();
+        
+        $notify[] = ['success','Log deleted Successfully'];
+        return back()->withNotify($notify);
+        
     }
 
     public function userImageCollectionLog()

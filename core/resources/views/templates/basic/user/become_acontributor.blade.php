@@ -44,9 +44,10 @@
                                 <textarea id="description" name="description" maxlength="5000" placeholder="Tell your audience about you..." class="text-area mg-bottom-0 w-input" required>{{$user->description}}</textarea>
                             </div>
                             @if($user->user_status == 1)
-                                <input type="button" value="Already Applied" data-wait="Please wait..." id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-100 mg-top-16px w-button" disabled>
+                                {{-- <input type="button" id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="alreadyApplied" disabled> --}}
+                                <input type="button" value="Already Applied" id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-100 mg-top-16px w-button" disabled>
                             @else
-                                <input type="submit" value="Apply now" data-wait="Please wait..." id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-100 mg-top-16px w-button">
+                                <input type="submit" id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="applyNowBtn">
                             @endif
                             
                         </div>
@@ -66,3 +67,39 @@
         </div>
     </section>
 @endsection
+
+@push('style')
+<style>
+    #w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c {
+        border: 0;
+    }
+
+    .applyNowBtn {
+        background: url("/core/public/assets/image/buttons/apply now black.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 15px 255px;
+        color: transparent;
+    }
+
+    .applyNowBtn:hover {
+        background: url("/core/public/assets/image/buttons/apply now green.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 15px 255px;
+        color: transparent;
+    }
+
+    .alreadyApplied {
+        background: url("/core/public/assets/image/buttons/already applied black.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 15px 255px;
+        color: transparent;
+    }
+
+    .alreadyApplied:hover {
+        background: url("/core/public/assets/image/buttons/already applied green.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 15px 255px;
+        color: transparent;
+    }
+</style>
+@endpush

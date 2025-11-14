@@ -62,27 +62,27 @@ class ImageController extends Controller
                     $amount = $file->price * $general->per_download / 100;
                 }
                 
-                $contributor = $file->image->user;
-                $contributor->balance +=  $amount;
-                $contributor->update();
+                // $contributor = $file->image->user;
+                // $contributor->balance +=  $amount;
+                // $contributor->update();
 
-                $earn                   = new EarningLog();
-                $earn->contributor_id   = $contributor->id;
-                $earn->image_file_id    = $file->id;
-                $earn->amount           = $amount;
-                $earn->earning_date     = now()->format('Y-m-d');
-                $earn->save();
+                // $earn                   = new EarningLog();
+                // $earn->contributor_id   = $contributor->id;
+                // $earn->image_file_id    = $file->id;
+                // $earn->amount           = $amount;
+                // $earn->earning_date     = now()->format('Y-m-d');
+                // $earn->save();
 
-                $transaction               = new Transaction();
-                $transaction->user_id      = $contributor->id;
-                $transaction->amount       =  $amount;
-                $transaction->post_balance = getAmount($contributor->balance);
-                $transaction->charge       = 0;
-                $transaction->trx_type     = '+';
-                $transaction->details      = "Earnings generated from downloading the {$file->image->title}";
-                $transaction->trx          = getTrx();
-                $transaction->remark       = 'earning_log';
-                $transaction->save();
+                // $transaction               = new Transaction();
+                // $transaction->user_id      = $contributor->id;
+                // $transaction->amount       =  $amount;
+                // $transaction->post_balance = getAmount($contributor->balance);
+                // $transaction->charge       = 0;
+                // $transaction->trx_type     = '+';
+                // $transaction->details      = "Earnings generated from downloading the {$file->image->title}";
+                // $transaction->trx          = getTrx();
+                // $transaction->remark       = 'earning_log';
+                // $transaction->save();
             }
             $file->save();
             $download->save();
@@ -113,8 +113,7 @@ class ImageController extends Controller
         }
     }
     
-    private function purchaseProcessByPlan($file, $user, $type)
-    {
+    private function purchaseProcessByPlan($file, $user, $type){
    
         $downloads       = Download::where('user_id', $user->id)->where('premium', Status::YES);
 
@@ -124,7 +123,8 @@ class ImageController extends Controller
        
         if ($user->purchasedPlan->daily_limit <= $todayDownload || $user->purchasedPlan->monthly_limit <= $monthlyDownload) {
             
-            $this->purchaseProcessByBalance($file, $user, $type);
+            // $this->purchaseProcessByBalance($file, $user, $type);
+            throw ValidationException::withMessages(['limit_over' => 'Download Limit Over']);
            
         }
     }

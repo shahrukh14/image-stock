@@ -82,6 +82,10 @@ class FileInfo
             'extensions' => ['png', 'jpg', 'jpeg', 'psd', 'ai', 'raw', 'indd', 'eps']
         ];
 
+        $data['video_extensions'] = [
+            'extensions' => ['mp4', 'mov', 'mkv', 'wmv','3gp', 'avi', 'flv']
+        ];
+
         $data['defaultImage'] = [
             'path' => 'assets/images/default'
         ];

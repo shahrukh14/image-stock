@@ -19,12 +19,12 @@ style="opacity: 1">
                         class="hidden-on-desktop w-button" />
                 </form>
                 <ul role="list" class="header-nav-menu-list">
-                    <li class="header-nav-list-item"><a href="{{ route('home') }}" aria-current="page" class="header-nav-link w-nav-link w--current" style="max-width: 1364px">Home</a></li>
-                    <li class="header-nav-list-item"><a href="{{ route('search', ['type'=>'image'])}}" class="header-nav-link w-nav-link"  style="max-width: 1364px">Search</a></li>
+                    <li class="header-nav-list-item"><a href="{{ route('home') }}" aria-current="page" class="header-nav-link w-nav-link" style="max-width: 1364px">Home</a></li>
+                    <li class="header-nav-list-item"><a href="{{ route('search')}}" class="header-nav-link w-nav-link"  style="max-width: 1364px">Search</a></li>
                     <li class="header-nav-list-item"><a href="{{ route('photos')}}" class="header-nav-link w-nav-link" style="max-width: 1364px">Photos</a></li>
-                    <li class="header-nav-list-item"><a href="#" class="header-nav-link w-nav-link" style="max-width: 1364px">Vectors</a></li>
-                    <li class="header-nav-list-item"><a href="#" class="header-nav-link w-nav-link" style="max-width: 1364px">Videos</a></li>
-                    <li class="header-nav-list-item"><a href="{{route('price.details')}}" class="header-nav-link w-nav-link" style="max-width: 1364px">Pricing</a></li>
+                    <li class="header-nav-list-item"><a href="{{ route('vectors')}}" class="header-nav-link w-nav-link" style="max-width: 1364px">Vectors</a></li>
+                    <li class="header-nav-list-item"><a href="{{ route('videos')}}" class="header-nav-link w-nav-link" style="max-width: 1364px">Videos</a></li>
+                    <li class="header-nav-list-item"><a href="{{route('price.details')}}" class="header-nav-link w-nav-link" style="max-width: 1364px; margin-right: 20px;">Pricing</a></li>
 
                     @if(!auth()->user())
                     <li class="header-nav-list-item"> <a href="{{ route('user.login') }}" class="header-nav-link w-nav-link" style="max-width: 1364px">Log In /Sign up</a> </li>
@@ -104,15 +104,6 @@ style="opacity: 1">
                 </ul>
             </nav>
             <div  class="w-commerce-commercecartwrapper cart-button-wrapper">
-                <a href="#" data-node-type="commerce-cart-open-link"
-                    class="w-commerce-commercecartopenlink cart-button w-inline-block" role="button"
-                    aria-haspopup="dialog" aria-label="Open empty cart">
-                    <div class="w-commerce-commercecartopenlinkcount cart-quantity">
-                        0
-                    </div>
-                    <img src="{{ asset('assets/images/app_images/cart-icon-stock-x-webflow-template.svg') }}"
-                        alt="Cart Icon - Stock X Webflow Template" class="cart-button-image" />
-                </a>
                 <div data-node-type="commerce-cart-container-wrapper" style="display: none"
                     class="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-modal cart-wrapper">
                     <div data-node-type="commerce-cart-container" role="dialog"

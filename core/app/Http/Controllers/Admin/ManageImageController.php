@@ -22,8 +22,7 @@ class ManageImageController extends Controller
         return view('admin.images.list', compact('pageTitle', 'images'));
     }
 
-    public function pending()
-    {
+    public function pending(){
         $pageTitle = 'Pending Images';
         $images    = $this->imageData('pending');
         return view('admin.images.list', compact('pageTitle', 'images'));
@@ -90,23 +89,23 @@ class ManageImageController extends Controller
 
         $request->validate([
             'category'      => 'required|array',
-            'title'         => 'required|string|max:40',
+            'title'         => 'required|string|max:120',
             'resolution'    => 'required|array',
-            'resolution.*'    => 'required|string|max:40',
+            'resolution.*'  => 'required|string|max:40',
             'tags'          => 'required|array',
             'tags.*'        => 'required|string',
             'extensions'    => 'required|array',
             'extensions.*'  => 'required|in:' . implode(',', $extensions),
             'status'        => 'nullable|in:0,1,3',
             'statusFile'    => 'required|array',
-            'statusFile.*'    => 'required|in:0,1',
+            'statusFile.*'  => 'required|in:0,1',
             'is_free'       => 'required|array',
             'is_free.*'     => 'required|in:0,1', //0 = Premium, 1=Free
             'price'         => 'array',
             'price.*'       => 'nullable|numeric',
             'reason'        => 'required_if:status,3',
-            'file_id'         => 'required|array',
-            'file_id.*'         => 'required|integer',
+            'file_id'       => 'required|array',
+            'file_id.*'     => 'required|integer',
         ], [
             'extensions.*.in' => 'Extensions are invalid',
         ]);
@@ -125,6 +124,7 @@ class ManageImageController extends Controller
         $image->colors        = $request->colors;
         $image->attribution   = $request->attribution ? Status::ENABLE : Status::DISABLE;
         $image->status        = $request->status;
+        $image->description   = $request->description;
         $image->admin_id      = auth('admin')->id();
         $image->reviewer_id = 0;
         if ($image->status == 3) {
@@ -175,6 +175,6 @@ class ManageImageController extends Controller
         if ($scope) {
             $images = Image::$scope();
         }
-        return  $images->searchAble(['title', 'category:name', 'user:username,firstname,lastname', 'collections:title', 'admin:username,name', 'reviewer:username,name'])->withSum('files as total_downloads', 'total_downloads')->orderBy('id', 'desc')->with('user')->paginate(getPaginate());
+        return  $images->where('file_type', 'photo')->searchAble(['title', 'category:name', 'user:username,firstname,lastname', 'collections:title', 'admin:username,name', 'reviewer:username,name'])->withSum('files as total_downloads', 'total_downloads')->orderBy('id', 'desc')->with('user')->paginate(getPaginate());
     }
 }

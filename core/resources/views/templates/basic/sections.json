@@ -39,7 +39,6 @@
         "content": {
             "form_title": "text",
             "sub_title": "text",
-            "mobile": "text",
             "email": "text"
         }
     },
@@ -68,8 +67,10 @@
         "no_selection": true,
         "name": "Plan Section",
         "content": {
-            "title": "text",
-            "subtitle": "text"
+            "title_1": "text",
+            "subtitle_1": "text",
+            "title_2": "text",
+            "subtitle_2": "text"
         }
     },
   

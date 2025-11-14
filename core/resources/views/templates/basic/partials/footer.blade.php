@@ -142,7 +142,8 @@
                             @csrf
                             <div class="position-relative">
                                 <input type="email" class="input button-inside w-input" maxlength="256" name="email" data-name="Email" placeholder="Enter your email..." id="Footer-Email" required="" />
-                                <input type="submit" value="Subscribe now" data-wait="Please wait..." id="w-node-_3f6661a9-88e7-47bc-76df-590fa2612bff-a2612b67" class="btn-primary inside-input default white-mb w-button" />
+                                <input type="submit" value="Subscribe now" class="subscribeNowBtn" />
+                                {{-- <input type="submit" value="Subscribe now" class="btn-primary inside-input default white-mb w-button" /> --}}
                             </div>
                         </form>
                         <div class="success-message color-neutral-100 w-form-done" tabindex="-1"
@@ -171,5 +172,69 @@
         </div>
     </div>
 </footer>
+
+@push('style')
+    <style>
+
+        .subscribeNowBtn {
+            background: url("/core/public/assets/image/buttons/subscribe now black.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 6px 20px;
+            color: transparent;
+            border:0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            position: absolute;
+            top: 6px;
+            bottom: 6px;
+            right: 6px;
+        }
+
+        .subscribeNowBtn:hover {
+            background: url("/core/public/assets/image/buttons/subscribe now green.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 6px 20px;
+            color: transparent;
+            border:0;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            position: absolute;
+            top: 6px;
+            bottom: 6px;
+            right: 6px;
+        }
+    </style>
+@endpush
+
+@push('script')
+<script type="text/javascript">
+    var _iub = _iub || [];
+    _iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,"enableFadp":true,"enableLgpd":true,"enableTcf":true,"enableUspr":true,"fadpApplies":true,"floatingPreferencesButtonDisplay":"bottom-right","googleAdditionalConsentMode":true,"lang":"en","perPurposeConsent":true,"siteId":3442632,"tcfPurposes":{"2":"consent_only","7":"consent_only","8":"consent_only","9":"consent_only","10":"consent_only","11":"consent_only"},"usprApplies":true,"whitelabel":false,"cookiePolicyId":30517066, "banner":{ "acceptButtonDisplay":true,"closeButtonDisplay":false,"customizeButtonDisplay":true,"explicitWithdrawal":true,"listPurposes":true,"position":"bottom","rejectButtonDisplay":true,"showTitle":false }};
+</script>
+<script type="text/javascript" src="https://cs.iubenda.com/autoblocking/3442632.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/tcf/stub-v2.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/tcf/safe-tcf-v2.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
+
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/659c1f9a0ff6374032bdc24e/1hjktmt25';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+    
+    
+@endpush
 
       

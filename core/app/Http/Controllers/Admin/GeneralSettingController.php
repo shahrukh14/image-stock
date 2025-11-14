@@ -623,7 +623,7 @@ class GeneralSettingController extends Controller
 
             if($json){
                 $img = $json->image;
-                $imagePath = public_path("assets/image/hero_banner/{$img}");
+                $imagePath = public_path("assets/image/photos_setting/{$img}");
                 if (file_exists($imagePath)) {
                     unlink($imagePath);
                 }
@@ -643,6 +643,92 @@ class GeneralSettingController extends Controller
         $gs->save();
 
         $notify[] = ['success', 'Image has been updated.'];
+        return back()->withNotify($notify);
+    }
+
+    public function vectorPageSetting(){
+        $pageTitle = 'Vector Page Setting';
+        return view('admin.setting.vector', compact('pageTitle'));
+    }
+
+    public function vectorPageSettingUpdate(Request $request){
+        $gs = gs();
+        $folder_path = public_path('assets/image/vector_setting');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+        $json = json_decode($gs->vector_setting);
+        if (isset($request->vector_setting['image'])){
+            $sl = rand();
+            $vector = $request->vector_setting['image'];
+            $vector_setting = date('Ymd').'_'.$sl.'_'.'.'.$vector->getClientOriginalExtension();
+            $request->vector_setting['image']->move($folder_path, $vector_setting);
+
+            if($json){
+                $img = $json->image;
+                $imagePath = public_path("assets/image/vector_setting/{$img}");
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+             
+        }else{
+            $vector_setting = $json->image;
+        }
+
+        $data = [
+            'image'         => $vector_setting,
+            'heading'       => $request->vector_setting['heading'],
+            'sub_heading'   => $request->vector_setting['sub_heading']
+        ];
+
+        $gs->vector_setting = json_encode($data);
+        $gs->save();
+
+        $notify[] = ['success', 'Vector page has been updated.'];
+        return back()->withNotify($notify);
+    }
+
+    public function videoPageSetting(){
+        $pageTitle = 'Video Page Setting';
+        return view('admin.setting.video', compact('pageTitle'));
+    }
+
+    public function videoPageSettingUpdate(Request $request){
+        $gs = gs();
+        $folder_path = public_path('assets/image/video_setting');
+        if (!File::exists($folder_path)) {
+            File::makeDirectory($folder_path, 0777, true, true);
+        }
+        $json = json_decode($gs->video_setting);
+        if (isset($request->video_setting['image'])){
+            $sl = rand();
+            $vector = $request->video_setting['image'];
+            $video_setting = date('Ymd').'_'.$sl.'_'.'.'.$vector->getClientOriginalExtension();
+            $request->video_setting['image']->move($folder_path, $video_setting);
+
+            if($json){
+                $img = $json->image;
+                $imagePath = public_path("assets/image/video_setting/{$img}");
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+             
+        }else{
+            $video_setting = $json->image;
+        }
+
+        $data = [
+            'image'         => $video_setting,
+            'heading'       => $request->video_setting['heading'],
+            'sub_heading'   => $request->video_setting['sub_heading']
+        ];
+
+        $gs->video_setting = json_encode($data);
+        $gs->save();
+
+        $notify[] = ['success', 'Video page has been updated.'];
         return back()->withNotify($notify);
     }
 }

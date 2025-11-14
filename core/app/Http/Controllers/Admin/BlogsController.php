@@ -94,16 +94,24 @@ class BlogsController extends Controller
         }
 
         $blog->title = $request->title;
+
         // formatting the data
+        // if($request->title){
+        //     $sl = rand();
+        //     $formatData = explode(" ", Str::lower($request->title));
+        //     array_push($formatData, $sl);
+        //     $join = Arr::join($formatData,'-');
+        //     $blog->slug = $join;
+        // }
+
         if($request->title){
             $sl = rand();
-            $formatData = explode(" ", Str::lower($request->title));
-            array_push($formatData, $sl);
-            $join = Arr::join($formatData,'-');
-            $blog->slug = $join;
+            $strLower = strtolower($request->title);
+            $cleanStr = preg_replace('/[^a-z0-9]+/', '-', $strLower);
+            $cleanStr = trim($cleanStr, '-');
+            $slug = $cleanStr."-".$sl;
+            $blog->slug = $slug;
         }
-
-        
 
         // formatting end the data
         $blog->author = $request->author;

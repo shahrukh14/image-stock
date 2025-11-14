@@ -8,7 +8,9 @@ use App\Models\BlogCategory;
 use App\Models\Deposit;
 use App\Models\NotificationLog;
 use App\Models\Subscriber;
+use App\Models\EarningLog;
 use App\Models\Transaction;
+use App\Models\Download;
 use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Http\Request;
@@ -224,9 +226,11 @@ class ManageUsersController extends Controller
             $user->balance += $amount;
 
             $transaction->trx_type = '+';
-            $transaction->remark = 'balance_add';
+            // $transaction->remark = 'balance_add';
+            $transaction->remark = 'earning_add';
 
-            $notifyTemplate = 'BAL_ADD';
+            // $notifyTemplate = 'BAL_ADD';
+            $notifyTemplate = 'EARNING_ADD';
 
             $notify[] = ['success', gs('cur_sym') . $amount . ' added successfully'];
         } else {
@@ -253,6 +257,13 @@ class ManageUsersController extends Controller
         $transaction->trx =  $trx;
         $transaction->details = $request->remark;
         $transaction->save();
+
+        $earn                   = new EarningLog();
+        $earn->contributor_id   = $id;
+        $earn->remark           = $request->remark;
+        $earn->amount           = $amount;
+        $earn->earning_date     = now()->format('Y-m-d');
+        $earn->save();
 
         notify($user, $notifyTemplate, [
             'trx' => $trx,
@@ -406,10 +417,24 @@ class ManageUsersController extends Controller
         $subscribers = Subscriber::searchable(['email'])->orderBy('email')->paginate(getPaginate());
         return view('admin.subscriber.all_subscriber',compact('subscribers','pageTitle'));
     }
+
     public function subscriberDelete($id) {
         $sub = Subscriber::find($id);
         $sub->delete();
         $notify[] = ['success', 'Subscriber deleted successfully'];
         return back()->withNotify($notify);
+    }
+
+    public function downloadHistory() {
+        $pageTitle = 'Download History';
+        $downloads     = Download::orderBy('id', 'DESC')->with('imageFile.image:title,id,category_id', 'contributor', 'imageFile','user')->paginate(getPaginate());
+        return view('admin.download.history', compact('pageTitle', 'downloads'));
+    }
+
+    public function userEarningLog($id){
+        $user = User::findOrFail($id);
+        $pageTitle = 'Earning Log - ' . $user->username;
+        $logs      = EarningLog::where('contributor_id', $id)->orderBy('id', 'desc')->with('contributor', 'imageFile.image')->paginate(getPaginate());
+        return view('admin.users.earning_log', compact('pageTitle', 'logs'));
     }
 }

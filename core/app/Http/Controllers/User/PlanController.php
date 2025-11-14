@@ -32,7 +32,7 @@ class PlanController extends Controller
         $planPurchase = PlanPurchase::where('user_id', $user->id)->where('plan_id', $plan->id)->whereDate('expired_at', '>=', Carbon::now())->first();
 
         if ($planPurchase) {
-            $notify[] = ['error', 'You already purchased the plan'];
+            $notify[] = ['error', 'You already purchased this plan'];
             return back()->withNotify($notify);
         }
 

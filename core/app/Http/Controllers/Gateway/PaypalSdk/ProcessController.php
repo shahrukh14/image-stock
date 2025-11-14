@@ -85,11 +85,16 @@ class ProcessController extends Controller
                 $deposit->detail = json_decode(json_encode($response->result->payer));
                 $deposit->save();
 
-                PaymentController::userDataUpdate($deposit);
+                // PaymentController::userDataUpdate($deposit);
                if($deposit->donation_id){
                         $notify[] = ['success', 'Donation successfully sent'];
                     }else{
-                        $notify[] = ['success', 'Payment captured successfully'];
+                        if(session('imagePayment') === 1){
+                            $notify[] = ['success', 'Click on the download icon to download your image'];
+                        }else{
+                            PaymentController::userDataUpdate($deposit);
+                            $notify[] = ['success', 'Payment captured successfully'];
+                        }
 
                     }
                 return to_route(...$successRedirectUrl)->withNotify($notify);

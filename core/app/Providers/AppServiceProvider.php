@@ -64,8 +64,10 @@ class AppServiceProvider extends ServiceProvider
                 'pendingDepositsCount'         => Deposit::pending()->count(),
                 'pendingPaymentCount'          => Deposit::pending()->where('plan_id', '!=', 0)->count(),
                 'pendingWithdrawCount'         => Withdrawal::pending()->count(),
-                'pendingImagesCount'           => Image::pending()->count(),
-                'pendingDonationCount'           => Donation::pending()->count(),
+                'pendingImagesCount'           => Image::pending()->where('file_type','photo')->count(),
+                'pendingVectorCount'           => Image::pending()->where('file_type','vector')->count(),
+                'pendingVideoCount'           => Image::pending()->where('file_type','video')->count(),
+                'pendingDonationCount'         => Donation::pending()->count(),
             ]);
         });
 

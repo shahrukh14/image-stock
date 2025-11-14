@@ -62,15 +62,21 @@
             <div class="d-flex flex-wrap gap-3 mt-4">
                 <div class="flex-fill">
                     <button data-bs-toggle="modal" data-bs-target="#addSubModal" class="btn btn--success btn--shadow w-100 btn-lg bal-btn" data-act="add">
-                        <i class="las la-plus-circle"></i> @lang('Balance')
+                        <i class="las la-plus-circle"></i> @lang('Earnings')
                     </button>
                 </div>
 
                 <div class="flex-fill">
+                    <a href="{{ route('admin.users.earning.log', $user->id) }}" class="btn btn--danger btn--shadow w-100 btn-lg">
+                        <i class="las la-wallet"></i>@lang('Logs')
+                    </a>
+                </div>
+
+                {{-- <div class="flex-fill">
                     <button data-bs-toggle="modal" data-bs-target="#addSubModal" class="btn btn--danger btn--shadow w-100 btn-lg bal-btn" data-act="sub">
                         <i class="las la-minus-circle"></i> @lang('Balance')
                     </button>
-                </div>
+                </div> --}}
 
                 <div class="flex-fill">
                     <a href="{{ route('admin.report.login.history') }}?search={{ $user->username }}" class="btn btn--primary btn--shadow w-100 btn-lg">
@@ -256,7 +262,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"><span class="type"></span> <span>@lang('Balance')</span></h5>
+                    <h5 class="modal-title"><span class="type"></span> <span>@lang('Earning')</span></h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <i class="las la-times"></i>
                     </button>

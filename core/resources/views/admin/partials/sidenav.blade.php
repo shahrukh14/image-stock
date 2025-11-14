@@ -82,17 +82,31 @@
                     </a>
                 </li> --}}
 
-                <li class="sidebar-menu-item {{ menuActive('admin.manage.reason.all') }}">
+                {{-- <li class="sidebar-menu-item {{ menuActive('admin.manage.reason.all') }}">
                     <a class="nav-link" href="{{ route('admin.manage.reason.all') }}">
                         <i class="menu-icon las la-list-ol"></i>
                         <span class="menu-title">@lang('Predefined Reason')</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="sidebar-menu-item {{ menuActive('admin.plan.all') }}">
                     <a class="nav-link" href="{{ route('admin.plan.all') }}">
                         <i class="menu-icon las la-stream"></i>
                         <span class="menu-title">@lang('Manage Plan')</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item {{ menuActive('admin.coupon.code') }}">
+                    <a class="nav-link" href="{{ route('admin.coupon.code') }}">
+                        <i class="menu-icon las la-ticket-alt"></i>
+                        <span class="menu-title">@lang('Coupon Code')</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item {{ menuActive('admin.download.history') }}">
+                    <a class="nav-link" href="{{ route('admin.download.history') }}">
+                        <i class="menu-icon las la-download"></i>
+                        <span class="menu-title">@lang('Download History')</span>
                     </a>
                 </li>
 
@@ -200,7 +214,7 @@
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a class="{{ menuActive('admin.images*', 3) }}" href="javascript:void(0)">
                         <i class="menu-icon las la-photo-video"></i>
-                        <span class="menu-title">@lang('Manage Images')</span>
+                        <span class="menu-title">@lang('Manage Photos')</span>
 
                         @if ($pendingImagesCount > 0)
                             <span class="menu-badge pill bg--danger ms-auto">
@@ -213,7 +227,7 @@
                             <li class="sidebar-menu-item {{ menuActive('admin.images.pending') }}">
                                 <a class="nav-link" href="{{ route('admin.images.pending') }}">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Pending Images')</span>
+                                    <span class="menu-title">@lang('Pending Photos')</span>
                                     @if ($pendingImagesCount)
                                         <span class="menu-badge pill bg--danger ms-auto">{{ $pendingImagesCount }}</span>
                                     @endif
@@ -223,21 +237,115 @@
                             <li class="sidebar-menu-item {{ menuActive('admin.images.rejected') }}">
                                 <a class="nav-link" href="{{ route('admin.images.rejected') }}">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Rejected Images')</span>
+                                    <span class="menu-title">@lang('Rejected Photos')</span>
                                 </a>
                             </li>
 
                             <li class="sidebar-menu-item {{ menuActive('admin.images.approved') }}">
                                 <a class="nav-link" href="{{ route('admin.images.approved') }}">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Approved Images')</span>
+                                    <span class="menu-title">@lang('Approved Photos')</span>
                                 </a>
                             </li>
 
                             <li class="sidebar-menu-item {{ menuActive('admin.images.all') }}">
                                 <a class="nav-link" href="{{ route('admin.images.all') }}">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('All Images')</span>
+                                    <span class="menu-title">@lang('All Photos')</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a class="{{ menuActive('admin.vectors*', 3) }}" href="javascript:void(0)">
+                        <i class="menu-icon las la-photo-video"></i>
+                        <span class="menu-title">@lang('Manage Vectors & Graphics')</span>
+
+                        @if ($pendingVectorCount > 0)
+                            <span class="menu-badge pill bg--danger ms-auto">
+                                <i class="fa fa-exclamation"></i>
+                            </span>
+                        @endif
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.vectors*', 2) }}">
+                        <ul>
+                            <li class="sidebar-menu-item {{ menuActive('admin.vectors.pending') }}">
+                                <a class="nav-link" href="{{ route('admin.vectors.pending') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Pending Vectors & Graphics')</span>
+                                    @if ($pendingVectorCount)
+                                        <span class="menu-badge pill bg--danger ms-auto">{{ $pendingVectorCount }}</span>
+                                    @endif
+                                </a>
+                            </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.vectors.rejected') }}">
+                                <a class="nav-link" href="{{ route('admin.vectors.rejected') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Rejected Vectors & Graphics')</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.vectors.approved') }}">
+                                <a class="nav-link" href="{{ route('admin.vectors.approved') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Approved Vectors & Graphics')</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.vectors.all') }}">
+                                <a class="nav-link" href="{{ route('admin.vectors.all') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('All Vectors & Graphics')</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a class="{{ menuActive('admin.videos*', 3) }}" href="javascript:void(0)">
+                        <i class="menu-icon las la-photo-video"></i>
+                        <span class="menu-title">@lang('Manage Videos')</span>
+
+                        @if ($pendingVideoCount > 0)
+                            <span class="menu-badge pill bg--danger ms-auto">
+                                <i class="fa fa-exclamation"></i>
+                            </span>
+                        @endif
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.videos*', 2) }}">
+                        <ul>
+                            <li class="sidebar-menu-item {{ menuActive('admin.videos.pending') }}">
+                                <a class="nav-link" href="{{ route('admin.videos.pending') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Pending Videos')</span>
+                                    @if ($pendingVideoCount)
+                                        <span class="menu-badge pill bg--danger ms-auto">{{ $pendingVideoCount }}</span>
+                                    @endif
+                                </a>
+                            </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.videos.rejected') }}">
+                                <a class="nav-link" href="{{ route('admin.videos.rejected') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Rejected Videos')</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.videos.approved') }}">
+                                <a class="nav-link" href="{{ route('admin.videos.approved') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Approved Videos')</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.videos.all') }}">
+                                <a class="nav-link" href="{{ route('admin.videos.all') }}">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('All Videos')</span>
                                 </a>
                             </li>
                         </ul>
@@ -569,6 +677,20 @@
                     <a class="nav-link" href="{{ route('admin.photos.page.setting') }}">
                         <i class="menu-icon las la-image"></i>
                         <span class="menu-title">@lang('Photos Page Setting')</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item {{ menuActive('admin.vector.page.setting') }}">
+                    <a class="nav-link" href="{{ route('admin.vector.page.setting') }}">
+                        <i class="menu-icon las la-image"></i>
+                        <span class="menu-title">@lang('Vector Page Setting')</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item {{ menuActive('admin.video.page.setting') }}">
+                    <a class="nav-link" href="{{ route('admin.video.page.setting') }}">
+                        <i class="menu-icon las la-video"></i>
+                        <span class="menu-title">@lang('Video Page Setting')</span>
                     </a>
                 </li>
 

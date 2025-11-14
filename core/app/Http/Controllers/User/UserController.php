@@ -6,6 +6,7 @@ use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\FormProcessor;
 use App\Lib\GoogleAuthenticator;
+use App\Models\ImageFile;
 use App\Models\Donation;
 use App\Models\Follow;
 use App\Models\Form;
@@ -13,6 +14,7 @@ use App\Models\ReferralLog;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\EarningLog;
+use App\Models\Coupon;
 use App\Models\Download;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -109,14 +111,22 @@ class UserController extends Controller
         return back()->withNotify($notify);
     }
 
-    public function transactions()
-    {
+    public function transactions(){
         $pageTitle = 'Transactions';
         $remarks = Transaction::distinct('remark')->orderBy('remark')->get('remark');
 
         $transactions = Transaction::where('user_id', auth()->id())->searchable(['trx'])->filter(['trx_type', 'remark'])->orderBy('id', 'desc')->paginate(getPaginate());
 
         return view($this->activeTemplate . 'user.transactions', compact('pageTitle', 'transactions', 'remarks'));
+    }
+
+    public function purchaseHistory(){
+        $pageTitle = 'Purchase History';
+        $remarks = Transaction::distinct('remark')->orderBy('remark')->get('remark');
+
+        $transactions = Transaction::where('user_id', auth()->id())->where('trx_type', '-')->searchable(['trx'])->filter(['trx_type', 'remark'])->orderBy('id', 'desc')->paginate(getPaginate());
+
+        return view($this->activeTemplate . 'user.purchase_history', compact('pageTitle', 'transactions', 'remarks'));
     }
 
     public function kycForm()
@@ -315,8 +325,22 @@ class UserController extends Controller
 
     public function downloadHistory()
     {
+        if(session()->has('imagePayment')){
+            session()->forget('imagePayment');
+        }
+
+        $startDate = Carbon::now()->subYear();
+        $endDate = Carbon::now();
+
+        Download::where('user_id', auth()->id())->where('created_at', '<', $startDate)->delete();
+
         $pageTitle = 'Download History';
-        $downloads = Download::where('user_id', auth()->id())->with('imageFile.image:title,id,category_id', 'contributor', 'imageFile')->orderBy('id', 'desc')->paginate(getPaginate());
+        $downloads = Download::where('user_id', auth()->id())
+                            ->whereBetween('created_at', [$startDate, $endDate])
+                            ->with('imageFile.image:title,id,category_id,file_type', 'contributor', 'imageFile')
+                            ->orderBy('id', 'desc')
+                            ->paginate(getPaginate());
+
         return view($this->activeTemplate . 'user.download_history', compact('pageTitle', 'downloads'));
     }
 
@@ -341,7 +365,8 @@ class UserController extends Controller
         $user->mobile = $request->mobile;
         $user->website = $request->website;
         $user->description = $request->description;
-        $user->user_status =1;
+        $user->user_status =2;
+        $user->role =2;
         $user->address = [
             'country' =>  $user->address->country,
             'address' => $request->address,
@@ -352,5 +377,46 @@ class UserController extends Controller
         $user->save();
         $notify[] = ['success', 'Application Submitted'];
         return to_route('user.home')->withNotify($notify);
+    }
+
+    public function purchaseImage(Request $request){
+
+        $request->validate([
+            'license'      => 'required|string|in:standard,extended',
+            'image_file'   => 'required|integer|gt:0',
+            'payment_type' => 'required|string|in:direct,wallet'
+        ], [
+            'payment_type.in' => 'Select correct payment type'
+        ]);
+
+        $user = auth()->user();
+        $imageFile = ImageFile::where('id', $request->image_file)->first();
+
+        if (!$imageFile) {
+            $notify[] = ['error', 'File not found!'];
+            return back()->withNotify($notify);
+        }
+
+        return to_route('user.payment.image', ['image_file' => $imageFile->id, 'license' => $request->license]);
+    }
+
+    public function couponApply(Request $request){
+        $today = now()->toDateString();
+        $couponCode = $request->coupon_code;
+
+        $coupon = Coupon::where('code', $couponCode)
+            ->where('coupon_for', $request->coupon_for)
+            ->where('start_date', '<=', $today)
+            ->where('expiry_date', '>', $today)
+            ->latest()
+            ->first();
+
+        if ($coupon) {
+            $data = ['coupon' => $coupon, 'status'=>200];
+        } else {
+            $data = ['coupon' => [], 'status'=>201];
+        }
+        return $data;
+
     }
 }

@@ -48,6 +48,7 @@ Route::middleware('auth')->name('user.')->group(function () {
 
         Route::get('user-data', 'User\UserController@userData')->name('data');
         Route::post('user-data-submit', 'User\UserController@userDataSubmit')->name('data.submit');
+        
 
         Route::middleware('registration.complete')->namespace('User')->group(function () {
 
@@ -68,6 +69,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::any('deposit/history', 'depositHistory')->name('deposit.history');
                 Route::any('donation/history', 'donationHistory')->name('donation.history');
                 Route::get('transactions', 'transactions')->name('transactions');
+                Route::get('purchase-history', 'purchaseHistory')->name('purchase.history');
 
                 Route::get('attachment-download/{fil_hash}', 'attachmentDownload')->name('attachment.download');
 
@@ -88,7 +90,10 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('become/contributor', 'becomeContributorPage')->name('become.contributor.page');
                 Route::post('become/contributor/{id}', 'becomeContributor')->name('become.contributor');
                 
+                Route::post('purchase-image', 'purchaseImage')->name('purchase.image');
 
+                //Coupon Apply
+                Route::post('coupon/apply', 'couponApply')->name('coupon.apply');
             });
 
             //Profile setting
@@ -119,6 +124,52 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::post('file/status/{id}', 'changeImageFileActiveStatus')->name('file.status');
 
                 //Download own image and already download image
+                Route::get('download', 'download')->name('download.file');
+
+            });
+
+            //Vector
+            Route::controller('VectorController')->name('vector.')->prefix('vector')->group(function () {
+                Route::get('all', 'all')->name('all');
+                Route::get('pending', 'pending')->name('pending');
+                Route::get('approved', 'approved')->name('approved');
+                Route::get('rejected', 'rejected')->name('rejected');
+
+                //image store
+                Route::get('upload', 'add')->name('add');
+                Route::post('store', 'store')->name('store');
+                Route::post('like/update', 'updateLike')->name('like.update');
+
+                //image edit
+                Route::get('{id}/edit', 'edit')->name('edit');
+                Route::post('update/{id}', 'updateVector')->name('update');
+                Route::post('status/{id}', 'changeActiveStatus')->name('status');
+                Route::post('file/status/{id}', 'changeImageFileActiveStatus')->name('file.status');
+
+                //Download own vector and already download image
+                Route::get('download/{id}', 'download')->name('download.file');
+
+            });
+
+            //Videos
+            Route::controller('VideoController')->name('video.')->prefix('video')->group(function () {
+                Route::get('all', 'all')->name('all');
+                Route::get('pending', 'pending')->name('pending');
+                Route::get('approved', 'approved')->name('approved');
+                Route::get('rejected', 'rejected')->name('rejected');
+
+                //image store
+                Route::get('upload', 'add')->name('add');
+                Route::post('store', 'store')->name('store');
+                Route::post('like/update', 'updateLike')->name('like.update');
+
+                //image edit
+                Route::get('{id}/edit', 'edit')->name('edit');
+                Route::post('update/{id}', 'updateVideo')->name('update');
+                Route::post('status/{id}', 'changeActiveStatus')->name('status');
+                Route::post('file/status/{id}', 'changeImageFileActiveStatus')->name('file.status');
+
+                //Download own video and already download image
                 Route::get('download/{id}', 'download')->name('download.file');
 
             });
@@ -154,12 +205,15 @@ Route::middleware('auth')->name('user.')->group(function () {
         // Payment
         Route::middleware('registration.complete')->controller('Gateway\PaymentController')->group(function () {
             Route::any('/payment', 'payment')->name('payment');
+            Route::any('/payment-image', 'paymentForImage')->name('payment.image');
             Route::prefix('deposit')->name('deposit.')->group(function () {
                 Route::any('', 'deposit')->name('index');
                 Route::post('insert', 'depositInsert')->name('insert');
                 Route::get('confirm', 'depositConfirm')->name('confirm');
                 Route::get('manual', 'manualDepositConfirm')->name('manual.confirm');
                 Route::post('manual', 'manualDepositUpdate')->name('manual.update');
+                Route::post('insert-image', 'depositInsertImage')->name('insert.image');
+                Route::get('confirm-image', 'depositConfirmImage')->name('confirm.image');
             });
         });
     });

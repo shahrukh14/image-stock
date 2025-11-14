@@ -91,7 +91,7 @@
                           <div class="text-200 bold color-neutral-800">{{ __(@$content->data_values->email) }}</div>
                         </div>
                       </a>
-                      <a href="tel:(414)435-094" class="contact-link w-inline-block">
+                      {{-- <a href="tel:{{ __(@$content->data_values->mobile) }}" class="contact-link w-inline-block">
                         <div class="inner-container _48px mg-right-12px">
                           <div class="image-wrapper">
                             <img src=".\assets\images\app_images\_phone-icon-stock-x-webflow-template.svg" alt="Phone Icon - Stock X Webflow Template" class="image">
@@ -101,7 +101,7 @@
                           <div class="text-200 mg-bottom-8px">Give us a call</div>
                           <div class="text-200 bold color-neutral-800">{{ __(@$content->data_values->mobile) }}</div>
                         </div>
-                      </a>
+                      </a> --}}
                     </div>
                   </div>
                 </div>

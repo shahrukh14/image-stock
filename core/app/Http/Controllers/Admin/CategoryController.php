@@ -31,7 +31,8 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             try {
                 $path  = getFilePath('category');
-                $size  = getFileSize('category');
+                // $size  = getFileSize('category');
+                $size  = null;
                 $image = fileUploader($request->image, $path, $size, $category->image);
                 $category->image = $image;
             } catch (\Exception $exp) {
@@ -51,6 +52,22 @@ class CategoryController extends Controller
     public function status($id)
     {
         return Category::changeStatus($id);
+    }
+
+    public function homepage($id){
+        $category = Category::find($id);
+        if($category->show_on_homepage == 'yes'){
+            $category->show_on_homepage = 'no';
+            $category->save();
+            $notify[] = ['success', 'category removed from homepage'];
+            return back()->withNotify($notify);
+        }else{
+            $category->show_on_homepage = 'yes';
+            $category->save();
+            $notify[] = ['success', 'Category added to homepage'];
+            return back()->withNotify($notify);
+        }
+        
     }
 
     private function validation($request, $id)

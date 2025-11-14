@@ -34,8 +34,8 @@ class ProcessController extends Controller
         $send['val'] = $val;
         $send['view'] = 'user.payment.redirect';
         $send['method'] = 'post';
-        $send['url'] = 'https://www.sandbox.paypal.com/'; // use for sandbod text
-        // $send['url'] = 'https://www.paypal.com/cgi-bin/webscr';
+        // $send['url'] = 'https://www.sandbox.paypal.com/';
+        $send['url'] = 'https://www.paypal.com/cgi-bin/webscr';
         return json_encode($send);
     }
 
@@ -57,8 +57,8 @@ class ProcessController extends Controller
             $details[$key] = $value;
         }
 
-        $paypalURL = "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr?"; // use for sandbox text
-        // $paypalURL = "https://ipnpb.paypal.com/cgi-bin/webscr?";
+        // $paypalURL = "https://ipnpb.sandbox.paypal.com/cgi-bin/webscr?"; 
+        $paypalURL = "https://ipnpb.paypal.com/cgi-bin/webscr?";
         $url = $paypalURL . $req;
         $response = CurlRequest::curlContent($url);
 

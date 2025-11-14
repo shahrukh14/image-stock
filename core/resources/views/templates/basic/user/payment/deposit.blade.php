@@ -6,6 +6,7 @@
             <input name="plan_id" type="hidden" value="{{ $plan->id }}">
             <input name="period" type="hidden" value="{{ $period }}">
             <input name="type" type="hidden" value="payment">
+            <input name="final_amt" type="hidden" value="">
         @else
             <input name="type" type="hidden" value="deposit">
         @endif
@@ -50,17 +51,28 @@
                     </div>
                 </div>
                 <div class="mt-3 preview-details d-none">
+                    <label class="form-label">@lang('Coupon Code')</label>
+                    <div class="input-group input--group">
+                        <input class="form-control form--control" name="coupon" type="text">
+                        {{-- <span class="input-group-text">{{ __($general->cur_text) }}</span> --}}
+                        <button class="btn btn--base" type="button" id="couponApply">Apply</button>
+                    </div>
+                    <span class="text-danger mx-1 d-none" id="errMsg">Invalid Code</span>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex flex-wrap justify-content-between">
+                        {{-- <li class="list-group-item d-flex flex-wrap justify-content-between">
                             <span>@lang('Limit')</span>
                             <span><span class="min fw-bold">0</span> {{ __($general->cur_text) }} - <span class="max fw-bold">0</span> {{ __($general->cur_text) }}</span>
+                        </li> --}}
+                        <li class="list-group-item d-flex flex-wrap justify-content-between">
+                            <span>@lang('Discount')</span>
+                            <span><span class="fw-bold" id="discount">0</span> {{ __($general->cur_text) }}</span>
                         </li>
                         <li class="list-group-item d-flex flex-wrap justify-content-between">
-                            <span>@lang('Charge')</span>
+                            <span>@lang('Sales Tax')</span>
                             <span><span class="charge fw-bold">0</span> {{ __($general->cur_text) }}</span>
                         </li>
                         <li class="list-group-item d-flex flex-wrap justify-content-between">
-                            <span>@lang('Payable')</span> <span><span class="payable fw-bold"> 0</span> {{ __($general->cur_text) }}</span>
+                            <span>@lang('Total')</span> <span><span class="payable fw-bold"> 0</span> {{ __($general->cur_text) }}</span>
                         </li>
                         <li class="list-group-item justify-content-between d-none rate-element">
 
@@ -140,6 +152,76 @@
                 $('select[name=gateway]').change();
                 $('.amount').text(parseFloat($(this).val()).toFixed(2));
             });
+
+            //Coupon Code Apply
+            $('#couponApply').on('click', function(){
+                var couponCode = $('input[name=coupon]').val();
+
+                let data = {
+                    coupon_code: couponCode,
+                    coupon_for: 'plan'
+                };
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('user.coupon.apply') }}",
+                    data: data,
+                    success: function(response) {
+                        if(response.status == 201){
+                            $('#errMsg').removeClass('d-none')
+                        }
+
+                        if(response.coupon.type == 'amount'){
+                            var currAmt = $('input[name=amount]').val();
+                            var discount = response.coupon.discount;
+                            var newAmt = currAmt - discount;
+                            var discountText = parseFloat(discount).toFixed(2);
+                            var resource = $('select[name=gateway] option:selected').data('gateway');
+                            var fixed_charge = parseFloat(resource.fixed_charge);
+                            var percent_charge = parseFloat(resource.percent_charge);
+                            $('input[name=final_amt]').val(newAmt);
+                            $('#discount').text(discountText);
+
+                            var amount = parseFloat($('input[name=final_amt]').val());
+                            var charge = parseFloat(fixed_charge + (amount * percent_charge / 100)).toFixed(2);
+                            $('.charge').text(charge);
+                            var payable = parseFloat((parseFloat(amount) + parseFloat(charge))).toFixed(2);
+                            $('.payable').text(payable);
+
+                        }else if(response.coupon.type == 'percent'){
+
+                            var currAmt = $('input[name=amount]').val();
+                            var discount = parseFloat(currAmt * response.coupon.discount / 100).toFixed(2);
+                            var newAmt = currAmt - discount;
+                            var discountText = parseFloat(discount).toFixed(2);
+                            var resource = $('select[name=gateway] option:selected').data('gateway');
+                            var fixed_charge = parseFloat(resource.fixed_charge);
+                            var percent_charge = parseFloat(resource.percent_charge);
+                            $('input[name=final_amt]').val(newAmt);
+                            $('#discount').text(discountText);
+
+                            var amount = parseFloat($('input[name=final_amt]').val());
+                            var charge = parseFloat(fixed_charge + (amount * percent_charge / 100)).toFixed(2);
+                            $('.charge').text(charge);
+                            var payable = parseFloat((parseFloat(amount) + parseFloat(charge))).toFixed(2);
+                            $('.payable').text(payable);
+
+                        }
+                    }
+                });
+            });
+
+            $('input[name=coupon]').on('keyup', function(){
+                $('#errMsg').addClass('d-none');
+            });
+
+            $('input[name=final_amt]').val($('input[name=amount]').val());
         })(jQuery);
     </script>
 @endpush

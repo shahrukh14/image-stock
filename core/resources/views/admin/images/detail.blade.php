@@ -213,7 +213,7 @@
                                             <div class="row align-items-center">
                                                 @foreach ($image->thumb_resource ?? [] as $thumb)
                                                 <div class="col-md-2">
-                                                    <img alt="{{$image->title}}"    src="{{ imageUrl(getFilePath('stockImage'), $thumb, null, true) }}" class="image background-image">
+                                                    <img alt="{{$image->title}}" src="{{ imageUrl(getFilePath('stockImage'), $thumb, null, true) }}" class="image background-image">
                                                 </div>
                                                 @endforeach
                                             </div>

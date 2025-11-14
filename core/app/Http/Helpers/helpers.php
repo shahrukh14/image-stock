@@ -12,6 +12,7 @@ use App\Lib\CurlRequest;
 use App\Lib\FileManager;
 use App\Lib\StorageManager;
 use App\Models\Ads;
+use App\Models\Image;
 use App\Models\Transaction;
 use App\Notify\Notify;
 use Illuminate\Support\Facades\Cache;
@@ -97,6 +98,25 @@ function getTrx($length = 12)
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
+}
+
+function getTrackId(){
+    $latestImage = Image::latest()->first();
+
+    if ($latestImage) {
+        $latestTrackId = $latestImage->track_id;
+
+        // Extract the number part from the track ID
+        preg_match('/(\d+)$/', $latestTrackId, $matches);
+        $lastNumber = isset($matches[0]) ? intval($matches[0]) : 0;
+
+        $newNumber = $lastNumber + 1;
+        $track_id = 'GS' . $newNumber;
+    } else {
+        $track_id = 'GS1000';
+    }
+
+    return $track_id;
 }
 
 function getAmount($amount, $length = 2)
@@ -671,14 +691,13 @@ function adSizes()
 
     return [
         "250x250",
-        "120x240",
+        "300x1050",
         "160x600",
     ];
 }
-function getAds($size, $count = 1)
-{
+function getAds($size, $ad_for, $count = 1){
     if (!gs()->ads_module) return;
-    $ads = Ads::where('size', $size)->inRandomOrder()->take($count)->get();
+    $ads = Ads::where('size', $size)->where('ad_for', $ad_for)->inRandomOrder()->take($count)->get();
     if (!$ads->count()) return;
 
     $html = '<div style="text-align:center; padding: 5px 0">';

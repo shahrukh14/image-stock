@@ -1,5 +1,9 @@
 @extends($activeTemplate . 'layouts.frontend')
 @section('content')
+@php
+    $content = getContent('plan.content', true);
+    $elements = getContent('plan.element', false, 4, true);
+@endphp
 
     <section class="section">
         <div class="container-default w-container">
@@ -7,38 +11,42 @@
                 <div class="">
                     <div class="inner-container _981px width-100 margin-auto">
                         <h1 class="display-3 mg-bottom-32px text-align-center">Pricing</h1>
-                        <p class="mg-bottom-32px text-align-center">Find a package that suits your need</p>
+
+                        <div style="margin-left: 20px">
+                            <h4 class="">{{ __(@$content->data_values->title_1) }}</h4>
+                            <p class="mg-bottom-20px ">{{ __(@$content->data_values->subtitle_1) }}</p>
+                            <h4 class="">{{ __(@$content->data_values->title_2) }}</h4>
+                            <p class="mg-bottom-40px ">{{ __(@$content->data_values->subtitle_2) }}</p>
+                        </div>
+
                         <div class="grid-container">
                             @forelse ($plans as $plan)
                             <div class="grid-item text-align-center padding-20px">
-                                <h1 class="display-5 mg-bottom-32px text-align-center">{{ $plan->name}}</h1>
-                                <div class="d-flex justify-content-center">
-                                    @php
-                                        $images = json_decode($plan->image);
-                                    @endphp
-                                    @foreach ($images as $image)
-                                        <img src="{{asset('core/public/assets/image/plan_images/'.$image)}}" alt="{{ $plan->name}}"  class="image-price-icon" />
-                                    @endforeach
-                                    
-                                    {{-- <img src=".\assets\images\app_images\vectors-and-graphics-image-stock-x-webflow-template.svg"  alt="Vectors And Graphics Icon - Stock X Webflow Template"  class="image-price-icon" /> --}}
-                                </div>
+                                <h2 class="display-5 text-align-center">{{ $plan->name }}</h2>
+                                @if($plan->plan_for == "photo")
+                                <h4 class="text-align-center">Photos | Vectors & graphics</h4>
+                                @else
+                                <h4 class="text-align-center">Videos</h4>
+                                @endif
+                                <h3>${{ __(showAmount($plan->yearly_price)) }}</h3>
                                 <div class="product-page-main-content---top">
                                     <p class="mg-bottom-0">{{ $plan->title}}</p>
-                                    <div style="margin-top:20px;">
-                                        <p>{{ $plan->dailyLimitText }} daily downloads</p>
-                                        <p>{{ $plan->monthlyLimitText }} monthly downloads</p>
-                                    </div>
-                                    <div class="divider_card contact-form-center-divider"></div>
-                                   
-                                    <h3>${{ __(showAmount($plan->yearly_price)) }}</h3>
                                 </div>
-                                <button class="w-commerce-commerceaddtocartbutton btn-primary width-50 margin-auto purchase-btn" data-current="{{ auth()->user()?->purchasedPlan?->plan_id == $plan->id }}" data-daily_limit="{{ $plan->dailyLimitText }}" data-id="{{ $plan->id }}" data-monthly_limit="{{ $plan->monthlyLimitText }}" data-plan_name="{{ __($plan->name) }}" >Buy</button>
+                                <button class="buyButton purchase-btn" data-current="{{ auth()->user()?->purchasedPlan?->plan_id == $plan->id }}" data-daily_limit="{{ $plan->dailyLimitText }}" data-id="{{ $plan->id }}" data-monthly_limit="{{ $plan->monthlyLimitText }}" data-plan_name="{{ __($plan->name) }}" @if($plan->plan_for == 'video') data-plan_type="videos" @else data-plan_type="photos, vectors or graphics images" @endif >Buy</button>
                             </div>
                             @empty
                             <div class="grid-item text-align-center padding-20px">
                                  <h2>No Plans Found</h2>
                             </div>
                             @endforelse
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <h3>Buy Out</h3>
+                            <span>
+                                You can buy our assets with one time fee. The price will be different from the regular price.
+                                Buyer will receive the copyright and the assets will be removed from our site and the public.
+                                Please contact us <a href="mailto:green@greenstockpro.com" style="color:rgb(59, 59, 233) !important">green@greenstockpro.com</a>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -65,26 +73,26 @@
                             <div class="row gy-3">
 
                                 <h6 class="text-danger already_purchased text-center">
-                                    @lang('You already purchased the plan')
+                                    @lang('You already purchased this plan')
                                 </h6>
 
-                                <p class="plan-info text-center">@lang('By purchasing') <span class="fw-bold plan_name"></span> @lang(' plan, you will get ') <span class="daily_limit fw-bold"></span>@lang(' images download opurtunity per day and') <span class="monthly_limit fw-bold"></span> @lang(' images per month.')</p>
+                                <p class="plan-info text-center">@lang('By purchasing') <span class="fw-bold plan_name"></span> @lang(' plan, you will get') <span class="daily_limit fw-bold"></span> <span class="fw-bold plan_type"> </span>@lang('. No limit per day download. You can download all one day or at different times.')</p>
                                 {{-- <input type="hidden" name="payment_type" value="direct"> --}}
                                 <div class="form-group payment-info">
                                     <label class="form-label required" for="payment_type">@lang('Payment Type')</label>
                                     <div class="form--select">
-                                        <select class="form-select" id="payment_type" name="payment_type" required>
-                                            <option value="">@lang('Select One')</option>
-                                            <option value="direct">@lang('Direct Payment')</option>
-                                            <option value="wallet">@lang('From Wallet')</option>
+                                        <select class="form-select" id="payment_type" name="payment_type" required readonly>
+                                            <option value="direct" selected>@lang('Credit Card Or Paypal')</option>
+                                            {{-- <option value="wallet">@lang('From Wallet')</option> --}}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="loginBtn planSubmitConfirm" type="submit">@lang('Buy Now') <span class="plan_id"></span> </button>
+                            <button class="buyNowButton planSubmitConfirm" type="submit">@lang('Buy Now') <span class="plan_id"></span> </button>
                             <button class="loginBtn closeButton" data-bs-dismiss="modal" type="button">@lang('Close')</button>
+
                         </div>
                     </form>
                 @else
@@ -102,6 +110,35 @@
 
 @push('style')
     <style>
+
+        .buyButton {
+            background: url("/core/public/assets/image/buttons/buy button black.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 12px 70px;
+            color: transparent;
+        }
+
+        .buyButton:hover {
+            background: url("/core/public/assets/image/buttons/buy button green.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 12px 70px;
+            color: transparent;
+        }
+
+        .buyNowButton {
+            background: url("/core/public/assets/image/buttons/buy package black.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 8px 40px;
+            color: transparent;
+        }
+
+        .buyNowButton:hover {
+            background: url("/core/public/assets/image/buttons/buy package green.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 8px 40px;
+            color: transparent;
+        }
+
         .loginBtn{
             padding: 2px 12px;
             border-radius: 20px;
@@ -159,6 +196,7 @@
                 modal.find('[name=period]').val(period);
 
                 modal.find('.plan_name').text(plan.plan_name);
+                modal.find('.plan_type').text(plan.plan_type);
                 modal.find('.daily_limit').text(plan.daily_limit);
                 modal.find('.monthly_limit').text(plan.monthly_limit);
 

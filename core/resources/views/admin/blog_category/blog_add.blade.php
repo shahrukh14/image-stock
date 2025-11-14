@@ -46,7 +46,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>@lang('Blog Body') </label>
-                            <textarea name="blog_body" rows="10" class="form-control  nicEdit" placeholder="@lang('Your email template')"></textarea>
+                            <textarea name="blog_body" id="blog_body" rows="10" class="form-control"></textarea>
                         </div>
                     </div>
 
@@ -87,3 +87,10 @@
 </div>
 
 @endsection
+
+@push('script')
+<script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('blog_body');
+</script>
+@endpush

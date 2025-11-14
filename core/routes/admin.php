@@ -86,6 +86,7 @@ Route::middleware('admin')->group(function () {
         Route::post('send-notification/{id}', 'sendNotificationSingle')->name('notification.single');
         Route::get('login/{id}', 'login')->name('login');
         Route::post('status/{id}', 'status')->name('status');
+        Route::get('earning/log/{id}', 'userEarningLog')->name('earning.log');
 
         //featured status
         Route::post('featured/{id}', 'updateFeaturedStatus')->name('featured');
@@ -130,17 +131,58 @@ Route::middleware('admin')->group(function () {
         Route::post('update/{id}', 'update')->name('update');
     });
 
+    // Users Vectors
+    Route::controller('ManageVectorController')->name('vectors.')->prefix('vectors')->group(function () {
+        Route::get('/', 'all')->name('all');
+        Route::get('pending', 'pending')->name('pending');
+        Route::get('rejected', 'rejected')->name('rejected');
+        Route::get('approved', 'approved')->name('approved');
+        Route::get('details/{id}', 'details')->name('details');
+        Route::get('download/file/{id}', 'downloadFile')->name('file.download');
+        Route::get('{id}/download/log', 'downloadLog')->name('download.log');
+
+        Route::post('feature/update/{id}', 'updateFeature')->name('feature.update');
+        Route::post('update/{id}', 'update')->name('update');
+    });
+
+    // Users Videos
+    Route::controller('ManageVideoController')->name('videos.')->prefix('videos')->group(function () {
+        Route::get('/', 'all')->name('all');
+        Route::get('pending', 'pending')->name('pending');
+        Route::get('rejected', 'rejected')->name('rejected');
+        Route::get('approved', 'approved')->name('approved');
+        Route::get('details/{id}', 'details')->name('details');
+        Route::get('download/file/{id}', 'downloadFile')->name('file.download');
+        Route::get('{id}/download/log', 'downloadLog')->name('download.log');
+
+        Route::post('feature/update/{id}', 'updateFeature')->name('feature.update');
+        Route::post('update/{id}', 'update')->name('update');
+    });
+
 
     Route::controller('CategoryController')->name('category.')->prefix('category')->group(function () {
         Route::get('all', 'all')->name('all');
         Route::post('store/{id?}', 'store')->name('store');
         Route::post('status/{id}', 'status')->name('status');
+        Route::post('homepage/{id}', 'homepage')->name('homepage');
     });
 
     Route::controller('PlanController')->name('plan.')->prefix('plan')->group(function () {
         Route::get('all', 'allPlan')->name('all');
         Route::post('store/{id?}', 'store')->name('store');
         Route::post('status/{id}', 'status')->name('status');
+        Route::post('delete/{id}', 'delete')->name('delete');
+    });
+
+    Route::controller('ManageUsersController')->name('download.')->prefix('download')->group(function () {
+        Route::get('history', 'downloadHistory')->name('history');
+    });
+    
+
+    Route::controller('CouponController')->name('coupon.')->prefix('coupon')->group(function () {
+        Route::get('code', 'couponCode')->name('code');
+        Route::post('store/{id?}', 'store')->name('store');
+        Route::post('delete/{id}', 'delete')->name('delete');
     });
 
     Route::controller('ColorController')->name('color.')->prefix('color')->group(function () {
@@ -231,6 +273,7 @@ Route::middleware('admin')->group(function () {
         Route::get('download/log', 'downloadLog')->name('download.log');
         Route::get('plan/purchased', 'planPurchased')->name('plan.purchased');
         Route::get('contributor/earning/log', 'contributorEarningLog')->name('contributor.earnings');
+        Route::post('contributor/earning/log/delete/{id}', 'contributorEarningLogDelete')->name('contributor.earing.log.delete');
         Route::get('user/image-collections', 'userImageCollectionLog')->name('user.image.collections');
         Route::post('user/image-collections/featured/{id}', 'userImageCollectionFeatured')->name('user.image.collections.featured');
         Route::get('login/ipHistory/{ip}', 'loginIpHistory')->name('login.ipHistory');
@@ -283,6 +326,14 @@ Route::middleware('admin')->group(function () {
         //Photos Page Setting
         Route::get('photos-setting', 'photosPageSetting')->name('photos.page.setting');
         Route::post('photos-setting-update', 'photosPageSettingUpdate')->name('photos.page.update');
+
+        //Vector Page Setting
+        Route::get('vector-setting', 'vectorPageSetting')->name('vector.page.setting');
+        Route::post('vector-setting-update', 'vectorPageSettingUpdate')->name('vector.page.update');
+
+        //Video Page Setting
+        Route::get('video-setting', 'videoPageSetting')->name('video.page.setting');
+        Route::post('video-setting-update', 'videoPageSettingUpdate')->name('video.page.update');
 
         //configuration
         Route::get('setting/system-configuration', 'systemConfiguration')->name('setting.system.configuration');

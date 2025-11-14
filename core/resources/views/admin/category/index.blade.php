@@ -16,6 +16,7 @@
                                     <th>@lang('Slug')</th>
                                     <th>@lang('Image')</th>
                                     <th>@lang('Status')</th>
+                                    <th>@lang('Show on Homepage')</th>
                                     <th>@lang('Action')</th>
                                 </tr>
                             </thead>
@@ -41,6 +42,17 @@
                                         @php
                                             $category->image_with_path = getImage(getFilePath('category') . '/' . $category->image, getFileSize('category'));
                                         @endphp
+                                        <td>
+                                            @if ($category->show_on_homepage == 'yes')
+                                                <button class="btn btn-outline--danger btn-sm confirmationBtn" data-question="@lang('Are you sure to hide this category from homepage ?')" data-action="{{ route('admin.category.homepage', $category->id) }}">
+                                                    <i class="las la-eye-slash"></i>@lang('Hide')
+                                                </button>
+                                            @else
+                                                <button class="btn btn-outline--success confirmationBtn btn-sm" data-question="@lang('Are you sure to show this category on homepage?')" data-action="{{ route('admin.category.homepage', $category->id) }}">
+                                                    <i class="las la-eye"></i>@lang('Show')
+                                                </button>
+                                            @endif
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-end flex-wrap gap-1">
                                                 <button class="btn btn-outline--primary cuModalBtn btn-sm" data-modal_title="@lang('Update Category')" data-resource="{{ $category }}">
@@ -99,7 +111,7 @@
                                     <div class="avatar-edit">
                                         <input type="file" class="profilePicUpload" name="image" id="profilePicUpload" accept=".png, .jpg, .jpeg">
                                         <label for="profilePicUpload" class="bg--success">@lang('Upload Image')</label>
-                                        <small class="mt-2  ">@lang('Supported files'): <b>@lang('jpeg'), @lang('jpg'), @lang('png').</b> @lang('Image will be resized into '){{ getFileSize('category') }}@lang('px') </small>
+                                        <small class="mt-2  ">@lang('Supported files'): <b>@lang('jpeg'), @lang('jpg'), @lang('png').</b> </small>
                                     </div>
                                 </div>
                             </div>

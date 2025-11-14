@@ -224,7 +224,7 @@
 }
 
 .grid-item {
-  width: calc(50% - 10px); /* 2 columns for large screens */
+  width: calc(33% - 10px); /* 3 columns for large screens */
   margin-bottom: 20px;
   background-color: #f0f0f0;
   padding: 20px;

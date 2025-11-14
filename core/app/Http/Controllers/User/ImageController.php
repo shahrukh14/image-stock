@@ -8,6 +8,7 @@ use App\Models\Color;
 use App\Models\Image;
 use App\Models\Category;
 use App\Constants\Status;
+use App\Models\Download;
 use App\Lib\DownloadFile;
 use App\Models\ImageFile;
 use Image as ImageFacade;
@@ -229,15 +230,87 @@ class ImageController extends Controller
         return response()->json(['status' => 'success', 'total_like' => $image->total_like, 'user_total_like' => $userTotalLike]);
     }
 
-    public function download($id)
+    public function download(Request $request){
+
+        $id   = $request->id;
+        $type = $request->type;
+        $file = ImageFile::with('image')->findOrFail($id);
+        $user = auth()->user();
+        $this->downloadData($file, $user, $type);
+        return DownloadFile::download($file);
+
+        // $imageFile = ImageFile::findOrFail($id);
+        // $user = auth()->user()->load('downloads');
+        // return $user->downloads->where('image_file_id', $imageFile->id)->first();
+
+        // if ($imageFile->image->user_id == $user->id || $user->downloads->where('image_file_id', $imageFile->id)->first()) {
+        //     return DownloadFile::download($imageFile);
+        // } else {
+        //     $notify[] = ['error', 'Invalid Request'];
+        //     // return to_route('user.image.all')->withNotify($notify);
+        //     return back()->withNotify($notify);
+
+        // }
+    }
+
+    //save download data
+    protected function downloadData($file, $user, $type)
     {
-        $imageFile = ImageFile::findOrFail($id);
-        $user = auth()->user()->load('downloads');
-        if ($imageFile->image->user_id == $user->id || $user->downloads->where('image_file_id', $imageFile->id)->first()) {
-            return DownloadFile::download($imageFile);
-        } else {
-            $notify[] = ['error', 'Invalid Request'];
-            return to_route('user.image.all')->withNotify($notify);
+        $general = gs();
+
+        if ($file->image->user_id != @$user->id) {
+            if ($user) {
+                $download = Download::where('image_file_id', $file->id)->where('user_id', $user->id)->first();
+                if (!$download) {
+                    $download = new Download();
+                    $download->user_id = $user->id;
+                    $file->total_downloads += 1;
+                }
+            } else {
+                $download = new Download();
+                $file->total_downloads += 1;
+            }
+
+            $isDownloaded = Download::where('image_file_id', $file->id)->where('user_id', @$user->id)->exists();
+
+            $download->image_file_id = $file->id;
+            $download->contributor_id =  $file->image->user_id;
+            $download->ip = request()->ip();
+            $download->premium = $file->is_free == Status::PREMIUM;
+            $download->type = $type;
+
+            if (!$file->is_free && !$isDownloaded) {
+
+                if($type == "extended"){
+                    $amount = $file->ex_price * $general->per_download / 100;
+                }else{
+                    $amount = $file->price * $general->per_download / 100;
+                }
+                
+                // $contributor = $file->image->user;
+                // $contributor->balance +=  $amount;
+                // $contributor->update();
+
+                // $earn                   = new EarningLog();
+                // $earn->contributor_id   = $contributor->id;
+                // $earn->image_file_id    = $file->id;
+                // $earn->amount           = $amount;
+                // $earn->earning_date     = now()->format('Y-m-d');
+                // $earn->save();
+
+                // $transaction               = new Transaction();
+                // $transaction->user_id      = $contributor->id;
+                // $transaction->amount       =  $amount;
+                // $transaction->post_balance = getAmount($contributor->balance);
+                // $transaction->charge       = 0;
+                // $transaction->trx_type     = '+';
+                // $transaction->details      = "Earnings generated from downloading the {$file->image->title}";
+                // $transaction->trx          = getTrx();
+                // $transaction->remark       = 'earning_log';
+                // $transaction->save();
+            }
+            $file->save();
+            $download->save();
         }
     }
 
@@ -268,7 +341,7 @@ class ImageController extends Controller
     protected function imageData($scope = null)
     {
         $user   = auth()->user();
-        $images = Image::where('user_id', $user->id);
+        $images = Image::where('user_id', $user->id)->where('file_type', 'photo');
 
         if ($scope) {
             $images = $images->$scope();
@@ -423,11 +496,12 @@ class ImageController extends Controller
 
         $image->user_id     = $user->id;
         $image->category_id = $request->category;
+        $image->file_type   = $request->file_type;
         $image->title       = $request->title;
         $image->description = $request->description;
 
         $image->upload_date = now();
-        $image->track_id    =  getTrx();
+        $image->track_id    =  getTrackId();
         if ($isUpdate) {
             $image->status      = Status::IMAGE_PENDING;
         }
@@ -483,7 +557,7 @@ class ImageController extends Controller
             'photo'          => [$photoValidation, new FileTypeValidate(['jpg', 'png', 'jpeg'])],
             'file'           => 'nullable|array',
             'file.*'         => [$fileValidation, new FileTypeValidate(['zip'])],
-            'title'          => 'required|max:40',
+            'title'          => 'required|max:120',
             'removed_file'   => 'nullable|array',
             'removed_file.*' => 'nullable|exists:image_files,id',
             'old_file'   => 'nullable|array',

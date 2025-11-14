@@ -39,6 +39,7 @@ class AdsController extends Controller
         }
 
         $ads->title = $request->title;
+        $ads->ad_for = $request->ad_for;
         $ads->size = $request->size;
         $ads->type = $request->type;
         $ads->code = $ads->type == 1 ? $request->code  : '';

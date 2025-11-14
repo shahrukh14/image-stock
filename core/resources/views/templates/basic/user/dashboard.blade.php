@@ -47,7 +47,8 @@
                 </span>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+
+        {{-- <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
                     <i class="las la-file-invoice-dollar"></i>
@@ -65,6 +66,7 @@
                 </span>
             </div>
         </div>
+        
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
@@ -83,6 +85,7 @@
                 </span>
             </div>
         </div>
+
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
@@ -100,7 +103,8 @@
                     <i class="las la-credit-card"></i>
                 </span>
             </div>
-        </div>
+        </div> --}}
+
         <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
@@ -119,7 +123,8 @@
                 </span>
             </div>
         </div>
-        <div class="col-sm-6 col-md-4">
+        
+        {{-- <div class="col-sm-6 col-md-4">
             <div class="dashboard-widget">
                 <div class="dashboard-widget__icon">
                     <i class="las la-images"></i>
@@ -136,7 +141,8 @@
                     <i class="las la-images"></i>
                 </span>
             </div>
-        </div>
+        </div> --}}
+
         @if ($user->purchasedPlan)
             <h5 class="mb-0">@lang('Purchased Plan Details')</h5>
             <div class="col-sm-6 col-md-4">
@@ -149,7 +155,7 @@
                             {{ __(@$user->purchasedPlan->plan->name) }} @lang('Plan')
                         </span>
                         <p class="dashboard-widget__amount">
-                            @lang('Expired at : ') {{ showDateTime($user->purchasedPlan->expired_at, 'd M, Y') }}
+                            @lang('Expiry date : ') {{ showDateTime($user->purchasedPlan->expired_at, 'd M, Y') }}
                         </p>
                     </div>
                     <span class="dashboard-widget__overlay-icon">
@@ -164,10 +170,11 @@
                     </div>
                     <div class="dashboard-widget__content">
                         <span class="dashboard-widget__title">
-                            @lang('Daily Download Limit')
+                            @lang('Downloads Available')
                         </span>
                         <h4 class="dashboard-widget__amount">
-                            <span data-bs-toggle="tooltip" data-bs-title="@lang('Today\'s download')">{{ @$user->downloads()->whereDate('created_at', now())->count() }}</span> / <span data-bs-toggle="tooltip" data-bs-title="@lang('Daily download limit')">{{ $user->purchasedPlan->daily_limit }}</span>
+                            {{-- <span data-bs-toggle="tooltip" data-bs-title="@lang('Today\'s download')">{{ @$user->downloads()->whereDate('created_at', now())->count() }}</span> / <span data-bs-toggle="tooltip" data-bs-title="@lang('Daily download limit')">{{ $user->purchasedPlan->daily_limit }}</span> --}}
+                            <span data-bs-toggle="tooltip" data-bs-title="@lang('Downloads Available')">{{ $user->purchasedPlan->daily_limit - $user->downloads()->whereDate('created_at', now())->count() }}</span>
                         </h4>
                     </div>
                     <span class="dashboard-widget__overlay-icon">
@@ -175,7 +182,7 @@
                     </span>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4">
+            {{-- <div class="col-sm-6 col-md-4">
                 <div class="dashboard-widget">
                     <div class="dashboard-widget__icon">
                         <i class="las la-download"></i>
@@ -192,8 +199,9 @@
                         <i class="las la-download"></i>
                     </span>
                 </div>
-            </div>
+            </div> --}}
         @endif
+
         <h5 class="mb-0">@lang('Earning Last 30 Days')</h5>
         <div class="col-12">
             <div class="card custom--card">

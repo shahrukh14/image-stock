@@ -12,6 +12,7 @@
                                     <th>@lang('S.N')</th>
                                     <th>@lang('Name')</th>
                                     <th>@lang('Price')</th>
+                                    <th>@lang('Type')</th>
                                     <th>@lang('Download Limit')</th>
                                     <th>@lang('Status')</th>
                                     <th>@lang('Action')</th>
@@ -32,6 +33,10 @@
                                         <td>
                                             {{-- <span class="d-block">{{ showAmount($plan->monthly_price) }} {{ __($general->cur_text) }} / @lang('month')</span> --}}
                                             <span>{{ showAmount($plan->yearly_price) }} {{ __($general->cur_text) }} / @lang('year')</span>
+                                        </td>
+
+                                        <td>
+                                            {{$plan->plan_for == "video" ? "Videos" : "Photos | Vectors & Graphics"}}
                                         </td>
 
                                         <td>
@@ -56,6 +61,9 @@
                                                         <i class="las la-eye"></i>@lang('Enable')
                                                     </button>
                                                 @endif
+                                                <button class="btn btn-outline--danger confirmationBtn btn-sm" data-question="@lang('Are you sure to delete this plan?')" data-action="{{ route('admin.plan.delete', $plan->id) }}">
+                                                    <i class="las la-trash"></i>@lang('Delete')
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -97,6 +105,14 @@
                             <label>@lang('Description')</label>
                             <input type="text" class="form-control" name="title" required>
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Plan For')</label>
+                            <select class="form-control" name="plan_for" required>
+                                <option value="">Select</option>
+                                <option value="photo">Photos | Vectors & Graphics</option>
+                                <option value="video">Videos</option>
+                            </select>
+                        </div>
                         {{-- <div class="form-group">
                             <label>@lang('Monthly Price')</label>
                             <div class="input-group">
@@ -109,12 +125,6 @@
                             <div class="input-group">
                                 <input type="number" step="any" class="form-control" name="yearly_price" required>
                                 <span class="input-group-text">{{ __($general->cur_text) }}</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>@lang('Image')</label>
-                            <div class="input-group">
-                                <input type="file" class="form-control" name="image[]">
                             </div>
                         </div>
                         <div class="form-group">

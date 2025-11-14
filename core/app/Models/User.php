@@ -84,6 +84,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Image::class);
     }
+    
     public function images()
     {
         return $this->hasMany(Image::class)->where('status', Status::ENABLE);
@@ -184,5 +185,14 @@ class User extends Authenticatable
     public function scopeWithBalance($query)
     {
         $query->where('balance', '>', 0);
+    }
+
+    public function alredyDownload($imageFile, $type){
+        $download = Download::where('user_id', auth()->user()->id)->where('image_file_id', $imageFile)->where('type',$type)->first();
+        if($download){
+            return "yes";
+        }else{
+            return "no";
+        }
     }
 }

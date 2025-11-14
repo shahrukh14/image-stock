@@ -45,7 +45,8 @@ class SiteController extends Controller
         }])->with('user', 'likes')->limit(24)->get();
 
         $blogs = Blog::with('Category')->orderBy('date','DESC')->limit(3)->get();
-        return view($this->activeTemplate . 'home', compact('pageTitle', 'sections', 'images','blogs'));
+        $categories = Category::active()->where('show_on_homepage', 'yes')->latest()->limit(9)->get();
+        return view($this->activeTemplate . 'home', compact('pageTitle', 'sections', 'images','blogs','categories'));
     }
 
     public function pages($slug)
@@ -379,17 +380,72 @@ class SiteController extends Controller
         $seoContents = getSeoContents($image->tags, $image->title, $image->description, $imagePath);
 
         $user = auth()->user();
-        $todayDownload   = 0;
-        $monthlyDownload = 0;
         $alreadyDownloaded = false;
-        $relatedImages = Image::where('id', '!=', $image->id)->approved()->where('category_id', $image->category_id)->with('user', 'likes', 'files')->orderBy('id', 'desc')->limit(8)->get();
+        $categoryIds = $image->category_id;
+        $relatedImages = Image::where('id', '!=', $image->id)
+                                ->approved()
+                                ->where('file_type', 'photo')
+                                ->where(function ($query) use ($categoryIds) {
+                                    foreach ($categoryIds as $categoryId) {
+                                        $query->orWhereJsonContains('category_id', $categoryId);
+                                    }
+                                })
+                                ->with('user', 'likes', 'files')
+                                ->orderBy('id', 'DESC')
+                                ->limit(8)
+                                ->get();
+
         $gatewayCurrency = [];
         if (gs('donation_module')) {
             $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
                 $gate->where('status', Status::ENABLE);
             })->with('method')->orderby('method_code')->get();
         }
-        return view($this->activeTemplate . 'image_details', compact('pageTitle', 'image', 'relatedImages', 'seoContents', 'todayDownload', 'monthlyDownload', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency'));
+        return view($this->activeTemplate . 'image_details', compact('pageTitle', 'image', 'relatedImages', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency'));
+    }
+
+    public function vectorDetail($slug, $id){
+
+        $vector = Image::hasActiveFiles()->with(['user'])->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
+
+        abort_if($vector->status != Status::ENABLE && @auth()->user()->id != @$vector->user_id, 404);
+
+        $imageFiles = ImageFile::where('image_id', $id);
+        if (@auth()->user()->id != @$vector->user_id) {
+            $imageFiles = $imageFiles->where('status', Status::ENABLE);
+        }
+        $imageFiles = $imageFiles->get();
+
+
+        $this->incrementTotalView($vector);
+
+        $pageTitle = $vector->title;
+        $imagePath = getFilePath('stockImage') . '/' . @$vector->image_name;
+        $seoContents = getSeoContents($vector->tags, $vector->title, $vector->description, $imagePath);
+
+        $user = auth()->user();
+        $alreadyDownloaded = false;
+        $categoryIds = $vector->category_id;
+        $relatedVectors = Image::where('id', '!=', $vector->id)
+                                ->approved()
+                                ->where('file_type', 'vector')
+                                ->where(function ($query) use ($categoryIds) {
+                                    foreach ($categoryIds as $categoryId) {
+                                        $query->orWhereJsonContains('category_id', $categoryId);
+                                    }
+                                })
+                                ->with('user', 'likes', 'files')
+                                ->orderBy('id', 'DESC')
+                                ->limit(8)
+                                ->get();
+
+        $gatewayCurrency = [];
+        if (gs('donation_module')) {
+            $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
+                $gate->where('status', Status::ENABLE);
+            })->with('method')->orderby('method_code')->get();
+        }
+        return view($this->activeTemplate . 'vector_details', compact('pageTitle', 'vector', 'relatedVectors', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency'));
     }
 
     public function memberFollowers($username)
@@ -473,7 +529,7 @@ class SiteController extends Controller
         $imageCount = $getImages['imageCount'];
         $getCollections = $this->getCollections($request, true);
         $collectionCount = $getCollections['collectionCount'];
-        $categories = Category::active()->get();
+        $categories = Category::active()->orderBy('name')->get();
         $colors = Color::orderBy('id', 'DESC')->get();
         
         // $categories = Category::active()->whereHas('images', function ($query) {
@@ -493,7 +549,7 @@ class SiteController extends Controller
 
     private function searcPhotos($request)
     {
-        $images = Image::approved()->with('likes', 'user')->withCount(['files as premium' => function ($file) {
+        $images = Image::approved()->where('file_type', 'photo')->with('likes', 'user')->withCount(['files as premium' => function ($file) {
             $file->active()->premium();
         }]);
 
@@ -572,32 +628,277 @@ class SiteController extends Controller
     }
 
     public function vectors(Request $request){
-        return abort(404);
+        $pageTitle = "Vectors";
+        $vectors = collect([]);
+        $collections = collect([]);
+        $getVectors = $this->getVectors($request);
+        $vectors = $getVectors['vectors'];
+        $vectorCount = $getVectors['vectorCount'];
+        $getCollections = $this->getCollections($request, true);
+        $collectionCount = $getCollections['collectionCount'];
+        $categories = Category::active()->orderBy('name')->get();
+        $colors = Color::orderBy('id', 'DESC')->get();
+        return view($this->activeTemplate . 'vectors', compact('pageTitle' ,'vectors', 'collections', 'vectorCount', 'collectionCount', 'categories','colors'));
+    }
+
+    private function getVectors($request, $onlyCount = false){
+        $vectors = $this->searcVector($request);
+        $data['vectorCount'] = (clone $vectors)->count();
+        if (!$onlyCount) {
+            $data['vectors'] = $vectors->paginate(getPaginate(21));
+        }
+        return $data;
+    }
+
+    private function searcVector($request){
+        $images = Image::approved()->where('file_type', 'vector')->with('likes', 'user')->withCount(['files as premium' => function ($file) {
+            $file->active()->premium();
+        }]);
+
+        if ($request->category) {
+            $categoryId = Category::where('slug', $request->category)->first();
+            $category = $categoryId->id;
+            $images->whereJsonContains('category_id', (string)$category);
+        }
+
+        if ($request->has('tag') && $request->tag != 'all') {
+            $images->whereJsonContains('tags', $request->tag);
+        }
+        // filter by extensions
+        if ($request->has('extension') && $request->extension != 'all') {
+            $images->whereJsonContains('extensions', $request->extension);
+        }
+
+        if ($request->has('is_free')) {
+            $isFree = $request->is_free;
+            $images = $images->whereHas('files', function ($q) use ($isFree) {
+                $q->active()->where('is_free', $isFree);
+            });
+        }
+
+        if ($request->has('color')) {
+            $images = $images->whereJsonContains('colors', $request->color);
+        }
+
+        if ($request->has('tag')) {
+            $images = $images->whereJsonContains('tags', $request->tag);
+        }
+
+        if ($request->has('filter')) {
+            $filter = $request->filter;
+            $images = $images->where(function ($query) use ($filter) {
+                $query->where('title', 'like', "%$filter%")->orWhere(function ($query) use ($filter) {
+                    $query->whereJsonContains('tags', $filter);
+                })->orWhere(function ($query) use ($filter) {
+                    $query->whereHas('category', function ($category) use ($filter) {
+                        $category->where('name', 'like', "%$filter%");
+                    })->orWhereHas('user', function ($user) use ($filter) {
+                        $user->where('username', 'like', "%$filter%")
+                            ->orWhere('firstname', 'like', "%$filter%")
+                            ->orWhere('lastname', 'like', "%$filter%");
+                    })->orWhereHas('collections', function ($collections) use ($filter) {
+                        $collections->where('title', 'like', "%$filter%");
+                    });
+                });
+            });
+        }
+
+        //last filter
+        if ($request->has('period')) {
+            $images = $images->where('upload_date', '>=', Carbon::now()->subMonth($request->period));
+        }
+
+        if ($request->has('popular')) {
+            $images = $images->popular();
+        }
+
+
+        if (!$request->has('sort_by')) {
+            $images = $images->orderBy('id', 'desc');
+        } else {
+            $images = $images->orderBy('id', 'asc');
+        }
+
+        return $images;
     }
 
     public function videos(Request $request){
-        return abort(404);
+        $pageTitle = "Videos";
+        $videos = collect([]);
+        $collections = collect([]);
+        $getVideos = $this->getVideos($request);
+        $videos = $getVideos['videos'];
+        $videoCount = $getVideos['videoCount'];
+        $getCollections = $this->getCollections($request, true);
+        $collectionCount = $getCollections['collectionCount'];
+        $categories = Category::active()->orderBy('name')->get();
+        $colors = Color::orderBy('id', 'DESC')->get();
+        return view($this->activeTemplate . 'videos', compact('pageTitle' ,'videos', 'collections', 'videoCount', 'collectionCount', 'categories','colors'));
+    }
+
+    private function getVideos($request, $onlyCount = false){
+        $videos = $this->searcVideo($request);
+        $data['videoCount'] = (clone $videos)->count();
+        if (!$onlyCount) {
+            $data['videos'] = $videos->paginate(getPaginate(21));
+        }
+        return $data;
+    }
+
+    private function searcVideo($request){
+        $images = Image::approved()->where('file_type', 'video')->with('likes', 'user')->withCount(['files as premium' => function ($file) {
+            $file->active()->premium();
+        }]);
+
+        if ($request->category) {
+            $categoryId = Category::where('slug', $request->category)->first();
+            $category = $categoryId->id;
+            $images->whereJsonContains('category_id', (string)$category);
+        }
+
+        if ($request->has('tag') && $request->tag != 'all') {
+            $images->whereJsonContains('tags', $request->tag);
+        }
+        // filter by extensions
+        if ($request->has('extension') && $request->extension != 'all') {
+            $images->whereJsonContains('extensions', $request->extension);
+        }
+
+        if ($request->has('is_free')) {
+            $isFree = $request->is_free;
+            $images = $images->whereHas('files', function ($q) use ($isFree) {
+                $q->active()->where('is_free', $isFree);
+            });
+        }
+
+        if ($request->has('color')) {
+            $images = $images->whereJsonContains('colors', $request->color);
+        }
+
+        if ($request->has('tag')) {
+            $images = $images->whereJsonContains('tags', $request->tag);
+        }
+
+        if ($request->has('filter')) {
+            $filter = $request->filter;
+            $images = $images->where(function ($query) use ($filter) {
+                $query->where('title', 'like', "%$filter%")->orWhere(function ($query) use ($filter) {
+                    $query->whereJsonContains('tags', $filter);
+                })->orWhere(function ($query) use ($filter) {
+                    $query->whereHas('category', function ($category) use ($filter) {
+                        $category->where('name', 'like', "%$filter%");
+                    })->orWhereHas('user', function ($user) use ($filter) {
+                        $user->where('username', 'like', "%$filter%")
+                            ->orWhere('firstname', 'like', "%$filter%")
+                            ->orWhere('lastname', 'like', "%$filter%");
+                    })->orWhereHas('collections', function ($collections) use ($filter) {
+                        $collections->where('title', 'like', "%$filter%");
+                    });
+                });
+            });
+        }
+
+        //last filter
+        if ($request->has('period')) {
+            $images = $images->where('upload_date', '>=', Carbon::now()->subMonth($request->period));
+        }
+
+        if ($request->has('popular')) {
+            $images = $images->popular();
+        }
+
+
+        if (!$request->has('sort_by')) {
+            $images = $images->orderBy('id', 'desc');
+        } else {
+            $images = $images->orderBy('id', 'asc');
+        }
+
+        return $images;
+    }
+
+    public function videoDetail($slug, $id){
+
+        $video = Image::hasActiveFiles()->with(['user'])->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
+
+        abort_if($video->status != Status::ENABLE && @auth()->user()->id != @$video->user_id, 404);
+
+        $imageFiles = ImageFile::where('image_id', $id);
+        if (@auth()->user()->id != @$video->user_id) {
+            $imageFiles = $imageFiles->where('status', Status::ENABLE);
+        }
+        $imageFiles = $imageFiles->get();
+
+
+        $this->incrementTotalView($video);
+
+        $pageTitle = $video->title;
+        $imagePath = getFilePath('stockImage') . '/' . @$video->image_name;
+        $seoContents = getSeoContents($video->tags, $video->title, $video->description, $imagePath);
+
+        $user = auth()->user();
+        $alreadyDownloaded = false;
+        $categoryIds = $video->category_id;
+        $relatedVideos = Image::where('id', '!=', $video->id)
+                                ->approved()
+                                ->where('file_type', 'video')
+                                ->where(function ($query) use ($categoryIds) {
+                                    foreach ($categoryIds as $categoryId) {
+                                        $query->orWhereJsonContains('category_id', $categoryId);
+                                    }
+                                })
+                                ->with('user', 'likes', 'files')
+                                ->orderBy('id', 'DESC')
+                                ->limit(8)
+                                ->get();
+
+        $gatewayCurrency = [];
+        if (gs('donation_module')) {
+            $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
+                $gate->where('status', Status::ENABLE);
+            })->with('method')->orderby('method_code')->get();
+        }
+
+        $url = $video->video_url;
+        $firstParam = '';
+        if (strpos($url, 'youtu.be') !== false) {
+            // For 'youtu.be' URLs
+            $parts = explode('/', $url);
+            $firstParam = end($parts);
+        } else if (strpos($url, 'youtube.com') !== false) {
+            // For 'youtube.com' URLs
+            $query = parse_url($url, PHP_URL_QUERY);
+            parse_str($query, $queryParams);
+            $firstParam = isset($queryParams['v']) ? $queryParams['v'] : '';
+        }
+        $video_url = "https://www.youtube.com/embed/".$firstParam;
+
+        return view($this->activeTemplate . 'video_details', compact('pageTitle', 'video', 'relatedVideos', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency','video_url'));
     }
 
     public function search(Request $request){
-        
         $pageTitle = "Search";
         $images = collect([]);
         $collections = collect([]);
-        if ($request->type == 'image') {
-            $getImages = $this->getImages($request);
-            $images = $getImages['images'];
-            $imageCount = $getImages['imageCount'];
-            $getCollections = $this->getCollections($request, true);
-            $collectionCount = $getCollections['collectionCount'];
-        } else {
-            $getImages = $this->getImages($request, true);
-            $imageCount = $getImages['imageCount'];
-            $getCollections = $this->getCollections($request);
-            $collections = $getCollections['collections'];
-            $collectionCount = $getCollections['collectionCount'];
-        }
-        $categories = Category::active()->get();
+        // if ($request->type == 'image') {
+        //     $getImages = $this->getImages($request);
+        //     $images = $getImages['images'];
+        //     $imageCount = $getImages['imageCount'];
+        //     $getCollections = $this->getCollections($request, true);
+        //     $collectionCount = $getCollections['collectionCount'];
+        // } else {
+        //     $getImages = $this->getImages($request, true);
+        //     $imageCount = $getImages['imageCount'];
+        //     $getCollections = $this->getCollections($request);
+        //     $collections = $getCollections['collections'];
+        //     $collectionCount = $getCollections['collectionCount'];
+        // }
+        $getImages = $this->getImages($request);
+        $images = $getImages['images'];
+        $imageCount = $getImages['imageCount'];
+        $getCollections = $this->getCollections($request, true);
+        $collectionCount = $getCollections['collectionCount'];
+        $categories = Category::active()->orderBy('name')->get();
         return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories'));
     }
 
@@ -611,20 +912,11 @@ class SiteController extends Controller
         return $data;
     }
 
-    private function searchImages($request)
-    {
+    private function searchImages($request){
 
         $images = Image::approved()->with('likes', 'user')->withCount(['files as premium' => function ($file) {
             $file->active()->premium();
         }]);
-        
-
-        // if ($request->category) {
-        //     $category = $request->category;
-        //     $images = $images->whereHas('category', function ($query) use ($category) {
-        //         $query->where('slug', $category)->where('status', Status::ENABLE);
-        //     });
-        // }
 
 
         if ($request->category) {
@@ -636,6 +928,7 @@ class SiteController extends Controller
         if ($request->has('tag') && $request->tag != 'all') {
             $images->whereJsonContains('tags', $request->tag);
         }
+        
         // filter by extensions
         if ($request->has('extension') && $request->extension != 'all') {
             $images->whereJsonContains('extensions', $request->extension);
@@ -889,7 +1182,7 @@ class SiteController extends Controller
     public function Price(){
         $pageTitle = "Price";
         $activeTemplate = $this->activeTemplate;
-        $plans     = Plan::active()->get();
+        $plans     = Plan::active()->orderBy('id', 'DESC')->get();
         return view($this->activeTemplate .'price_list',compact('pageTitle','activeTemplate','plans'));
     }
     public function errorPage(){

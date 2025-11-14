@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
+use App\Models\PlanPurchase;
 use App\Models\Plan;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 
 class PlanController extends Controller
@@ -13,7 +15,7 @@ class PlanController extends Controller
     public function allPlan()
     {
         $pageTitle = 'All Plan';
-        $plans     = Plan::searchable(['name'])->orderBy('name')->paginate(getPaginate());
+        $plans     = Plan::searchable(['name'])->orderBy('id', 'DESC')->paginate(getPaginate());
         return view('admin.plan.index', compact('pageTitle', 'plans'));
     }
 
@@ -47,6 +49,10 @@ class PlanController extends Controller
             $images = json_encode($images);
         }
 
+        if(!$id && !$request->image){
+            $images = json_encode($images);
+        }
+
         $plan->name          = $request->name;
         $plan->title         = $request->title;
         $plan->monthly_price = $request->monthly_price;
@@ -54,6 +60,7 @@ class PlanController extends Controller
         $plan->daily_limit   = $request->daily_limit;
         $plan->monthly_limit = $request->monthly_limit;
         $plan->image         = $images;
+        $plan->plan_for      = $request->plan_for;
         $plan->save();
 
         $notify[] = ['success', $notification];
@@ -65,12 +72,28 @@ class PlanController extends Controller
         return Plan::changeStatus($id);
     }
 
+    public function delete($id){
+
+        $plan = Plan::find($id);
+        $expiryDate = Carbon::now();
+        $planPurchased = PlanPurchase::where('plan_id', $id)->where('expired_at', '>', $expiryDate)->get();
+        
+        if(count($planPurchased) > 0){
+            $notify[] = ['warning', 'Unable to delete this plan, some active users have alredy purchased this plan'];
+            return back()->withNotify($notify);
+        }else{
+            $plan->delete();
+            $notify[] = ['success', 'Plan deleted successfully'];
+            return back()->withNotify($notify);
+        }
+    }
+
     private function validation($request, $id)
     {
         $request->validate([
-            'name'          => 'required|max:40|unique:plans,id,' . $id,
+            // 'name'          => 'required|max:40|unique:plans,id,' . $id,
+            'name'          => 'required|max:40',
             'title'         => 'required|string|max:255',
-            // 'monthly_price' => 'required|numeric|gte:0',
             'yearly_price'  => 'required|numeric|gte:0',
             'daily_limit'   => 'required|integer|gte:-1',
             'monthly_limit' => 'required|integer|gte:-1'

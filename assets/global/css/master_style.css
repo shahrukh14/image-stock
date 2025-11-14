@@ -4892,7 +4892,8 @@ figcaption {
 }
 
 .inner-container._981px {
-    max-width: 981px;
+    /* max-width: 981px; */
+    max-width: 1200px;
 }
 
 .inner-container._896px {

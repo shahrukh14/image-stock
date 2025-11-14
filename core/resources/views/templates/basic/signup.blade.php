@@ -13,16 +13,70 @@
                         <div id="w-node-_556b4f01-7325-9050-7702-f57a115f9ad7-1caef54c">
                             <input type="text" class="input w-input" maxlength="256" name="username" data-name="username" placeholder="User Name" id="username" required>
                         </div>
-                        <div id="w-node-_556b4f01-7325-9050-7702-f57a115f9ad7-1caef54c">
+                        <div id="w-node-_556b4f01-7325-9050-7702-f57a115f9ad7-1caef54c" class="input-box">
                             <input type="password" class="input w-input" maxlength="256" name="password" data-name="Password" placeholder="Password" id="password" required>
+                            <span id="viewPassword">View</span>
                         </div>
                     </div>
                     <div class="text-align-center margin-top-20px">
-                        <input type="submit" value="Sign up" data-wait="Please wait..." id="w-node-_5592ff70-b149-b8af-9a2f-465b7fb15f7b-1caef54c" class="btn-primary width-50 mg-top-16px w-button">
+                        {{-- <input type="submit" data-wait="Please wait..." id="signUpButton" class="signUpButton"> --}}
+                        <button type="submit" id="signUpButton" class="signUpButton">Button</button>
                     </div>
-                    <div  class="margin-top-20px text-align-center">Already have an account? <a href="{{ route('user.login') }}" class="text-link text-medium color-neutral-800">Log in</a></div>
+                    <div class="margin-top-20px text-align-center">Already have an account? <a href="{{ route('user.login') }}" class="text-link text-medium color-neutral-800">Log in</a></div>
                 </div>
             </form>
         </div>
     </section>
 @endsection
+
+@push('style')
+<style>
+    .input-box {
+        position: relative;
+    }
+
+    #viewPassword {
+        position: absolute;
+        top: 13px;
+        right: 15px;
+        cursor: pointer;
+    }
+    .signUpButton {
+        background: url("/core/public/assets/image/buttons/sign up button black.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 10px 70px;
+        color: transparent;
+    }
+
+    .signUpButton:hover {
+        background: url("/core/public/assets/image/buttons/sign up button green.png") no-repeat;
+        background-size: 100% 100%;
+        padding: 10px 70px;
+        color: transparent;
+    }
+</style>
+@endpush
+
+@push('script')
+<script>
+    $(document).ready(function(){
+        // $('#viewPassword').on('click', function(){
+        //     var fieldType = $('#password').attr('type');
+
+        //     if (fieldType === 'password') {
+        //         $('#password').attr('type', 'text');
+        //     } else {
+        //         $('#password').attr('type', 'password');
+        //     }
+        // });
+
+        $('#viewPassword').on('mousedown', function(){
+            $('#password').attr('type', 'text');
+        });
+
+        $('#viewPassword').on('mouseup', function(){
+            $('#password').attr('type', 'password');
+        });
+    });
+</script>
+@endpush

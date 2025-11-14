@@ -6,6 +6,9 @@ use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\FormProcessor;
 use App\Models\AdminNotification;
+use App\Models\Download;
+use App\Lib\DownloadFile;
+use App\Models\ImageFile;
 use App\Models\Deposit;
 use App\Models\Donation;
 use App\Models\GatewayCurrency;
@@ -13,6 +16,7 @@ use App\Models\Transaction;
 use App\Models\Plan;
 use App\Models\PlanPurchase;
 use App\Models\User;
+use App\Models\EarningLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -49,6 +53,7 @@ class PaymentController extends Controller
         return view($this->activeTemplate . 'user.payment.deposit', compact('gatewayCurrency', 'pageTitle', 'plan', 'period'));
     }
 
+
     public function depositInsert(Request $request)
     {
         $request->validate([
@@ -62,7 +67,8 @@ class PaymentController extends Controller
 
         //for plan purchase
         $plan  = null;
-        $amount = $request->amount;
+        // $amount = $request->amount;
+        $amount = $request->final_amt;
         $limitNotification = 'Please follow deposit limit';
 
         if ($request->plan_id) {
@@ -74,12 +80,12 @@ class PaymentController extends Controller
 
             $price = $request->period . '_price';
 
-            if ($plan->$price != $amount) {
-                $notify[] = ['error', 'Amount must be equal to plan\'s ' . $request->period . ' price'];
-                return back()->withNotify($notify);
-            }
-
-            $amount = $plan->$price;
+            // if ($plan->$price != $amount) {
+            //     $notify[] = ['error', 'Amount must be equal to plan\'s ' . $request->period . ' price'];
+            //     return back()->withNotify($notify);
+            // }
+            // $amount = $plan->$price;
+            
             $limitNotification = 'Please follow payment limit';
         }
 
@@ -121,6 +127,97 @@ class PaymentController extends Controller
         return to_route('user.deposit.confirm');
     }
 
+    
+    //For Image Purchase
+    public function paymentForImage(Request $request)
+    {
+        $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
+            $gate->where('status', Status::ENABLE);
+        })->with('method')->orderby('method_code')->get();
+
+        $pageTitle = 'Payment Methods';
+        $imageFile = ImageFile::where('id', $request->image_file)->first();
+
+        if (!$imageFile) {
+            $notify[] = ['error', 'File not found'];
+            return back()->withNotify($notify);
+        }
+        $license = $request->license;
+        return view($this->activeTemplate . 'user.payment.image_purchase', compact('gatewayCurrency', 'pageTitle', 'imageFile', 'license'));
+    }
+
+    public function depositInsertImage(Request $request)
+    {
+        $request->validate([
+            'type'        => 'required|in:payment,deposit',
+            'amount'      => 'required|numeric|gt:0',
+            'gateway'     => 'required',
+            'currency'    => 'required',
+            'image_file'  => 'required_if:type,payment|numeric|gt:0',
+            'license'     => 'required_if:type,payment|in:standard,extended',
+        ]);
+
+        //for Image purchase
+        $imageFile  = null;
+        $amount = $request->final_amt;
+        $limitNotification = 'Please follow deposit limit';
+
+        if ($request->plan_id) {
+            $imageFile = ImageFile::where('id', $request->image_file)->first();
+            if (!$imageFile) {
+                $notify[] = ['error', 'File not found'];
+                return back()->withNotify($notify);
+            }
+
+            // $price = $request->period . '_price';
+            // if ($plan->$price != $amount) {
+            //     $notify[] = ['error', 'Amount must be equal to plan\'s ' . $request->period . ' price'];
+            //     return back()->withNotify($notify);
+            // }
+            $limitNotification = 'Please follow payment limit';
+        }
+
+        $user = auth()->user();
+        $gate = GatewayCurrency::whereHas('method', function ($gate) {
+            $gate->where('status', Status::ENABLE);
+        })->where('method_code', $request->gateway)->where('currency', $request->currency)->first();
+
+        if (!$gate) {
+            $notify[] = ['error', 'Invalid gateway'];
+            return back()->withNotify($notify);
+        }
+
+        if ($gate->min_amount > $amount || $gate->max_amount < $amount) {
+            $notify[] = ['error', $limitNotification];
+            return back()->withNotify($notify);
+        }
+
+        $charge    = $gate->fixed_charge + ($amount * $gate->percent_charge / 100);
+        $payable   = $amount + $charge;
+        $final_amo = $payable * $gate->rate;
+
+        $deposit                  = new Deposit();
+        $deposit->user_id         = $user->id;
+        $deposit->plan_id         = $request->plan_id ?? 0;
+        $deposit->period          = $request->period ?? null;
+        $deposit->method_code     = $gate->method_code;
+        $deposit->method_currency = strtoupper($gate->currency);
+        $deposit->amount          = $amount;
+        $deposit->charge          = $charge;
+        $deposit->rate            = $gate->rate;
+        $deposit->final_amo       = $final_amo;
+        $deposit->btc_amo         = 0;
+        $deposit->btc_wallet      = "";
+        $deposit->trx             = getTrx();
+        $deposit->save();
+        session()->put('Track', $deposit->trx);
+
+        $file = ImageFile::with('image')->findOrFail($request->image_file);
+        $this->downloadData($file, $user, $request->license, $amount);
+        session()->put('imagePayment', 1);
+        return to_route('user.deposit.confirm.image');
+    }
+
 
     public function appDepositConfirm($hash)
     {
@@ -158,6 +255,48 @@ class PaymentController extends Controller
         $data = json_decode($data);
        
 
+        if (isset($data->error)) {
+            $notify[] = ['error', $data->message];
+            return to_route(gatewayRedirectUrl())->withNotify($notify);
+        }
+        if (isset($data->redirect)) {
+            return redirect($data->redirect_url);
+        }
+
+        // for Stripe V3
+        if (@$data->session) {
+            $deposit->btc_wallet = $data->session->id;
+            $deposit->save();
+        }
+
+        $pageTitle = 'Payment Confirm';
+        $masterBlade = 'layouts.master';
+        if (!auth()->check()) {
+            if ($deposit->donation_id) $masterBlade = 'layouts.frontend';
+        }
+
+        return view($this->activeTemplate . $data->view, compact('data', 'pageTitle', 'deposit', 'masterBlade'));
+    }
+
+    public function depositConfirmImage()
+    {
+        $track = session()->get('Track');
+        $deposit = Deposit::where('trx', $track)->where('status', Status::PAYMENT_INITIATE)->orderBy('id', 'DESC')->with('gateway')->firstOrFail();
+
+        if ($deposit->method_code >= 1000) {
+            if ($deposit->donation_id) {
+
+                return to_route('donation.manual.confirm');
+            }
+            return to_route('user.deposit.manual.confirm');
+        }
+
+
+        $dirName = $deposit->gateway->alias;
+        $new     = __NAMESPACE__ . '\\' . $dirName . '\\ProcessController';
+        $data = $new::process($deposit); 
+        $data = json_decode($data);
+        
         if (isset($data->error)) {
             $notify[] = ['error', $data->message];
             return to_route(gatewayRedirectUrl())->withNotify($notify);
@@ -476,4 +615,79 @@ class PaymentController extends Controller
             return to_route('image.detail', [slug(@$image->title), @$image->id])->withNotify($notify);
         }
     }
+
+        //save download data
+        protected function downloadData($file, $user, $type, $price)
+        {
+
+            $general = gs();
+    
+            if ($file->image->user_id != @$user->id) {
+
+                if ($user) {
+                    $download = Download::where('image_file_id', $file->id)->where('user_id', $user->id)->first();
+                    if (!$download) {
+                        $download = new Download();
+                        $download->user_id = $user->id;
+                        $file->total_downloads += 1;
+                    }
+                } else {
+                    $download = new Download();
+                    $file->total_downloads += 1;
+                }
+    
+                $isDownloaded = Download::where('image_file_id', $file->id)->where('user_id', @$user->id)->exists();
+    
+                $download->image_file_id = $file->id;
+                $download->contributor_id =  $file->image->user_id;
+                $download->ip = request()->ip();
+                $download->premium = $file->is_free == Status::PREMIUM;
+                $download->type = $type;
+                if (!$file->is_free && !$isDownloaded) {
+    
+                    // if($type == "extended"){
+                    //     $amount = $file->ex_price * $general->per_download / 100;
+                    // }else{
+                    //     $amount = $file->price * $general->per_download / 100;
+                    // }
+                    
+                    // $contributor = $file->image->user;
+                    // $contributor->balance +=  $amount;
+                    // $contributor->update();
+    
+                    // $earn                   = new EarningLog();
+                    // $earn->contributor_id   = $contributor->id;
+                    // $earn->image_file_id    = $file->id;
+                    // $earn->amount           = $amount;
+                    // $earn->earning_date     = now()->format('Y-m-d');
+                    // $earn->save();
+    
+                    // $transaction               = new Transaction();
+                    // $transaction->user_id      = $contributor->id;
+                    // $transaction->amount       =  $amount;
+                    // $transaction->post_balance = getAmount($contributor->balance);
+                    // $transaction->charge       = 0;
+                    // $transaction->trx_type     = '+';
+                    // $transaction->details      = "Earnings generated from downloading the {$file->image->title}";
+                    // $transaction->trx          = getTrx();
+                    // $transaction->remark       = 'earning_log';
+                    // $transaction->save();
+
+                    $transaction               = new Transaction();
+                    $transaction->user_id      = $user->id;
+                    $transaction->amount       = $price;
+                    $transaction->post_balance = getAmount($user->balance);
+                    $transaction->charge       = 0;
+                    $transaction->trx_type     = '-';
+                    $transaction->details      = "Charge for download - {$file->image->title}";
+                    $transaction->trx          = getTrx();
+                    $transaction->remark       = 'download_charge';
+                    $transaction->save();
+                    $file->save();
+                    $download->save();
+                   
+                }
+                
+            }
+        }
 }

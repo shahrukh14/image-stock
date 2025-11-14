@@ -99,7 +99,13 @@ class Deposit extends Model
             return ['image.detail', [slug(@$image->title), @$image->id]];
         }
         if ($type) {
-            return ['user.deposit.history'];
+
+            if(session('imagePayment') === 1){
+                return ['user.download.history'];
+            }else{
+                return ['user.deposit.history'];
+            }
+            
         } else {
             return ['user.deposit.index'];
         }

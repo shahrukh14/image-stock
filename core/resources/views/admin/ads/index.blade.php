@@ -10,6 +10,7 @@
                                 <tr>
                                     <th>@lang('S.N')</th>
                                     <th>@lang('Title')</th>
+                                    <th>@lang('Ad For')</th>
                                     <th>@lang('Size')</th>
                                     <th>@lang('Type')</th>
                                     <th>@lang('Impressions')</th>
@@ -24,6 +25,9 @@
                                         </td>
                                         <td>
                                             {{ __($ad->title) }}
+                                        </td>
+                                        <td>
+                                            {{ __($ad->ad_for) }}
                                         </td>
                                         <td>
                                             {{ __($ad->size) }}
@@ -81,6 +85,17 @@
                         <div class="form-group">
                             <label>@lang('Title')</label>
                             <input class="form-control" name="title" type="text" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>@lang('Ad For')</label>
+                            <select class="form-control" name="ad_for" required>
+                                <option>@lang('Select')</option>
+                                <option value="photo">@lang('Photos Page')</option>
+                                <option value="vector">@lang('Vector & Graphics Page')</option>
+                                <option value="video">@lang('Videos Page')</option>
+                                <option value="search">@lang('Search Page')</option>
+                            </select>
                         </div>
 
                         <div class="form-group">

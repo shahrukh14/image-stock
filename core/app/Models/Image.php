@@ -127,4 +127,10 @@ class Image extends Model
             }
         );
     }
+
+    public function getImageOrientationAttribute(){
+        $width = $this->width; // Replace with the actual attribute name for width
+        $height = $this->height; // Replace with the actual attribute name for height
+        return ($width > $height) ? 'horizontal' : 'vertical';
+    }
 }
