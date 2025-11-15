@@ -23,4 +23,7 @@ It includes **subscription plans**, secure payments, user dashboards, and admin 
 - Frontend: HTML5, CSS3, JavaScript & jQuery
 - Database: MySQL / MariaDB
 - Payments: Stripe / Razorpay / PayPal (Choose as configured)
-- Storage: Local / AWS S3 
+- Storage: Local / AWS S3
+
+## 🏗️ Installation
+1. Clone the Repository
