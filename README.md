@@ -40,24 +40,24 @@ composer install
 ```
 
 3. Configure Environment
-    Copy .env.example to .env and update the necessary fields.
-    Update values:
+   - Copy .env.example to .env and update the necessary fields.
+   - Update values:
 
-    APP_NAME="ImageStock"
-    APP_URL=http://localhost:8000
+   - APP_NAME="ImageStock"
+   - APP_URL=http://localhost:8000
     
-    DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
-    DB_PORT=3306
-    DB_DATABASE=imagestock
-    DB_USERNAME=root
-    DB_PASSWORD=
+   - DB_CONNECTION=mysql
+   - DB_HOST=127.0.0.1
+   - DB_PORT=3306
+   - DB_DATABASE=imagestock
+   - DB_USERNAME=root
+   - DB_PASSWORD=
     
-    MAIL_MAILER=smtp
-    MAIL_HOST=smtp.gmail.com
-    MAIL_PORT=587
-    MAIL_USERNAME=your_email@gmail.com
-    MAIL_PASSWORD=your_password
-    MAIL_ENCRYPTION=tls
+   - MAIL_MAILER=smtp
+   - MAIL_HOST=smtp.gmail.com
+   - MAIL_PORT=587
+   - MAIL_USERNAME=your_email@gmail.com
+   - MAIL_PASSWORD=your_password
+   - MAIL_ENCRYPTION=tls
 
 
