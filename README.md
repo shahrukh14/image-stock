@@ -24,6 +24,18 @@ It includes **subscription plans**, secure payments, user dashboards, and admin 
 - Database: MySQL / MariaDB
 - Payments: Stripe / Razorpay / PayPal (Choose as configured)
 - Storage: Local / AWS S3
+  
 
 ## 🏗️ Installation
+
 1. Clone the Repository
+ ```bash
+git clone https://github.com/shahrukh14/image-stock.git
+cd image-stock
+```
+
+2. Install Dependencies
+ ```bash
+composer install
+```
+
