@@ -60,14 +60,14 @@ Route::controller('SiteController')->group(function () {
     });
 
     //search
-    Route::get('search', 'search')->name('search');
+    Route::get('search/{category?}/{value?}', 'search')->name('search');
 
-    Route::get('photos', 'photos')->name('photos');
+    Route::get('photos/{category?}/{value?}', 'photos')->name('photos');
 
-    Route::get('vectors', 'vectors')->name('vectors');
+    Route::get('vectors/{category?}/{value?}', 'vectors')->name('vectors');
     Route::get('vector/{slug}/{id}', 'vectorDetail')->name('vector.detail');
 
-    Route::get('videos', 'videos')->name('videos');
+    Route::get('videos/{category?}/{value?}', 'videos')->name('videos');
     Route::get('video/{slug}/{id}', 'videoDetail')->name('video.detail');
 
     Route::get('/change/{lang?}', 'changeLanguage')->name('lang');

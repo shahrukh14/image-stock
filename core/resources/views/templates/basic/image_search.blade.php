@@ -60,8 +60,8 @@
                     <div>
                       @foreach ($categories as $category)
                       <div class="categoryFilter">
-                        <span class="search-param"  data-param="category" data-search_type="single" data-param_value="{{ $category->slug}}" >{{ $category->name }}</span>
-                        {{-- <a href="{{ route('photos', ['category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a> --}}
+                        {{-- <span class="search-param"  data-param="category" data-search_type="single" data-param_value="{{ $category->slug}}" >{{ $category->name }}</span> --}}
+                        <a href="{{ route('search', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
                       </div>
                       @endforeach
                     </div>

@@ -108,7 +108,7 @@
             @endphp
              <div role="listitem" class="w-dyn-item">
               <b style="margin-left: 17%">{{ $category->name }}</b>
-                <a  href="{{ route('search', ['type' => 'image', 'category' => $category->slug]) }}" class="resource-card-wrapper w-inline-block">
+                <a  href="{{ route('search', ['category', $category->slug]) }}" class="resource-card-wrapper w-inline-block">
                   <div class="image-wrapper">
                     <img alt="Image" class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
                   </div>

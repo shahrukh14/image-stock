@@ -48,7 +48,7 @@
                     <div>
                       @foreach ($categories as $category)
                       <div class="categoryFilter">
-                        <a href="{{ route('vectors', ['category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
+                        <a href="{{ route('vectors', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
                       </div>
                       @endforeach
                     </div>

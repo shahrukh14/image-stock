@@ -519,8 +519,8 @@ class SiteController extends Controller
         return view($this->activeTemplate . 'invoice', compact('transaction', 'pageTitle', 'image', 'plan'));
     }
 
-    public function photos(Request $request){
-        
+    public function photos(Request $request, $category=null, $value=null){
+        $request->category = $value;
         $pageTitle = "Images";
         $images = collect([]);
         $collections = collect([]);
@@ -627,7 +627,8 @@ class SiteController extends Controller
         return $images;
     }
 
-    public function vectors(Request $request){
+    public function vectors(Request $request, $category=null, $value=null){
+        $request->category = $value;
         $pageTitle = "Vectors";
         $vectors = collect([]);
         $collections = collect([]);
@@ -722,7 +723,8 @@ class SiteController extends Controller
         return $images;
     }
 
-    public function videos(Request $request){
+    public function videos(Request $request, $category=null, $value=null){
+        $request->category = $value;
         $pageTitle = "Videos";
         $videos = collect([]);
         $collections = collect([]);
@@ -876,7 +878,8 @@ class SiteController extends Controller
         return view($this->activeTemplate . 'video_details', compact('pageTitle', 'video', 'relatedVideos', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency','video_url'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request, $category=null, $value=null){
+        $request->category = $value;
         $pageTitle = "Search";
         $images = collect([]);
         $collections = collect([]);

@@ -49,7 +49,8 @@
                       @foreach ($categories as $category)
                       <div class="categoryFilter">
                         {{-- <span class="color-badge color-selector search-param" ></span> --}}
-                        <a href="{{ route('photos', ['category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
+                        {{-- <a href="{{ route('photos', ['category' => $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a> --}}
+                        <a href="{{ route('photos', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
                       </div>
                       @endforeach
                     </div>
