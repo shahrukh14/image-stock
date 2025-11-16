@@ -39,6 +39,12 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
+                            <label>@lang('Slug') </label>
+                            <input type="text" class="form-control " placeholder="@lang('Slug')" name="slug" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
                             <label>@lang('Feature Image') </label>
                             <input class="form-control" type="file" placeholder="@lang('Feature Image')" id="file" value="" name="file" required/>
                         </div>
@@ -51,7 +57,7 @@
                     </div>
 
                     <div class="col-md-12 mt-2">
-                        <h5 class="form-group">SEO Section</h5>
+                        <h5 class="form-group">@lang('SEO Section') </h5>
                     </div>
 
                     <input type="hidden" name="seo_data[seo_image]" value=" ">

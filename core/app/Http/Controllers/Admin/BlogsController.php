@@ -77,6 +77,7 @@ class BlogsController extends Controller
     }
     public function blogInsert(Request $request)
     {
+        // return $request;
         $blog = new Blog();
 
         $folder_path = public_path('assets/image/blog_image');
@@ -95,31 +96,40 @@ class BlogsController extends Controller
 
         $blog->title = $request->title;
 
-        // formatting the data
         // if($request->title){
         //     $sl = rand();
-        //     $formatData = explode(" ", Str::lower($request->title));
-        //     array_push($formatData, $sl);
-        //     $join = Arr::join($formatData,'-');
-        //     $blog->slug = $join;
+        //     $strLower = strtolower($request->title);
+        //     $cleanStr = preg_replace('/[^a-z0-9]+/', '-', $strLower);
+        //     $cleanStr = trim($cleanStr, '-');
+        //     $slug = $cleanStr."-".$sl;
+        //     $blog->slug = $slug;
         // }
 
-        if($request->title){
-            $sl = rand();
+        if($request->slug){
+            $strLower = strtolower($request->slug);
+            $cleanStr = preg_replace('/[^a-z0-9]+/', '-', $strLower);
+            $slug = trim($cleanStr, '-');
+        }else{
             $strLower = strtolower($request->title);
             $cleanStr = preg_replace('/[^a-z0-9]+/', '-', $strLower);
-            $cleanStr = trim($cleanStr, '-');
-            $slug = $cleanStr."-".$sl;
-            $blog->slug = $slug;
+            $slug = trim($cleanStr, '-');
+        }
+
+        //Cheacking if the Slug is already exsists
+        $slugCheck = Blog::where('slug', $slug)->first();
+        if($slugCheck){
+            $notify[] = ['error', 'Slug already exsist, Please add a different slug for new blog'];
+            return redirect()->back()->withNotify($notify);
         }
 
         // formatting end the data
-        $blog->author = $request->author;
-        $blog->category = $request->category;
-        $blog->date = $request->date;
+        $blog->author        = $request->author;
+        $blog->category      = $request->category;
+        $blog->date          = $request->date;
         $blog->feature_image = $image;
-        $blog->blog_body = $request->blog_body;
-        $blog->seo_data = json_encode($request->seo_data);
+        $blog->slug          = $slug;
+        $blog->blog_body     = $request->blog_body;
+        $blog->seo_data      = json_encode($request->seo_data);
         $blog->save();
         $notify[] = ['success', 'Blog Added successfully'];
         return redirect()->route('admin.blog.all.blog')->withNotify($notify);
@@ -149,21 +159,29 @@ class BlogsController extends Controller
             $blog->feature_image = $blog->feature_image;
         }
 
-        if($request->title){
-            $sl = rand();
-            $formatData = explode(" ", Str::lower($request->title));
-            array_push($formatData, $sl);
-            $join = Arr::join($formatData,'-');
-            // $blog->slug = $join;
+        if($request->slug){
+            $strLower = strtolower($request->slug);
+            $cleanStr = preg_replace('/[^a-z0-9]+/', '-', $strLower);
+            $slug = trim($cleanStr, '-');
+        }else{
+            $strLower = strtolower($request->title);
+            $cleanStr = preg_replace('/[^a-z0-9]+/', '-', $strLower);
+            $slug = trim($cleanStr, '-');
         }
-
-        $blog->title = $request->title;
+        //Cheacking if the Slug is already exsists
+        $slugCheck = Blog::where('slug', $slug)->first();
+        if($slugCheck && $slugCheck->id != $id){
+            $notify[] = ['error', 'Slug already exsist, Please add a different slug for new blog'];
+            return redirect()->back()->withNotify($notify);
+        }
         
-        $blog->author = $request->author;
-        $blog->category = $request->category;
-        $blog->date = $request->date;
+        $blog->title     = $request->title;
+        $blog->author    = $request->author;
+        $blog->category  = $request->category;
+        $blog->date      = $request->date;
+        $blog->slug      = $slug;
         $blog->blog_body = $request->blog_body;
-        $blog->seo_data = json_encode($request->seo_data);
+        $blog->seo_data  = json_encode($request->seo_data);
         $blog->save();
         $notify[] = ['success', 'Blog Updated successfully'];
         return redirect()->route('admin.blog.all.blog')->withNotify($notify);

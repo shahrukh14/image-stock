@@ -125,6 +125,32 @@
                             <label>@lang('Slug')</label>
                             <input type="text" class="form-control" name="slug" required>
                         </div>
+
+                        <div class="form-group">
+                            <label>@lang('Heading')</label>
+                            <input type="text" class="form-control" name="heading" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>@lang('Meta Title')</label>
+                            <input type="text" class="form-control" name="meta_title">
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Meta Description')</label>
+                            <textarea name="meta_description" rows="3" class="form-control"> </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Keywords')</label>
+                            <input type="text" class="form-control" name="meta_keywords">
+                            <small class="ms-2 mt-2 ">@lang('Separate multiple keywords by') <code>,</code>(@lang('comma')) @lang(',do not add space between them') </small>
+                        </div>
+                        {{-- <div class="form-group select2-parent position-relative">
+                            <label>@lang('Keywords')</label>
+                            <small class="ms-2 mt-2 ">@lang('Separate multiple keywords by') <code>,</code>(@lang('comma')) @lang('or') <code>@lang('enter')</code> @lang('key')</small>
+                            <select name="meta_keywords[]" class="form-control select2-auto-tokenize"  multiple="multiple">
+                                
+                            </select>
+                        </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn--primary w-100 h-45">@lang('Submit')</button>

@@ -41,8 +41,12 @@ class CategoryController extends Controller
             }
         }
 
-        $category->name = $request->name;
-        $category->slug = $request->slug;
+        $category->name             = $request->name;
+        $category->slug             = $request->slug;
+        $category->heading          = $request->heading;
+        $category->meta_title       = $request->meta_title;
+        $category->meta_keywords    = $request->meta_keywords;
+        $category->meta_description = $request->meta_description; 
         $category->save();
 
         $notify[] = ['success', $notification];

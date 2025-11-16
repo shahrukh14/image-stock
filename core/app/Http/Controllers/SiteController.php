@@ -521,9 +521,19 @@ class SiteController extends Controller
 
     public function photos(Request $request, $category=null, $value=null){
         $request->category = $value;
-        $pageTitle = "Images";
+        if($value){
+            $thisCategory = Category::where('name', $value)->first();
+            $keywords = explode(",",$thisCategory->meta_keywords);
+            $pageTitle = $thisCategory->meta_title ?? $value;
+            $seoContents = getSeoContents($keywords, $thisCategory->meta_title, $thisCategory->meta_description);
+        }else{
+            $thisCategory = null;
+            $pageTitle = 'Images';
+            $seoContents = null;
+        }
+
         $images = collect([]);
-        $collections = collect([]);
+        $collections = collect([]); 
         $getImages = $this->getPhotos($request);
         $images = $getImages['images'];
         $imageCount = $getImages['imageCount'];
@@ -531,11 +541,12 @@ class SiteController extends Controller
         $collectionCount = $getCollections['collectionCount'];
         $categories = Category::active()->orderBy('name')->get();
         $colors = Color::orderBy('id', 'DESC')->get();
-        
+
         // $categories = Category::active()->whereHas('images', function ($query) {
         //     $query->approved()->hasActiveFiles();
         // })->get();
-        return view($this->activeTemplate . 'photos', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors'));
+
+        return view($this->activeTemplate . 'photos', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','colors','thisCategory','seoContents'));
     }
 
     private function getPhotos($request, $onlyCount = false){

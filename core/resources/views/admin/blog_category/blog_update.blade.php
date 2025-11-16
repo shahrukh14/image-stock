@@ -39,6 +39,17 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
+                            <label>@lang('Slug') </label>
+                            @php
+                                $withSpaces = str_replace('-', ' ', $blog->slug);
+                                $lowercaseStr = strtolower($withSpaces);
+                                $slug = ucwords($lowercaseStr);
+                            @endphp
+                            <input type="text" class="form-control " placeholder="@lang('Slug')" name="slug" value="{{ $slug }}" required/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
                             <label>@lang('Feature Image') </label>
                             <input class="form-control" type="file" placeholder="@lang('Feature Image')" id="file" value="" name="file"/>
                         </div>

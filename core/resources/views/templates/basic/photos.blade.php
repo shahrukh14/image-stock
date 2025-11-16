@@ -92,7 +92,9 @@
                   $defaultImageContent = getContent('default_images.content', true);
                   $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
               @endphp
-
+              @if($thisCategory != null)
+              <h2>@lang('Category') @lang('-') {{$thisCategory->name}}</h2>
+              @endif
               <div class="grid">
                 <div class="grid-sizer"></div>
                 @foreach($images as $image)
