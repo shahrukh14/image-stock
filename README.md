@@ -60,4 +60,8 @@ composer install
    - MAIL_PASSWORD=your_password
    - MAIL_ENCRYPTION=tls
 
+4. Generate App Key
+```bash
+php artisan key:generate
+```
 
