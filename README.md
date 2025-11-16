@@ -70,3 +70,8 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
+6. Serve The Project
+```bash
+php artisan serve
+```
+
