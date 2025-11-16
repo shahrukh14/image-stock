@@ -65,3 +65,8 @@ composer install
 php artisan key:generate
 ```
 
+5. Run Migrations & Seeders
+```bash
+php artisan migrate --seed
+```
+
