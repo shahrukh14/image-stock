@@ -74,4 +74,5 @@ php artisan migrate --seed
 ```bash
 php artisan serve
 ```
+Visit: http://localhost:8000
 
