@@ -1,14 +1,14 @@
 # 🎨 Image Stock – Images, Vectors & Videos Marketplace
 Image Stock is a **Laravel + JavaScript** based platform for downloading and purchasing **images, vectors, and videos.**
-It includes **subscription plans**, secure payment systems, user dashboards, and admin panel.
+It includes **subscription plans**, secure payment systems, user dashboards and admin panel.
 
 ---
 
 ## 🚀 Features
 
-- 🖼️ Browse & Download Free and Premium Images, Vectors, and Videos
+- 🖼️ Browse & Download Free and Premium Images, Vectors and Videos
 - 💳 Secure Purchase System with Subscription Plans
-- 🔐 Authentication with Roles (Admin / User)
+- 🔐 Authentication with Roles (Admin /Contributor /User)
 - 🧾 Subscription Management
 - 🛍️ Cart and Checkout Functionality
 - 💾 Cloud or Local Storage Support for Assets
