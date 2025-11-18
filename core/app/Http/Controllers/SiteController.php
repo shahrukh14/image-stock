@@ -522,7 +522,7 @@ class SiteController extends Controller
     public function photos(Request $request, $category=null, $value=null){
         $request->category = $value;
         if($value){
-            $thisCategory = Category::where('name', $value)->first();
+            $thisCategory = Category::where('slug', $value)->first();
             $keywords = explode(",",$thisCategory->meta_keywords);
             $pageTitle = $thisCategory->meta_title ?? $value;
             $seoContents = getSeoContents($keywords, $thisCategory->meta_title, $thisCategory->meta_description);
