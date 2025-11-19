@@ -130,6 +130,10 @@
                             <label>@lang('Heading')</label>
                             <input type="text" class="form-control" name="heading" required>
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Paragraph')</label>
+                            <input type="text" class="form-control" name="paragraph" required>
+                        </div>
 
                         <div class="form-group">
                             <label>@lang('Meta Title')</label>

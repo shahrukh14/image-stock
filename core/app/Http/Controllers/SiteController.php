@@ -640,7 +640,17 @@ class SiteController extends Controller
 
     public function vectors(Request $request, $category=null, $value=null){
         $request->category = $value;
-        $pageTitle = "Vectors";
+        if($value){
+            $thisCategory = Category::where('slug', $value)->first();
+            $keywords = explode(",",$thisCategory->meta_keywords);
+            $pageTitle = $thisCategory->meta_title ?? $value;
+            $seoContents = getSeoContents($keywords, $thisCategory->meta_title, $thisCategory->meta_description);
+        }else{
+            $thisCategory = null;
+            $pageTitle = 'Vectors';
+            $seoContents = null;
+        }
+
         $vectors = collect([]);
         $collections = collect([]);
         $getVectors = $this->getVectors($request);
@@ -650,7 +660,7 @@ class SiteController extends Controller
         $collectionCount = $getCollections['collectionCount'];
         $categories = Category::active()->orderBy('name')->get();
         $colors = Color::orderBy('id', 'DESC')->get();
-        return view($this->activeTemplate . 'vectors', compact('pageTitle' ,'vectors', 'collections', 'vectorCount', 'collectionCount', 'categories','colors'));
+        return view($this->activeTemplate . 'vectors', compact('seoContents','pageTitle' ,'vectors', 'collections', 'vectorCount', 'collectionCount', 'categories','colors'));
     }
 
     private function getVectors($request, $onlyCount = false){
@@ -736,7 +746,16 @@ class SiteController extends Controller
 
     public function videos(Request $request, $category=null, $value=null){
         $request->category = $value;
-        $pageTitle = "Videos";
+        if($value){
+            $thisCategory = Category::where('slug', $value)->first();
+            $keywords = explode(",",$thisCategory->meta_keywords);
+            $pageTitle = $thisCategory->meta_title ?? $value;
+            $seoContents = getSeoContents($keywords, $thisCategory->meta_title, $thisCategory->meta_description);
+        }else{
+            $thisCategory = null;
+            $pageTitle = 'Videos';
+            $seoContents = null;
+        }
         $videos = collect([]);
         $collections = collect([]);
         $getVideos = $this->getVideos($request);
@@ -746,7 +765,7 @@ class SiteController extends Controller
         $collectionCount = $getCollections['collectionCount'];
         $categories = Category::active()->orderBy('name')->get();
         $colors = Color::orderBy('id', 'DESC')->get();
-        return view($this->activeTemplate . 'videos', compact('pageTitle' ,'videos', 'collections', 'videoCount', 'collectionCount', 'categories','colors'));
+        return view($this->activeTemplate . 'videos', compact('seoContents','pageTitle' ,'videos', 'collections', 'videoCount', 'collectionCount', 'categories','colors'));
     }
 
     private function getVideos($request, $onlyCount = false){

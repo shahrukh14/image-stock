@@ -94,6 +94,7 @@
               @endphp
               @if($thisCategory != null)
               <h2>@lang('Category') @lang('-') {{$thisCategory->name}}</h2>
+              <p>{{$thisCategory->paragraph}}</p>
               @endif
               <div class="grid">
                 <div class="grid-sizer"></div>
@@ -105,7 +106,7 @@
                       <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
                         <img src="{{ $imageUrl }}">
                         <div class="resource-card---video-button w-condition-invisible">
-                          <img src="./Photography - Stock X - Webflow Ecommerce website template_files/64347e458126ad558f064a5e_play-button-small-icon-stock-x-webflow-template.svg" alt="Play Button - Stock X Webflow Template" class="play-button" />
+                          
                         </div>
                         <div class="resource-card-content v2">
                           <div class="text-200 color-neutral-100 mg-bottom-24px">
@@ -149,7 +150,7 @@
                         <img alt="Image"  class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
                       </div>
                       <div class="resource-card---video-button w-condition-invisible">
-                        <img src="./Photography - Stock X - Webflow Ecommerce website template_files/64347e458126ad558f064a5e_play-button-small-icon-stock-x-webflow-template.svg" alt="Play Button - Stock X Webflow Template" class="play-button" />
+                       
                       </div>
                       <div class="resource-card-content v2">
                         <div class="text-200 color-neutral-100 mg-bottom-24px">
