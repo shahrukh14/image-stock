@@ -22,8 +22,8 @@ It includes **subscription plans**, secure payment systems, user dashboards and 
 - Backend: Laravel 10
 - Frontend: HTML5, CSS3, JavaScript & jQuery
 - Database: MySQL / MariaDB
-- Payments: Stripe / Razorpay / PayPal (Choose as configured)
-- Storage: Local / AWS S3
+- Payments: Stripe / Razorpay / PayPal
+- Storage: Local / AWS S3 Bucket
   
 
 ## 🏗️ Installation
