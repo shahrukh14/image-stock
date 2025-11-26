@@ -8,7 +8,7 @@ It includes **subscription plans**, secure payment systems, user dashboards and 
 
 - 🖼️ Browse & Download Free and Premium Images, Vectors and Videos
 - 💳 Secure Purchase System with Subscription Plans
-- 🔐 Authentication with Roles (Admin /Contributor /User)
+- 🔐 Authentication with Roles (Admin/Contributor/User)
 - 🧾 Subscription Management
 - 🛍️ Cart and Checkout Functionality
 - 💾 Cloud or Local Storage Support for Assets
