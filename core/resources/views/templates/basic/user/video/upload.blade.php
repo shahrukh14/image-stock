@@ -373,7 +373,6 @@
 
         //Get YouTube video from url
         $('#getYouTubevideo').on('click', function(){
-            console.log($('.youTubeUrl').val());
             var url = $('.youTubeUrl').val();
 
             var firstParam = getFirstParam(url);
@@ -386,6 +385,10 @@
             let firstParam = '';
             if (url.includes('youtu.be')) {
                 // For 'youtu.be' URLs
+                const parts = url.split('/');
+                firstParam = parts[parts.length - 1];
+            } else if (url.includes('youtube.com/shorts')) {
+                // For YouTube Shorts URLs
                 const parts = url.split('/');
                 firstParam = parts[parts.length - 1];
             } else if (url.includes('youtube.com')) {
