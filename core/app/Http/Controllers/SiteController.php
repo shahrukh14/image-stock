@@ -932,7 +932,7 @@ class SiteController extends Controller
         $getCollections = $this->getCollections($request, true);
         $collectionCount = $getCollections['collectionCount'];
         $categories = Category::active()->orderBy('name')->get();
-        return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories'));
+        return view($this->activeTemplate . 'image_search', compact('pageTitle' ,'images', 'collections', 'imageCount', 'collectionCount', 'categories','value'));
     }
 
     private function getImages($request, $onlyCount = false)

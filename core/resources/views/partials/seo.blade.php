@@ -19,6 +19,10 @@ if (isset($seoContents) && count($seoContents)) {
     <meta name="keywords" content="{{ implode(',', $seoContents->keywords) }}">
     <link rel="shortcut icon" href="{{ getImage(getFilePath('logoIcon') . '/favicon.png') }}" type="image/x-icon">
 
+    @if(request()->routeIs('search'))
+    <link rel="canonical" href="{{ route('photos', ['category' , $value]) }}" />
+    @endif
+
     {{-- <!-- Apple Stuff --> --}}
     <link rel="apple-touch-icon" href="{{ getImage(getFilePath('logoIcon') . '/logo.png') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
