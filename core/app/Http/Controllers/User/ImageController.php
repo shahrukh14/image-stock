@@ -359,8 +359,7 @@ class ImageController extends Controller
         $imageLocation = getFilePath('stockImage') . '/' . $directory;
         $fileLocation  = getFilePath('stockFile') . '/' . $directory;
         $removeFileMethod = $general->storage_type == 1 ?  'removeFile' : 'removeFileFromStorageManager';
-
-
+        $filePath = 'files/' . $directory;
 
         if ($request->hasFile('photo')) {
 
