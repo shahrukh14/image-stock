@@ -154,8 +154,8 @@
 
                                     @else
                                     <div class="spanDiv confirmationBtn">
-                                        <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
-                                        <span class="download-span">|<span>
+                                        {{-- <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
+                                        <span class="download-span">|<span> --}}
                                         <span class="download-span">{{ $imageFile->resolution }}</span>
                                         <span class="download-span">|<span>
                                         <span class="download-span">Standard License<span>

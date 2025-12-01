@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
+use Mail;
 use Carbon\Carbon;
 use App\Models\Page;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\Blog;
+use App\Models\Color;
 use App\Models\Image;
 use App\Models\Follow;
 use App\Models\Frontend;
 use App\Models\Language;
 use App\Constants\Status;
 use App\Mail\ConatctUsMail;
-use App\Models\AdminNotification;
-use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Category;
 use App\Models\Collection;
@@ -25,12 +25,22 @@ use App\Models\SupportMessage;
 use App\Models\SupportTicket;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\AdminNotification;
+use App\Services\MailerLiteService;
 use Illuminate\Support\Facades\Cookie;
-use Mail;
-use App\Models\Color;
+
+
 class SiteController extends Controller
 {
     private $memberRelation = ['images', 'downloads', 'publicCollections', 'privateCollections', 'followers', 'followings'];
+    protected $mailerLiteService;
+
+    public function __construct(MailerLiteService $mailerLiteService){
+        // Call parent constructor
+        parent::__construct();
+
+        $this->mailerLiteService = $mailerLiteService;
+    }
 
     public function index()
     {
@@ -1242,11 +1252,20 @@ class SiteController extends Controller
         return view($this->activeTemplate .'terms_and_condition',compact('pageTitle','activeTemplate','content'));
     }
     public function userSubscribe(Request $request){
-       $subscriber = new Subscriber();
-       $subscriber->email = $request->email;
-       $subscriber->save();
-       $notify[] = ['success', 'You subscribed successfully!'];
-       return redirect()->back()->withNotify($notify);
+        $subscriber = new Subscriber();
+        $subscriber->email = $request->email;
+        $subscriber->save();
+
+       // Subscribe the user to the group (MailerLite API call)
+        $groupId = env('MAILERLITE_GROUP_ID');
+        $result = $this->mailerLiteService->subscribeToGroup($request->email, $groupId);
+
+        // Send the campaign email to the new subscriber
+        // $campaignId = env('MAILERLITE_CAMPAIGN_ID'); 
+        // $this->mailerLiteService->sendCampaignToSubscriber($request->email, $campaignId);
+
+        $notify[] = ['success', 'You subscribed successfully!'];
+        return redirect()->back()->withNotify($notify);
     }
 
     public function doNotSellPersonalInformation(){

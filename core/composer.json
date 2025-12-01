@@ -20,6 +20,7 @@
         "laravel/ui": "^3.4",
         "league/flysystem-aws-s3-v3": "^3.15",
         "league/flysystem-ftp": "3.15",
+        "mailerlite/mailerlite-api-v2-php-sdk": "^0.3.2",
         "mailjet/mailjet-apiv3-php": "^1.4",
         "messagebird/php-rest-api": "^1.20",
         "mollie/laravel-mollie": "^2.14",
@@ -79,7 +80,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
