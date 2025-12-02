@@ -12,6 +12,7 @@
         "ezyang/htmlpurifier": "^4.13",
         "guzzlehttp/guzzle": "^7.5",
         "intervention/image": "^2.5",
+        "ixudra/curl": "^6.22",
         "laramin/utility": "dev-main",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",

@@ -141,10 +141,11 @@
                         <form id="Footer-Form" name="wf-form-Footer-Form" action="{{route('user.subscribe')}}" data-name="Footer Form" method="post" data-wf-page-id="642ee44a50f54319d1b2f9b3" data-wf-element-id="3f6661a9-88e7-47bc-76df-590fa2612bfc" aria-label="Footer Form">
                             @csrf
                             <div class="position-relative">
-                                <input type="email" class="input button-inside w-input" maxlength="256" name="email" data-name="Email" placeholder="Enter your email..." id="Footer-Email" required="" />
+                                <input type="email" class="input button-inside w-input" maxlength="256" name="email" data-name="Email" placeholder="Enter your email..." id="Footer-Email" required/>
                                 <input type="submit" value="Subscribe now" class="subscribeNowBtn" />
-                                {{-- <input type="submit" value="Subscribe now" class="btn-primary inside-input default white-mb w-button" /> --}}
                             </div>
+                            {{-- Add reCAPTCHA --}}
+                            <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
                         </form>
                         <div class="success-message color-neutral-100 w-form-done" tabindex="-1"
                             role="region" aria-label="Footer Form success">
@@ -205,6 +206,11 @@
             bottom: 6px;
             right: 6px;
         }
+
+        .g-recaptcha {
+            margin-top: 10px;
+            margin-left: 23px;
+        }
     </style>
 @endpush
 
@@ -218,6 +224,9 @@
 <script type="text/javascript" src="//cdn.iubenda.com/cs/tcf/safe-tcf-v2.js"></script>
 <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
 <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
+
+{{-- Include reCAPTCHA Script --}}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 
 <!--Start of Tawk.to Script-->

@@ -27,7 +27,9 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\AdminNotification;
 use App\Services\MailerLiteService;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cookie;
+use Ixudra\Curl\Facades\Curl;
 
 
 class SiteController extends Controller
@@ -1252,6 +1254,27 @@ class SiteController extends Controller
         return view($this->activeTemplate .'terms_and_condition',compact('pageTitle','activeTemplate','content'));
     }
     public function userSubscribe(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+            'g-recaptcha-response' => 'required',
+        ]);
+
+        // Verify reCAPTCHA response
+        $response = Curl::to('https://www.google.com/recaptcha/api/siteverify')
+                    ->withData([
+                        'secret' => env('RECAPTCHA_SECRET_KEY'),
+                        'response' => $request->input('g-recaptcha-response'),
+                        'remoteip' => $request->ip(),
+                    ])->post();
+        // Decode the response
+        $recaptchaResult = json_decode($response, true);
+
+        // Check if reCAPTCHA was successful
+        if (!$recaptchaResult['success']) {
+            \Log::error('reCAPTCHA verification failed: ' . json_encode($recaptchaResult));
+            return redirect()->back()->with('error', 'reCAPTCHA verification failed');
+        }
+
         $subscriber = new Subscriber();
         $subscriber->email = $request->email;
         $subscriber->save();

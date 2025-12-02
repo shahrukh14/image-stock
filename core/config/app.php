@@ -165,10 +165,12 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
          */
+        Ixudra\Curl\CurlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -195,6 +197,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'Status' => App\Constants\Status::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Curl' => Ixudra\Curl\Facades\Curl::class,
     ])->toArray(),
 
 ];
