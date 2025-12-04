@@ -98,7 +98,7 @@
                                     
                                 @endphp
 
-                                    @if($imageFile->price != 0  && $imageFile->ex_price != 0)
+                                    @if($imageFile->is_free != 1)
                                         @for($i=0; $i < 2; $i++)
                                         <div class="spanDiv">
                                             @if($i == 0)
