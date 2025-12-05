@@ -54,9 +54,8 @@ class ProcessController extends Controller
             $send['redirect'] = true;
             $send['redirect_url'] = $response->result->links[1]->href;
         } catch (HttpException $ex) {
-            dd($ex);
             $send['error'] = true;
-            $send['message'] = 'Failed to process with api';
+            $send['message'] = json_decode($ex->getMessage())->error_description;
         }
 
         return json_encode($send);

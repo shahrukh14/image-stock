@@ -294,7 +294,7 @@ class PaymentController extends Controller
 
         $dirName = $deposit->gateway->alias;
         $new     = __NAMESPACE__ . '\\' . $dirName . '\\ProcessController';
-        $data = $new::process($deposit); 
+        $data = $new::process($deposit);
         $data = json_decode($data);
         
         if (isset($data->error)) {
