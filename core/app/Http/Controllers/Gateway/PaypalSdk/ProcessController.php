@@ -20,7 +20,6 @@ class ProcessController extends Controller
     {
         $paypalAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
 
-
         $failedRedirectUrl  = $deposit->gatewayRedirectUrl();
 
 

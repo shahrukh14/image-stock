@@ -126,12 +126,12 @@
                                                         Download 
                                                     </a>
                                                 @else
-                                                    <span class="download-span {{ $downloadActionClass }}" data-type="standard" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                    <span class="buyBtn download-span {{ $downloadActionClass }}" data-type="standard" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
                                                         Buy
                                                     </span>
                                                 @endif
                                             @else
-                                                <span class="download-span downloadByPayment" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                <span class="buyBtn download-span downloadByPayment" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
                                                     Buy
                                                 </span>
                                                 {{-- @if(auth()->user() && $user->purchasedPlan && $imageFile->exclued_package == "no" && $availableDownload > 0)
@@ -349,12 +349,19 @@
         margin-right: 5px;
     }
 
-    .downloadBtn{
-        padding: 1px 10px;
+    .buyBtn{
+        padding: 5px 15px;
         margin-bottom: 3px;
         border-radius: 20px;
-        border: 2px solid #000 !important;
+        border: 1px solid #000 !important;
         text-decoration: none;
+        color: #000;
+    }
+
+    .buyBtn:hover {
+        color: #fff;
+        background-color: #62a444;
+        border: 1px solid #fff !important;
     }
 
 
