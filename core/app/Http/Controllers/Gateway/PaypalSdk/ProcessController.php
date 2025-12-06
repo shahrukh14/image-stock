@@ -26,7 +26,8 @@ class ProcessController extends Controller
         // Creating an environment
         $clientId = $paypalAcc->clientId;
         $clientSecret = $paypalAcc->clientSecret;
-        $environment = new SandboxEnvironment($clientId, $clientSecret);
+        // $environment = new SandboxEnvironment($clientId, $clientSecret); //For Test Key
+        $environment = new ProductionEnvironment($clientId, $clientSecret); //For live Key
         $client = new PayPalHttpClient($environment);
         $request = new OrdersCreateRequest();
         $request->prefer('return=representation');
@@ -74,7 +75,8 @@ class ProcessController extends Controller
             $paypalAcc = json_decode($deposit->gatewayCurrency()->gateway_parameter);
             $clientId = $paypalAcc->clientId;
             $clientSecret = $paypalAcc->clientSecret;
-            $environment = new SandboxEnvironment($clientId, $clientSecret);
+            // $environment = new SandboxEnvironment($clientId, $clientSecret); //For Test Key
+            $environment = new ProductionEnvironment($clientId, $clientSecret); //For live Key
             $client = new PayPalHttpClient($environment);
 
             $response = $client->execute($request);
