@@ -94,7 +94,6 @@
                                     }else{
                                         $downloadActionClass = 'downloadByPayment';
                                     }
-
                                     
                                 @endphp
 
@@ -121,7 +120,6 @@
 
                                             @if($i == 0)
                                                 @if(auth()->user() && $user->purchasedPlan && $user->purchasedPlan->plan->plan_for == 'photo' && $imageFile->exclued_package == "no" && $availableDownload > 0)
-                                                {{-- @if(auth()->user() && $user->alredyDownload($imageFile->id, "standard") == "yes") --}}
                                                     <a href="{{ route('user.image.download.file', ['id'=>$imageFile->id, 'type'=>'standard']) }}" class="download-span" style="text-decoration: none;">
                                                         Download 
                                                     </a>
@@ -134,16 +132,6 @@
                                                 <span class="buyBtn download-span downloadByPayment" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
                                                     Buy
                                                 </span>
-                                                {{-- @if(auth()->user() && $user->purchasedPlan && $imageFile->exclued_package == "no" && $availableDownload > 0)
-                                                @if(auth()->user() && $user->alredyDownload($imageFile->id, "extended") == "yes")
-                                                    <a href="{{ route('user.image.download.file', ['id'=>$imageFile->id, 'type'=>'extended']) }}" class="download-span" style="text-decoration: none;">
-                                                        Download
-                                                    </a>
-                                                @else
-                                                    <span class="download-span {{ $downloadActionClass }}" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
-                                                        Buy
-                                                    </span>
-                                                @endif --}}
                                             @endif
 
                                             @if($imageFile->exclued_package == "yes")
@@ -154,15 +142,10 @@
 
                                     @else
                                     <div class="spanDiv confirmationBtn">
-                                        {{-- <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
-                                        <span class="download-span">|<span> --}}
                                         <span class="download-span">{{ $imageFile->resolution }}</span>
                                         <span class="download-span">|<span>
                                         <span class="download-span">Standard License<span>
                                         <span class="download-span">|<span>
-                                        {{-- <span class="download-span {{ $downloadActionClass }}"  data-type="standard" data-action="{{ route('image.download', encrypt($imageFile->id)) }}" data-question="@lang('Are you sure to download of this file ?')"  style="cursor: pointer;">
-                                            Download
-                                        </span> --}}
                                         <a href="{{ route('user.image.download.file', ['id'=>$imageFile->id, 'type'=>'standard']) }}" class="download-span" style="text-decoration: none;">
                                             Download 
                                         </a>

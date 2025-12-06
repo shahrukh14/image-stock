@@ -8,7 +8,7 @@
                 </button>
             </div>
             @auth
-                <form action="" method="POST">
+                <form action="" method="POST" id="paymentForm">
                     @csrf
                     <div class="modal-body">
                         <input name="license" type="hidden">
@@ -126,7 +126,8 @@
             modal.find('#type').val( `${data.type}`);
             modal.find('[name=image_file]').val(data.file);
             modal.find('[name=license]').val(data.type);
-            modal.modal('show');
+            // modal.modal('show');
+            $("#paymentForm").submit();
         });
 
        $('.buyPackage').on('click',function(){
