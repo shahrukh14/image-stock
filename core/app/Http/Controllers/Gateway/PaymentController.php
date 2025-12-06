@@ -213,7 +213,7 @@ class PaymentController extends Controller
         session()->put('Track', $deposit->trx);
 
         $file = ImageFile::with('image')->findOrFail($request->image_file);
-        $this->downloadData($file, $user, $request->license, $amount);
+        $this->downloadData($file, $user, $request->license, $amount, $deposit->id);
         session()->put('imagePayment', 1);
         return to_route('user.deposit.confirm.image');
     }
@@ -616,78 +616,80 @@ class PaymentController extends Controller
         }
     }
 
-        //save download data
-        protected function downloadData($file, $user, $type, $price)
-        {
+    //save download data
+    protected function downloadData($file, $user, $type, $price, $depositId = null)
+    {
 
-            $general = gs();
-    
-            if ($file->image->user_id != @$user->id) {
+        $general = gs();
 
-                if ($user) {
-                    $download = Download::where('image_file_id', $file->id)->where('user_id', $user->id)->first();
-                    if (!$download) {
-                        $download = new Download();
-                        $download->user_id = $user->id;
-                        $file->total_downloads += 1;
-                    }
-                } else {
+        if ($file->image->user_id != @$user->id) {
+
+            if ($user) {
+                $download = Download::where('image_file_id', $file->id)->where('user_id', $user->id)->first();
+                if (!$download) {
                     $download = new Download();
+                    $download->user_id = $user->id;
                     $file->total_downloads += 1;
                 }
-    
-                $isDownloaded = Download::where('image_file_id', $file->id)->where('user_id', @$user->id)->exists();
-    
-                $download->image_file_id = $file->id;
-                $download->contributor_id =  $file->image->user_id;
-                $download->ip = request()->ip();
-                $download->premium = $file->is_free == Status::PREMIUM;
-                $download->type = $type;
-                if (!$file->is_free && !$isDownloaded) {
-    
-                    // if($type == "extended"){
-                    //     $amount = $file->ex_price * $general->per_download / 100;
-                    // }else{
-                    //     $amount = $file->price * $general->per_download / 100;
-                    // }
-                    
-                    // $contributor = $file->image->user;
-                    // $contributor->balance +=  $amount;
-                    // $contributor->update();
-    
-                    // $earn                   = new EarningLog();
-                    // $earn->contributor_id   = $contributor->id;
-                    // $earn->image_file_id    = $file->id;
-                    // $earn->amount           = $amount;
-                    // $earn->earning_date     = now()->format('Y-m-d');
-                    // $earn->save();
-    
-                    // $transaction               = new Transaction();
-                    // $transaction->user_id      = $contributor->id;
-                    // $transaction->amount       =  $amount;
-                    // $transaction->post_balance = getAmount($contributor->balance);
-                    // $transaction->charge       = 0;
-                    // $transaction->trx_type     = '+';
-                    // $transaction->details      = "Earnings generated from downloading the {$file->image->title}";
-                    // $transaction->trx          = getTrx();
-                    // $transaction->remark       = 'earning_log';
-                    // $transaction->save();
+            } else {
+                $download = new Download();
+                $file->total_downloads += 1;
+            }
 
-                    $transaction               = new Transaction();
-                    $transaction->user_id      = $user->id;
-                    $transaction->amount       = $price;
-                    $transaction->post_balance = getAmount($user->balance);
-                    $transaction->charge       = 0;
-                    $transaction->trx_type     = '-';
-                    $transaction->details      = "Charge for download - {$file->image->title}";
-                    $transaction->trx          = getTrx();
-                    $transaction->remark       = 'download_charge';
-                    $transaction->save();
-                    $file->save();
-                    $download->save();
-                   
-                }
+            $isDownloaded = Download::where('image_file_id', $file->id)->where('user_id', @$user->id)->exists();
+
+            $download->image_file_id = $file->id;
+            $download->contributor_id =  $file->image->user_id;
+            $download->ip = request()->ip();
+            $download->premium = $file->is_free == Status::PREMIUM;
+            $download->type = $type;
+            $download->deposit_id = $depositId;
+            
+            if (!$file->is_free && !$isDownloaded) {
+
+                // if($type == "extended"){
+                //     $amount = $file->ex_price * $general->per_download / 100;
+                // }else{
+                //     $amount = $file->price * $general->per_download / 100;
+                // }
+                
+                // $contributor = $file->image->user;
+                // $contributor->balance +=  $amount;
+                // $contributor->update();
+
+                // $earn                   = new EarningLog();
+                // $earn->contributor_id   = $contributor->id;
+                // $earn->image_file_id    = $file->id;
+                // $earn->amount           = $amount;
+                // $earn->earning_date     = now()->format('Y-m-d');
+                // $earn->save();
+
+                // $transaction               = new Transaction();
+                // $transaction->user_id      = $contributor->id;
+                // $transaction->amount       =  $amount;
+                // $transaction->post_balance = getAmount($contributor->balance);
+                // $transaction->charge       = 0;
+                // $transaction->trx_type     = '+';
+                // $transaction->details      = "Earnings generated from downloading the {$file->image->title}";
+                // $transaction->trx          = getTrx();
+                // $transaction->remark       = 'earning_log';
+                // $transaction->save();
+
+                $transaction               = new Transaction();
+                $transaction->user_id      = $user->id;
+                $transaction->amount       = $price;
+                $transaction->post_balance = getAmount($user->balance);
+                $transaction->charge       = 0;
+                $transaction->trx_type     = '-';
+                $transaction->details      = "Charge for download - {$file->image->title}";
+                $transaction->trx          = getTrx();
+                $transaction->remark       = 'download_charge';
+                $transaction->save();
+                $file->save();
+                $download->save();
                 
             }
+            
         }
+    }
 }

@@ -336,11 +336,13 @@ class UserController extends Controller
 
         $pageTitle = 'Download History';
         $downloads = Download::where('user_id', auth()->id())
-                            ->whereBetween('created_at', [$startDate, $endDate])
-                            ->with('imageFile.image:title,id,category_id,file_type', 'contributor', 'imageFile')
-                            ->orderBy('id', 'desc')
-                            ->paginate(getPaginate());
-
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->whereHas('deposit', function($deposit){
+                        $deposit->where('status', 1);
+                    })
+                    ->with('imageFile.image:title,id,category_id,file_type', 'contributor', 'imageFile')
+                    ->orderBy('id', 'desc')
+                    ->paginate(getPaginate());
         return view($this->activeTemplate . 'user.download_history', compact('pageTitle', 'downloads'));
     }
 

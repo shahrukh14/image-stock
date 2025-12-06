@@ -22,4 +22,8 @@ class Download extends Model
     {
         return $this->belongsTo(ImageFile::class);
     }
+
+    public function deposit(){
+        return $this->belongsTo(Deposit::class);
+    }
 }
