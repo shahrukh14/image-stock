@@ -47,6 +47,7 @@
                     <th class="sm-text">@lang('Amount')</th>
                     {{-- <th class="sm-text">@lang('Post Balance')</th> --}}
                     <th class="sm-text">@lang('Detail')</th>
+                    <th class="sm-text">@lang('Status')</th>
                     <th class="sm-text">@lang('Transacted')</th>
 
                 </tr>
@@ -71,6 +72,13 @@
                         </td> --}}
 
                         <td>{{ __($trx->details) }}</td>
+                        <td>
+                            @if($trx->deposit && $trx->deposit->status == 1)
+                                <span class="badge badge--success" style="border-radius: 20px; padding:2px 7px;"style="border-radius: 20px; padding:4px;">@lang('Success')</span>
+                            @else
+                                <span class="badge badge--danger" style="border-radius: 20px; padding:2px 5px;">@lang('Failed')</span>
+                            @endif
+                        </td>
 
                         <td class="sm-text">
                             {{ showDateTime($trx->created_at) }}<br>{{ diffForHumans($trx->created_at) }}

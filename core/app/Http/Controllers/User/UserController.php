@@ -126,6 +126,22 @@ class UserController extends Controller
 
         $transactions = Transaction::where('user_id', auth()->id())->where('trx_type', '-')->searchable(['trx'])->filter(['trx_type', 'remark'])->orderBy('id', 'desc')->paginate(getPaginate());
 
+        //THIS IS LATEST QUERY TO FILTER ONLY THOSE IMAGE PURCHASE TRANSACTION WHO HAVE SUCCESS DEPOSTI STATUS
+        // $transactions = Transaction::where('user_id', auth()->id())->where('trx_type', '-')
+        // ->where(function ($query) {
+        //     $query->where('remark', '!=', 'download_charge')
+        //     ->orWhere(function ($q) {
+        //         $q->where('remark', 'download_charge')
+        //         ->whereHas('deposit', function ($deposit) {
+        //             $deposit->where('status', 1);
+        //         });
+        //     });
+        // })
+        // ->searchable(['trx'])
+        // ->filter(['trx_type', 'remark'])
+        // ->orderBy('id', 'desc')
+        // ->paginate(getPaginate());
+
         return view($this->activeTemplate . 'user.purchase_history', compact('pageTitle', 'transactions', 'remarks'));
     }
 

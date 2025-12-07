@@ -675,15 +675,16 @@ class PaymentController extends Controller
                 // $transaction->remark       = 'earning_log';
                 // $transaction->save();
 
-                $transaction               = new Transaction();
-                $transaction->user_id      = $user->id;
-                $transaction->amount       = $price;
-                $transaction->post_balance = getAmount($user->balance);
-                $transaction->charge       = 0;
-                $transaction->trx_type     = '-';
-                $transaction->details      = "Charge for download - {$file->image->title}";
-                $transaction->trx          = getTrx();
-                $transaction->remark       = 'download_charge';
+                $transaction                = new Transaction();
+                $transaction->user_id       = $user->id;
+                $transaction->deposit_id    = $depositId;
+                $transaction->amount        = $price;
+                $transaction->post_balance  = getAmount($user->balance);
+                $transaction->charge        = 0;
+                $transaction->trx_type      = '-';
+                $transaction->details       = "Charge for download - {$file->image->title}";
+                $transaction->trx           = getTrx();
+                $transaction->remark        = 'download_charge';
                 $transaction->save();
                 $file->save();
                 $download->save();
