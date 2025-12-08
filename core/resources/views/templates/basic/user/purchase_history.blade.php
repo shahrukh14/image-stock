@@ -49,7 +49,7 @@
                     <th class="sm-text">@lang('Detail')</th>
                     <th class="sm-text">@lang('Status')</th>
                     <th class="sm-text">@lang('Transacted')</th>
-
+                    <th class="sm-text">@lang('Action')</th>
                 </tr>
             </thead>
             <tbody>
@@ -73,15 +73,20 @@
 
                         <td>{{ __($trx->details) }}</td>
                         <td>
-                            @if($trx->deposit && $trx->deposit->status == 1)
-                                <span class="badge badge--success" style="border-radius: 20px; padding:2px 7px;"style="border-radius: 20px; padding:4px;">@lang('Success')</span>
-                            @else
-                                <span class="badge badge--danger" style="border-radius: 20px; padding:2px 5px;">@lang('Failed')</span>
+                            @if($trx->deposit)
+                               {!! $trx->deposit->statusBadge !!}
                             @endif
                         </td>
 
                         <td class="sm-text">
                             {{ showDateTime($trx->created_at) }}<br>{{ diffForHumans($trx->created_at) }}
+                        </td>
+                        <td>
+                            @if($trx->deposit && $trx->deposit->download && $trx->deposit->download->imageFile)
+                                <a href="{{ route('user.image.download.file', ['id'=>$trx->deposit->download->imageFile->id]) }}" class="btn btn--base btn-sm">
+                                    <i class="las la-download"></i>
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 @empty

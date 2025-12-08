@@ -110,4 +110,8 @@ class Deposit extends Model
             return ['user.deposit.index'];
         }
     }
+
+    public function download(){
+        return $this->hasOne(Download::class);
+    }
 }
