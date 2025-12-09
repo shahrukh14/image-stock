@@ -285,7 +285,6 @@ class PaymentController extends Controller
 
         if ($deposit->method_code >= 1000) {
             if ($deposit->donation_id) {
-
                 return to_route('donation.manual.confirm');
             }
             return to_route('user.deposit.manual.confirm');

@@ -49,7 +49,9 @@ class Deposit extends Model
                 } elseif ($this->status == Status::PAYMENT_REJECT) {
                     $html = '<span><span class="badge badge--danger">' . trans('Rejected') . '</span><br>' . diffForHumans($this->updated_at) . '</span>';
                 } else {
-                    $html = '<span class="badge badge--dark">' . trans('Initiated') . '</span>';
+                    // $html = '<span class="badge badge--dark">' . trans('Initiated') . '</span>';
+                    $html = '<span class="badge badge--danger">' . trans('Failed') . '</span>';
+
                 }
                 return $html;
             }
@@ -101,7 +103,8 @@ class Deposit extends Model
         if ($type) {
 
             if(session('imagePayment') === 1){
-                return ['user.download.history'];
+                // return ['user.download.history'];
+                return ['user.purchase.history'];
             }else{
                 return ['user.deposit.history'];
             }

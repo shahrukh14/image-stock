@@ -82,7 +82,7 @@
                             {{ showDateTime($trx->created_at) }}<br>{{ diffForHumans($trx->created_at) }}
                         </td>
                         <td>
-                            @if($trx->deposit && $trx->deposit->download && $trx->deposit->download->imageFile)
+                            @if($trx->deposit && $trx->deposit->status == 1 && $trx->deposit->download && $trx->deposit->download->imageFile)
                                 <a href="{{ route('user.image.download.file', ['id'=>$trx->deposit->download->imageFile->id]) }}" class="btn btn--base btn-sm">
                                     <i class="las la-download"></i>
                                 </a>
