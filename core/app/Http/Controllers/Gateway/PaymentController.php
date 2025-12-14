@@ -290,7 +290,6 @@ class PaymentController extends Controller
             return to_route('user.deposit.manual.confirm');
         }
 
-
         $dirName = $deposit->gateway->alias;
         $new     = __NAMESPACE__ . '\\' . $dirName . '\\ProcessController';
         $data = $new::process($deposit);
@@ -315,7 +314,6 @@ class PaymentController extends Controller
         if (!auth()->check()) {
             if ($deposit->donation_id) $masterBlade = 'layouts.frontend';
         }
-
         return view($this->activeTemplate . $data->view, compact('data', 'pageTitle', 'deposit', 'masterBlade'));
     }
 
