@@ -117,4 +117,8 @@ class Deposit extends Model
     public function download(){
         return $this->hasOne(Download::class);
     }
+
+    public function transaction(){
+        return $this->hasOne(Transaction::class);
+    }
 }

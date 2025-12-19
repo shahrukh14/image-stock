@@ -19,6 +19,7 @@ use App\Models\User;
 use App\Models\EarningLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -282,7 +283,9 @@ class PaymentController extends Controller
     {
         $track = session()->get('Track');
         $deposit = Deposit::where('trx', $track)->where('status', Status::PAYMENT_INITIATE)->orderBy('id', 'DESC')->with('gateway')->firstOrFail();
-
+        Log::info('Deposit Before Payment', [
+            'deposit' => $deposit,
+        ]);
         if ($deposit->method_code >= 1000) {
             if ($deposit->donation_id) {
                 return to_route('donation.manual.confirm');
@@ -294,6 +297,11 @@ class PaymentController extends Controller
         $new     = __NAMESPACE__ . '\\' . $dirName . '\\ProcessController';
         $data = $new::process($deposit);
         $data = json_decode($data);
+
+        Log::info('Deposit Data', [
+            'Deposit data' => $data,
+        ]);
+
         
         if (isset($data->error)) {
             $notify[] = ['error', $data->message];
@@ -382,17 +390,20 @@ class PaymentController extends Controller
                 $user->balance += $deposit->amount;
                 $user->save();
 
-                //transaction log
-                $transaction               = new Transaction();
-                $transaction->user_id      = $deposit->user_id;
-                $transaction->amount       = $deposit->amount;
-                $transaction->post_balance = $user->balance;
-                $transaction->charge       = $deposit->charge;
-                $transaction->trx_type     = '+';
-                $transaction->details      = 'Deposit via ' . $deposit->gatewayCurrency()->name;
-                $transaction->trx          = $deposit->trx;
-                $transaction->remark       = 'deposit';
-                $transaction->save();
+                if(!$deposit->transaction){
+                    //transaction log
+                    $transaction               = new Transaction();
+                    $transaction->user_id      = $deposit->user_id;
+                    $transaction->amount       = $deposit->amount;
+                    $transaction->post_balance = $user->balance;
+                    $transaction->charge       = $deposit->charge;
+                    $transaction->trx_type     = '+';
+                    $transaction->details      = 'Deposit via ' . $deposit->gatewayCurrency()->name;
+                    $transaction->trx          = $deposit->trx;
+                    $transaction->remark       = 'deposit';
+                    $transaction->save();
+                }
+                
 
                 if ($deposit->plan_id) {
 
@@ -616,11 +627,9 @@ class PaymentController extends Controller
     //save download data
     protected function downloadData($file, $user, $type, $price, $depositId = null)
     {
-
         $general = gs();
 
         if ($file->image->user_id != @$user->id) {
-
             if ($user) {
                 $download = Download::where('image_file_id', $file->id)->where('user_id', $user->id)->first();
                 if (!$download) {
@@ -671,23 +680,22 @@ class PaymentController extends Controller
                 // $transaction->trx          = getTrx();
                 // $transaction->remark       = 'earning_log';
                 // $transaction->save();
-
-                $transaction                = new Transaction();
-                $transaction->user_id       = $user->id;
-                $transaction->deposit_id    = $depositId;
-                $transaction->amount        = $price;
-                $transaction->post_balance  = getAmount($user->balance);
-                $transaction->charge        = 0;
-                $transaction->trx_type      = '-';
-                $transaction->details       = "Charge for download - {$file->image->title}";
-                $transaction->trx           = getTrx();
-                $transaction->remark        = 'download_charge';
-                $transaction->save();
-                $file->save();
-                $download->save();
-                
             }
-            
+
+            $transaction                = new Transaction();
+            $transaction->user_id       = $user->id;
+            $transaction->deposit_id    = $depositId;
+            $transaction->amount        = $price;
+            $transaction->post_balance  = getAmount($user->balance);
+            $transaction->charge        = 0;
+            $transaction->trx_type      = '-';
+            $transaction->details       = "Charge for download - {$file->image->title}";
+            $transaction->trx           = getTrx();
+            $transaction->remark        = 'download_charge';
+            $transaction->save();
+            $file->save();
+            $download->save();
         }
+
     }
 }

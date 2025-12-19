@@ -60,46 +60,12 @@
                     <div>
                       @foreach ($categories as $category)
                       <div class="categoryFilter">
-                        {{-- <span class="search-param"  data-param="category" data-search_type="single" data-param_value="{{ $category->slug}}" >{{ $category->name }}</span> --}}
                         <a href="{{ route('search', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
                       </div>
                       @endforeach
                     </div>
                   @endif
                 </div>
-                {{-- Category Filter end --}}
-
-                {{-- Tags Filter start --}}
-                {{-- <h3>Tags <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
-                <div>
-                    <div>
-                      @if (request()->tag && !in_array(request()->tag, $tags))
-                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param"data-param="tag" data-search_type="single" data-param_value="{{ request()->tag }}">{{ __(request()->tag) }}</span>
-                      </div>
-                      @endif
-
-                      @foreach ($tags as $tag)
-                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param" data-param="tag" data-search_type="single"  data-param_value="{{ $tag }}" >{{ $tag }}</span>
-                      </div>
-                      @endforeach
-                    </div>
-                </div> --}}
-                {{-- Tags Filter end --}}
-
-                {{-- Extenstion Filter start --}}
-                {{-- <h3>Extenstions <span class="line-square-icon inactivearrow"></span><span class="line-square-icon activearrow"></span></h3>
-                <div>
-                    <div>
-                      @foreach ($extensions as $exts)
-                      <div style="margin-bottom: 5px; margin-left:10px; margin-top: 15px;">
-                        <span class="color-badge color-selector search-param" data-param="extension" data-search_type="single"  data-param_value="{{ $exts }}" >{{ $exts }}</span>
-                      </div>
-                      @endforeach
-                    </div>
-                </div> --}}
-                {{-- Extenstion Filter end --}}
               </div>
 
             @php
@@ -119,21 +85,6 @@
                     $photos_setting_image = "photos_default_banner.jpg";
                 }
             @endphp
-            {{-- <div class="inner-container _981px width-100">
-              <div class="mg-bottom-80px">
-                <div style=" background-image: url({{ asset('core/public/assets/image/photos_setting/'.$photos_setting_image)}});  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="category-banner">
-                  <div class="inner-container _635px center">
-                    <div class="text-center">
-                      <h1 class="display-3 color-neutral-100 mg-bottom-12px">
-                       @if($photos_setting) {{$photos_setting->heading}} @else Photos @endif
-                      </h1>
-                      <p class="color-neutral-200 mg-bottom-0">
-                        @if($photos_setting) {{$photos_setting->sub_heading}}  @endif
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div> --}}
               @php
                   $defaultImageContent = getContent('default_images.content', true);
                   $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
@@ -206,51 +157,6 @@
                     </div>
                 @endforeach
               </div>
-              {{-- <div style="opacity: 1"  class="w-dyn-list">
-                <div role="list"  class="grid-3-columns latest-resources-grid---page w-dyn-items">
-                  @foreach($images as $image)
-                  @php
-                      $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
-                  @endphp
-                  <div role="listitem" class="w-dyn-item">
-                    <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
-                      <div class="image-wrapper">
-                        <img alt="Image"  class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
-                      </div>
-                      <div class="resource-card---video-button w-condition-invisible">
-                       
-                      </div>
-                      <div class="resource-card-content v2">
-                        <div class="text-200 color-neutral-100 mg-bottom-24px">
-                          #{{$image->track_id}}
-                        </div>
-                        <div class="mg-top-auto">
-                          <div class="flex-horizontal space-between gap-16px">
-                            <div  class="flex-horizontal start gap-12px flex-wrap">
-                              <div class="avatar-circle _02">
-                                <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
-                              </div>
-                              <div>
-                                <div class="heading-h6-size color-neutral-100">
-                                  {{$image->user->firstname}}
-                                </div>
-                                <div class="text-50 color-neutral-300">
-                                  {{date('d-M-Y', strtotime($image->upload_date))}}
-                                </div>
-                              </div>
-                            </div>
-                            <div class="resource-card-arrow">
-                              <div class="line-square-icon"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  @endforeach
-                </div>
-                <div role="navigation"  aria-label="List" class="w-pagination-wrapper pagination-wrapper"></div>
-              </div> --}}
             </div>
           </div>
         </div>

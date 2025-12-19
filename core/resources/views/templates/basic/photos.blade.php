@@ -3,68 +3,106 @@
 <div class="page-wrapper">
     <section class="section aside-section">
       <div class="container-default w-container">
-        <div class="w-layout-grid grid-2-columns aside-left">
-          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
+        <div class="w-layout-grid">
+          {{-- <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
             <div class="inner-container _222px _100---tablet" style="height: 100%">
-              <div id="accordion">
+                <div id="accordion">
                 <h3>Type</h3>
                 <div>
-                  <div role="list"  class="grid-1-column gap-row-24px w-dyn-items">
-                    <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem"  class="collection-item w-dyn-item">
-                      <a href="{{ route('photos') }}"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
-                        <div class="flex-horizontal start gap-8px">
-                          <img src="{{ asset('assets\images\app_images\camera.svg') }}"  alt="Photography" class="image category-dropdown-link---icon" />
-                          <div  class="text-100 medium color-neutral-700">
-                            Photos
-                          </div>
+                    <div role="list"  class="grid-1-column gap-row-24px w-dyn-items">
+                        <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1" role="listitem"  class="collection-item w-dyn-item">
+                            <a href="{{ route('photos') }}"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
+                            <div class="flex-horizontal start gap-8px">
+                                <img src="{{ asset('assets\images\app_images\camera.svg') }}"  alt="Photography" class="image category-dropdown-link---icon" />
+                                <div  class="text-100 medium color-neutral-700">
+                                Photos
+                                </div>
+                            </div>
+                            </a>
                         </div>
-                      </a>
-                    </div>
-                    <div id="{{ route('vectors') }}" role="listitem" class="collection-item w-dyn-item">
-                      <a href="{{ route('vectors') }}" class="category-dropdown-link w-inline-block" tabindex="0">
-                        <div class="flex-horizontal start gap-8px">
-                          <img src="{{ asset('assets\images\app_images\vector.svg') }}" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
-                          <div class="text-100 medium color-neutral-700">
-                            Vectors &amp; graphics
-                          </div>
+                        <div id="{{ route('vectors') }}" role="listitem" class="collection-item w-dyn-item">
+                            <a href="{{ route('vectors') }}" class="category-dropdown-link w-inline-block" tabindex="0">
+                            <div class="flex-horizontal start gap-8px">
+                                <img src="{{ asset('assets\images\app_images\vector.svg') }}" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
+                                <div class="text-100 medium color-neutral-700">
+                                Vectors &amp; graphics
+                                </div>
+                            </div>
+                            </a>
                         </div>
-                      </a>
-                    </div>
-                    <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1"  role="listitem" class="collection-item w-dyn-item">
-                      <a href="{{ route('videos') }}" class="category-dropdown-link w-inline-block" tabindex="0">
-                        <div class="flex-horizontal start gap-8px">
-                          <img src="{{ asset('assets\images\app_images\video.svg') }}" alt="Videos" class="image category-dropdown-link---icon" />
-                          <div class="text-100 medium color-neutral-700">
-                            Videos
-                          </div>
+                        <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337636-32b2f9c1"  role="listitem" class="collection-item w-dyn-item">
+                            <a href="{{ route('videos') }}" class="category-dropdown-link w-inline-block" tabindex="0">
+                            <div class="flex-horizontal start gap-8px">
+                                <img src="{{ asset('assets\images\app_images\video.svg') }}" alt="Videos" class="image category-dropdown-link---icon" />
+                                <div class="text-100 medium color-neutral-700">
+                                Videos
+                                </div>
+                            </div>
+                            </a>
                         </div>
-                      </a>
                     </div>
-                  </div>
                 </div>
                 <h3 style="margin-top: 10px;">Category</h3>
                 <div>
-                  @if ($categories->count())
+                    @if ($categories->count())
                     <div>
-                      @foreach ($categories as $category)
-                      <div class="categoryFilter">
+                        @foreach ($categories as $category)
+                        <div class="categoryFilter">
                         <a href="{{ route('photos', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }}</a>
-                      </div>
-                      @endforeach
+                        </div>
+                        @endforeach
                     </div>
-                  @endif
+                    @endif
                 </div>
-              </div>
+                </div>
 
-            @php
-             echo getAds('300x1050', 'photo', 1);
-             echo getAds('250x250', 'photo', 1);
-             echo getAds('160x600', 'photo', 1);
-            @endphp
-
+                @php
+                echo getAds('300x1050', 'photo', 1);
+                echo getAds('250x250', 'photo', 1);
+                echo getAds('160x600', 'photo', 1);
+                @endphp
             </div>
-          </div>
-          <div class="aside-content-rigth">
+          </div> --}}
+          <div class="aside-content-rigth" style="display: inline-block !important;">
+            <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
+                <div>
+                    <div class="flex-horizontal start gap-8px">
+                        <div  class="text-100 medium color-neutral-700">
+                            Type
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <a href="{{ route('photos') }}"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
+                        <div class="flex-horizontal start gap-8px">
+                            <img src="{{ asset('assets\images\app_images\camera.svg') }}"  alt="Photography" class="image category-dropdown-link---icon" />
+                            <div  class="text-100 medium color-neutral-700">
+                                Photos
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ route('vectors') }}" class="category-dropdown-link w-inline-block" tabindex="0">
+                        <div class="flex-horizontal start gap-8px">
+                            <img src="{{ asset('assets\images\app_images\vector.svg') }}" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
+                            <div class="text-100 medium color-neutral-700">
+                                Vectors &amp; graphics
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div>
+                    <a href="{{ route('videos') }}" class="category-dropdown-link w-inline-block" tabindex="0">
+                        <div class="flex-horizontal start gap-8px">
+                            <img src="{{ asset('assets\images\app_images\video.svg') }}" alt="Videos" class="image category-dropdown-link---icon" />
+                            <div class="text-100 medium color-neutral-700">
+                                Videos
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
             @php
                 $photos_setting = json_decode(gs()->photos_setting);
                 if($photos_setting){
@@ -96,93 +134,57 @@
               <h2>@lang('Category') @lang('-') {{$thisCategory->name}}</h2>
               <p>{{$thisCategory->paragraph}}</p>
               @endif
-              <div class="grid">
-                <div class="grid-sizer"></div>
-                @foreach($images as $image)
-                    @php
-                        $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
-                    @endphp
-                    <div class="grid-item1 {{ $image->imageOrientation }}">
-                      <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
-                        <img src="{{ $imageUrl }}">
-                        <div class="resource-card---video-button w-condition-invisible">
-                          
-                        </div>
-                        <div class="resource-card-content v2">
-                          <div class="text-200 color-neutral-100 mg-bottom-24px">
-                            #{{$image->track_id}}
-                          </div>
-                          <div class="mg-top-auto">
-                            <div class="flex-horizontal space-between gap-16px">
-                              <div  class="flex-horizontal start gap-12px flex-wrap">
-                                <div class="avatar-circle _02">
-                                  <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
-                                </div>
-                                <div>
-                                  <div class="heading-h6-size color-neutral-100">
-                                    {{$image->user->firstname}}
-                                  </div>
-                                  <div class="text-50 color-neutral-300">
-                                    {{date('d-M-Y', strtotime($image->upload_date))}}
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="resource-card-arrow">
-                                <div class="line-square-icon"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
+              
+            <div class="row" style="margin-bottom: 20px;">
+                @if ($categories->count())
+                    @foreach ($categories as $category)
+                    <div class="col-3 categoryFilter" style="margin-bottom: 5px;">
+                        <a href="{{ route('photos', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }} | </a>
                     </div>
-                @endforeach
-              </div>
-
-              {{-- <div style="opacity: 1"  class="grid">
+                    @endforeach
+                @endif
+            </div>
+            <div class="grid">
                 <div class="grid-sizer"></div>
-                  @foreach($images as $image)
-                  @php
-                      $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
-                  @endphp
-                  <div role="listitem" class="grid-item1">
-                    <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
-                      <div class="image-wrapper">
-                        <img alt="Image"  class="gallery__img lazy-loading-img" data-image_src="{{ $imageUrl }}" src="{{ $defaultImage }}" style="transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)  rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d; " />
-                      </div>
-                      <div class="resource-card---video-button w-condition-invisible">
-                       
-                      </div>
-                      <div class="resource-card-content v2">
-                        <div class="text-200 color-neutral-100 mg-bottom-24px">
-                          #{{$image->track_id}}
-                        </div>
-                        <div class="mg-top-auto">
-                          <div class="flex-horizontal space-between gap-16px">
-                            <div  class="flex-horizontal start gap-12px flex-wrap">
-                              <div class="avatar-circle _02">
-                                <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
-                              </div>
-                              <div>
-                                <div class="heading-h6-size color-neutral-100">
-                                  {{$image->user->firstname}}
-                                </div>
-                                <div class="text-50 color-neutral-300">
-                                  {{date('d-M-Y', strtotime($image->upload_date))}}
-                                </div>
-                              </div>
+                    @foreach($images as $image)
+                        @php
+                            $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
+                        @endphp
+                        <div class="grid-item1 {{ $image->imageOrientation }}">
+                            <a  href="{{ route('image.detail', [slug($image->title), $image->id]) }}" class="resource-card-wrapper w-inline-block">
+                            <img src="{{ $imageUrl }}">
+                            <div class="resource-card---video-button w-condition-invisible">
+                                
                             </div>
-                            <div class="resource-card-arrow">
-                              <div class="line-square-icon"></div>
+                            <div class="resource-card-content v2">
+                                <div class="text-200 color-neutral-100 mg-bottom-24px">
+                                #{{$image->track_id}}
+                                </div>
+                                <div class="mg-top-auto">
+                                <div class="flex-horizontal space-between gap-16px">
+                                    <div  class="flex-horizontal start gap-12px flex-wrap">
+                                    <div class="avatar-circle _02">
+                                        <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
+                                    </div>
+                                    <div>
+                                        <div class="heading-h6-size color-neutral-100">
+                                        {{$image->user->firstname}}
+                                        </div>
+                                        <div class="text-50 color-neutral-300">
+                                        {{date('d-M-Y', strtotime($image->upload_date))}}
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="resource-card-arrow">
+                                    <div class="line-square-icon"></div>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
-                          </div>
+                            </a>
                         </div>
-                      </div>
-                    </a>
-                  </div>
-                  @endforeach
-             
-                <div role="navigation"  aria-label="List" class="w-pagination-wrapper pagination-wrapper"></div>
-              </div> --}}
+                    @endforeach
+                </div>
             </div>
           </div>
         </div>
@@ -198,6 +200,30 @@
 @endsection
 
 <style>
+/* Base row class: creates a flex container */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+/* Base column class (mimics col-md-3) */
+.col-md-3 {
+    flex: 0 0 25%;  /* 3 out of 12 columns = 25% width */
+    max-width: 25%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Responsive support (only apply col-md-3 at >=768px like Bootstrap) */
+@media (max-width: 767.98px) {
+    .col-md-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
  .categoryFilter{
     margin-left: 5px;
  } 

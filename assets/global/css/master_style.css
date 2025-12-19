@@ -2263,7 +2263,7 @@ textarea.w-select {
     grid-row-gap: 16px;
     grid-column-gap: 16px;
     grid-template-rows: auto auto;
-    grid-template-columns: 1fr 1fr;
+    /* grid-template-columns: 1fr 1fr; */
     grid-auto-columns: 1fr;
     display: grid;
 }
@@ -7691,7 +7691,7 @@ figcaption {
 }
 
 .aside-content-rigth {
-    border-left: 1px solid var(--neutral--300);
+    /* border-left: 1px solid var(--neutral--300); */
     justify-content: flex-end;
     padding-top: 50px;
     padding-left: 20px;
