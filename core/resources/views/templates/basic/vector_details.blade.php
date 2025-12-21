@@ -70,86 +70,91 @@
                         <div class="product-page-main-content---top">
                             <h1 class="display-3 mg-bottom-4px">{{ __($vector->title) }}</h1>
                             <p class="mg-bottom-0" style="word-wrap: break-word;">@php echo $vector->description; @endphp</p>
+                            <div style="margin-bottom:10px;">
+                                <span style="color:blue; text-decoration:underline; cursor:pointer;" id="checkPricingBtn">Check Pricing</span>
+                                <p class="mg-bottom-0" style="word-wrap: break-word;">Buy individual, Package plan or One-time Buy-out with copyright.</p>
+                            </div>
                         </div>
                         <div class="product-page-main-content---bottom">
                             <div class="mg-bottom-24px keep">
-                                <div class="flex-horizontal start flex-wrap">
+                                <div class="flex-horizontal center flex-wrap">
 
                                 @foreach ($imageFiles as $key => $imageFile)
-                                @php
-                                    if(auth()->user()){
-                                        $user = auth()->user()->load('purchasedPlan.plan', 'downloads');
-                                        if($user->purchasedPlan){
-                                            $availableDownload = $user->purchasedPlan->daily_limit - $user->downloads()->whereDate('created_at', now())->count();
+                                    @php
+                                        if(auth()->user()){
+                                            $user = auth()->user()->load('purchasedPlan.plan', 'downloads');
+                                            if($user->purchasedPlan){
+                                                $availableDownload = $user->purchasedPlan->daily_limit - $user->downloads()->whereDate('created_at', now())->count();
+                                            }else{
+                                                $availableDownload=0;
+                                            }
                                         }else{
-                                            $availableDownload=0;
+                                            $user = [];
+                                            $availableDownload = 0;
                                         }
-                                    }else{
-                                        $user = [];
-                                        $availableDownload = 0;
-                                    }
- 
-                                    if (auth()->user() && $user->purchasedPlan && $imageFile->exclued_package == "no") {
-                                        $downloadActionClass = 'downloadByPlan';
-                                    }else{
-                                        $downloadActionClass = 'downloadByPayment';
-                                    }
-                                @endphp
-
+    
+                                        if (auth()->user() && $user->purchasedPlan && $imageFile->exclued_package == "no") {
+                                            $downloadActionClass = 'downloadByPlan';
+                                        }else{
+                                            $downloadActionClass = 'downloadByPayment';
+                                        }
+                                    @endphp
                                     @if($imageFile->price != 0  && $imageFile->ex_price != 0)
                                         @for($i=0; $i < 2; $i++)
-                                        <div class="spanDiv">
-                                            @if($i == 0)
-                                                <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
-                                            @else
-                                                <span class="download-span">{{ showAmount($imageFile->ex_price) }} {{ __($general->cur_text) }} </span>
-                                            @endif
+                                            <div class="priceDetailsDiv" style="display:flex; align-items: center;">
+                                                <div class="form-group" style="margin-right:8px;">
+                                                     @if($i == 0)
+                                                        @if(auth()->user() && $user->purchasedPlan && $user->purchasedPlan->plan->plan_for == 'photo' && $imageFile->exclued_package == "no" && $availableDownload > 0)
+                                                            <a href="{{ route('user.image.download.file', ['id'=>$imageFile->id, 'type'=>'standard']) }}" class="download-span" style="text-decoration: none;">
+                                                                Download 
+                                                            </a>
+                                                        @else
+                                                            <input type="radio" class="form-check-input radioCheck" name="type" value="{{$i}}" data-class="{{ $downloadActionClass }}" data-type="standard" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')">
+                                                        @endif
+                                                    @else
+                                                        <input type="radio" class="form-check-input radioCheck" name="type" value="{{$i}}" data-class="downloadByPayment" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')">
+                                                    @endif
+                                                </div>
+                                                <div class="spanDiv">
+                                                    @if($i == 0)
+                                                        <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
+                                                    @else
+                                                        <span class="download-span">{{ showAmount($imageFile->ex_price) }} {{ __($general->cur_text) }} </span>
+                                                    @endif
 
-                                            <span class="download-span">|<span>
-                                            <span class="download-span">{{ $imageFile->resolution }}</span>
-                                            <span class="download-span">|<span>
+                                                    <span class="download-span">|<span>
+                                                    <span class="download-span">{{ $imageFile->resolution }}</span>
+                                                    <span class="download-span">|<span>
 
-                                            @if($i == 0)
-                                                <span class="download-span">Standard License<span>
-                                            @else
-                                                <span class="download-span">Extended License<span>
-                                            @endif
+                                                    @if($i == 0)
+                                                        <span class="download-span">Standard License<span>
+                                                    @else
+                                                        <span class="download-span">Extended License<span>
+                                                    @endif
 
-                                            <span class="download-span">|<span>
+                                                    {{-- <span class="download-span">|<span>
+                                                    @if($i == 0)
+                                                        @if(auth()->user() && $user->purchasedPlan && $user->purchasedPlan->plan->plan_for == 'photo' && $imageFile->exclued_package == "no" && $availableDownload > 0)
+                                                            <a href="{{ route('user.image.download.file', ['id'=>$imageFile->id, 'type'=>'standard']) }}" class="download-span" style="text-decoration: none;">
+                                                                Download
+                                                            </a>
+                                                        @else
+                                                            <span class="buyBtn download-span {{ $downloadActionClass }}" data-type="standard" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                                Buy
+                                                            </span>
+                                                        @endif
+                                                    @else
+                                                        <span class="buyBtn download-span downloadByPayment" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
+                                                            Buy
+                                                        </span>
+                                                    @endif --}}
 
-                                            @if($i == 0)
-                                                @if(auth()->user() && $user->purchasedPlan && $user->purchasedPlan->plan->plan_for == 'photo' && $imageFile->exclued_package == "no" && $availableDownload > 0)
-                                                {{-- @if(auth()->user() && $user->alredyDownload($imageFile->id, "standard") == "yes") --}}
-                                                    <a href="{{ route('user.image.download.file', ['id'=>$imageFile->id, 'type'=>'standard']) }}" class="download-span" style="text-decoration: none;">
-                                                        Download
-                                                    </a>
-                                                @else
-                                                    <span class="buyBtn download-span {{ $downloadActionClass }}" data-type="standard" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
-                                                        Buy
-                                                    </span>
-                                                @endif
-                                            @else
-                                                <span class="buyBtn download-span downloadByPayment" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
-                                                    Buy
-                                                </span>
-                                                {{-- @if(auth()->user() && $user->purchasedPlan && $imageFile->exclued_package == "no")
-                                                @if(auth()->user() && $user->alredyDownload($imageFile->id, "extended") == "yes")
-                                                    <a href="{{ route('user.image.download.file', $imageFile->id) }}" class="download-span" style="text-decoration: none;">
-                                                        Download
-                                                    </a>
-                                                @else
-                                                    <span class="download-span {{ $downloadActionClass }}" data-type="extended" data-file="{{$imageFile->id}}" @if($user != [] && $user->purchasedPlan && $imageFile->exclued_package == "no") data-action="{{ route('image.download', encrypt($imageFile->id)) }}" @else data-action="{{ route('user.purchase.image') }}" @endif data-question="@lang('Are you sure to download of this file ?')" style="cursor: pointer;">
-                                                        Buy
-                                                    </span>
-                                                @endif --}}
-                                            @endif
-
-                                            @if($imageFile->exclued_package == "yes")
-                                            <span style="color: red;">Note* : Can't download through package</span>
-                                            @endif
-                                        </div>
+                                                    @if($imageFile->exclued_package == "yes")
+                                                    <span style="color: red;">Note* : Can't download through package</span>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         @endfor
-
                                     @else
                                     <div class="spanDiv confirmationBtn">
                                         <span class="download-span">{{ showAmount($imageFile->price) }} {{ __($general->cur_text) }} </span>
@@ -171,6 +176,7 @@
                                     @endif
 
                                 @endforeach
+                                <span class="buyBtn download-span singleBuyButton" style="cursor: pointer;"> Buy </span>
                                 </div>
                             </div>
                             <div class="add-cart">
@@ -322,8 +328,60 @@
     @include($activeTemplate . 'partials.collection_modal')
     @include($activeTemplate . 'partials.share_modal')
     @include($activeTemplate . 'partials.login_modal')
+    @include($activeTemplate . 'partials.pricing_modal')
 @endsection
+@push('modal')
+    <!--  Purchase Modal  -->
+    <div class="modal custom--modal fade" id="purchaseModal" aria-hidden="true" aria-labelledby="title" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title">@lang('Purchase Plan')</h5>
+                    <button class="btn-close" data-bs-dismiss="modal" type="button" aria-label="Close"><b>X</b></button>
+                </div>
+                @auth
+                    <form action="{{ route('user.plan.purchase') }}" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <input name="period" type="hidden">
+                            <input name="plan" type="hidden">
+                            <div class="row gy-3">
 
+                                <h6 class="text-danger already_purchased text-center">
+                                    @lang('You already purchased this plan')
+                                </h6>
+
+                                <p class="plan-info text-center">@lang('By purchasing') <span class="fw-bold plan_name"></span> @lang(' plan, you will get') <span class="daily_limit fw-bold"></span> <span class="fw-bold plan_type"> </span>@lang('. No limit per day download. You can download all one day or at different times.')</p>
+                                {{-- <input type="hidden" name="payment_type" value="direct"> --}}
+                                <div class="form-group payment-info">
+                                    <label class="form-label required" for="payment_type">@lang('Payment Type')</label>
+                                    <div class="form--select">
+                                        <select class="form-select" id="payment_type" name="payment_type" required readonly>
+                                            <option value="direct" selected>@lang('Credit Card Or Paypal')</option>
+                                            {{-- <option value="wallet">@lang('From Wallet')</option> --}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="buyNowButton planSubmitConfirm" type="submit">@lang('Buy Now') <span class="plan_id"></span> </button>
+                            <button class="loginBtn closeButton" data-bs-dismiss="modal" type="button">@lang('Close')</button>
+
+                        </div>
+                    </form>
+                @else
+                    <div class="modal-body">
+                        <h4 style="text-align: center">@lang('Please login first to buy a plan')</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="loginBtn" href="{{ route('user.login') }}">Login</a>
+                    </div>
+                @endauth
+            </div>
+        </div>
+    </div>
+@endpush
 
 @push('style')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
@@ -402,6 +460,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flexslider/2.7.2/jquery.flexslider-min.js" integrity="sha512-BmoWLYENsSaAfQfHszJM7cLiy9Ml4I0n1YtBQKfx8PaYpZ3SoTXfj3YiDNn0GAdveOCNbK8WqQQYaSb0CMjTHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 
+    $(document).ready(function(){
+        $('#checkPricingBtn').on('click', function(){
+           let modal = new bootstrap.Modal(document.getElementById('pricingModal'));
+           modal.show();
+        });
+
+        $('.radioCheck').on('click', function(){
+            let data        = $(this).data();
+            let action      = data.action;
+            let className   = data.class;
+            let file        = data.file;
+            let question    = data.question;
+            let type        = data.type;
+            
+            //set data attribues on button 
+            let button  = $('.singleBuyButton');
+            button.addClass(className);
+            button.data('action', action);
+            button.data('file', file);
+            button.data('question', question);
+            button.data('type', type);
+        });
+    });
+
     $('#carousel').flexslider({
         animation: "slide",
         controlNav: false,
@@ -447,4 +529,116 @@
 	});
 	//lazy loading image end
 </script>
+@endpush
+
+@push('style')
+    <style>
+
+        .buyButton {
+            background: url("/core/public/assets/image/buttons/buy button black.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 12px 70px;
+            color: transparent;
+        }
+
+        .buyButton:hover {
+            background: url("/core/public/assets/image/buttons/buy button green.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 12px 70px;
+            color: transparent;
+        }
+
+        .buyNowButton {
+            background: url("/core/public/assets/image/buttons/buy package black.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 8px 40px;
+            color: transparent;
+        }
+
+        .buyNowButton:hover {
+            background: url("/core/public/assets/image/buttons/buy package green.png") no-repeat;
+            background-size: 100% 100%;
+            padding: 8px 40px;
+            color: transparent;
+        }
+
+        .loginBtn{
+            padding: 2px 12px;
+            border-radius: 20px;
+            border: 2px solid;
+            text-decoration: none;
+        }
+
+        .form--select .form-select {
+            height: 45px;
+            border-radius: 3px;
+            padding-right: 46px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid;
+            background: hsl(var(--light)/0.3);
+            color: hsl(var(--heading));
+        }
+        .form-select {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+            -moz-padding-start: calc(0.75rem - 3px);
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e);
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+    </style>
+@endpush
+
+@push('script')
+<script src="{{ asset('assets/global/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        (function($) {
+            "use strict";
+
+            $(document).on('click', '.purchase-btn',function() {
+                //hide pricing modal
+                let pricingModal = bootstrap.Modal.getInstance(document.getElementById('pricingModal'));
+                pricingModal.hide();
+                
+                let plan = $(this).data();
+                let plan_id = plan.id;
+                // let period = $('[name=plan_period]').val();
+                let period = 'yearly';
+                let modal = $('#purchaseModal');
+
+                modal.find('[name=plan]').val(plan.id);
+                modal.find('[name=period]').val(period);
+
+                modal.find('.plan_name').text(plan.plan_name);
+                modal.find('.plan_type').text(plan.plan_type);
+                modal.find('.daily_limit').text(plan.daily_limit);
+                modal.find('.monthly_limit').text(plan.monthly_limit);
+
+
+                $('.already_purchased, .closeButton').css({ 'display': 'none', });
+                $('.payment-info,.plan-info,.planSubmitConfirm').css({ 'display': '', });
+
+                let isCurrent = $(this).data('current');
+                if (isCurrent) {
+                    $('.already_purchased,.closeButton').css({ 'display': '', });
+                    $('.payment-info,.plan-info, .planSubmitConfirm').css({ 'display': 'none', });
+                }
+                modal.modal('show');
+            });
+
+        })(jQuery);
+    </script>
 @endpush

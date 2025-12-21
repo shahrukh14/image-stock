@@ -374,7 +374,7 @@ class SiteController extends Controller
 
     public function imageDetail($slug, $id)
     {
-        $image = Image::hasActiveFiles()->with(['user'])->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
+        $image = Image::hasActiveFiles()->with(['user', 'user.purchasedPlan', 'user.downloads'])->withSum('files as totalDownloads', 'total_downloads')->findOrFail($id);
 
         abort_if($image->status != Status::ENABLE && @auth()->user()->id != @$image->user_id, 404);
 
@@ -394,7 +394,8 @@ class SiteController extends Controller
         $user = auth()->user();
         $alreadyDownloaded = false;
         $categoryIds = $image->category_id;
-        $relatedImages = Image::where('id', '!=', $image->id)
+        $relatedImages = Image::with(['user', 'likes', 'files','user.purchasedPlan', 'user.downloads'])
+                                ->where('id', '!=', $image->id)
                                 ->approved()
                                 ->where('file_type', 'photo')
                                 ->where(function ($query) use ($categoryIds) {
@@ -402,7 +403,6 @@ class SiteController extends Controller
                                         $query->orWhereJsonContains('category_id', $categoryId);
                                     }
                                 })
-                                ->with('user', 'likes', 'files')
                                 ->orderBy('id', 'DESC')
                                 ->limit(8)
                                 ->get();
@@ -413,7 +413,8 @@ class SiteController extends Controller
                 $gate->where('status', Status::ENABLE);
             })->with('method')->orderby('method_code')->get();
         }
-        return view($this->activeTemplate . 'image_details', compact('pageTitle', 'image', 'relatedImages', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency'));
+        $plans = Plan::active()->orderBy('id', 'DESC')->get();
+        return view($this->activeTemplate . 'image_details', compact('pageTitle', 'image', 'relatedImages', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency','plans'));
     }
 
     public function vectorDetail($slug, $id){
@@ -457,7 +458,8 @@ class SiteController extends Controller
                 $gate->where('status', Status::ENABLE);
             })->with('method')->orderby('method_code')->get();
         }
-        return view($this->activeTemplate . 'vector_details', compact('pageTitle', 'vector', 'relatedVectors', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency'));
+        $plans = Plan::active()->orderBy('id', 'DESC')->get();
+        return view($this->activeTemplate . 'vector_details', compact('pageTitle', 'vector', 'relatedVectors', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency','plans'));
     }
 
     public function memberFollowers($username)
@@ -916,8 +918,8 @@ class SiteController extends Controller
             $firstParam = isset($queryParams['v']) ? $queryParams['v'] : '';
         }
         $video_url = "https://www.youtube.com/embed/".$firstParam;
-
-        return view($this->activeTemplate . 'video_details', compact('pageTitle', 'video', 'relatedVideos', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency','video_url'));
+        $plans = Plan::active()->orderBy('id', 'DESC')->get();
+        return view($this->activeTemplate . 'video_details', compact('pageTitle', 'video', 'relatedVideos', 'seoContents', 'alreadyDownloaded', 'imageFiles', 'gatewayCurrency','video_url','plans'));
     }
 
     public function search(Request $request, $category=null, $value=null){

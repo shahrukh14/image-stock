@@ -66,19 +66,10 @@
           <div class="aside-content-rigth" style="display: inline-block !important;">
             <div class="d-flex justify-content-between" style="margin-bottom: 20px;">
                 <div>
-                    <div class="flex-horizontal start gap-8px">
-                        <div  class="text-100 medium color-neutral-700">
-                            Type
-                        </div>
-                    </div>
-                </div>
-                <div>
                     <a href="{{ route('photos') }}"  aria-current="page" class="category-dropdown-link w-inline-block w--current"  tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                             <img src="{{ asset('assets\images\app_images\camera.svg') }}"  alt="Photography" class="image category-dropdown-link---icon" />
-                            <div  class="text-100 medium color-neutral-700">
-                                Photos
-                            </div>
+                            <div  class="text-100 medium color-neutral-700 mediaType">Photos</div>
                         </div>
                     </a>
                 </div>
@@ -86,9 +77,7 @@
                     <a href="{{ route('vectors') }}" class="category-dropdown-link w-inline-block" tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                             <img src="{{ asset('assets\images\app_images\vector.svg') }}" alt="Vectors &amp; graphics" class="image category-dropdown-link---icon" />
-                            <div class="text-100 medium color-neutral-700">
-                                Vectors &amp; graphics
-                            </div>
+                            <div class="text-100 medium color-neutral-700 mediaType">Vectors &amp; graphics</div>
                         </div>
                     </a>
                 </div>
@@ -96,9 +85,7 @@
                     <a href="{{ route('videos') }}" class="category-dropdown-link w-inline-block" tabindex="0">
                         <div class="flex-horizontal start gap-8px">
                             <img src="{{ asset('assets\images\app_images\video.svg') }}" alt="Videos" class="image category-dropdown-link---icon" />
-                            <div class="text-100 medium color-neutral-700">
-                                Videos
-                            </div>
+                            <div class="text-100 medium color-neutral-700 mediaType">Videos</div>
                         </div>
                     </a>
                 </div>
@@ -111,7 +98,8 @@
                     $photos_setting_image = "photos_default_banner.jpg";
                 }
             @endphp
-            <div class="inner-container _981px width-100">
+            {{-- <div class="inner-container _981px width-100"> --}}
+            <div class="width-100">
               <div class="mg-bottom-80px">
                 <div style=" background-image: url({{ asset('core/public/assets/image/photos_setting/'.$photos_setting_image)}});  transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1;  transform-style: preserve-3d; " class="category-banner">
                   <div class="inner-container _635px center">
@@ -224,14 +212,15 @@
     }
 }
 
- .categoryFilter{
+.categoryFilter{
     margin-left: 5px;
- } 
- .categoryFilter :hover{
-   margin-left: 10px;
-   color: #689F38 !important;
-   font-size: 110%;
- } 
+} 
+.categoryFilter :hover{
+    margin-left: 10px;
+    color: #689F38 !important;
+    font-size: 110%;
+}
+ 
 .ui-accordion-content.ui-corner-bottom {
     height: auto !important;
 }

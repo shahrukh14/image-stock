@@ -7782,6 +7782,11 @@ figcaption {
     transform: translate3d(4px, 0, 0.01px);
 }
 
+.category-dropdown-link:hover .mediaType {
+    color: #689F38;
+    font-size: 105%;
+}
+
 .resource-color-dot {
     max-height: 15px;
     max-width: 15px;

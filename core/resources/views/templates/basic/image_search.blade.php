@@ -13,8 +13,8 @@
 <div class="page-wrapper">
     <section class="section aside-section">
       <div class="container-default w-container">
-        <div class="w-layout-grid grid-2-columns aside-left">
-          <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
+        <div class="w-layout-grid">
+          {{-- <div id="w-node-ad5e1ca4-4b39-0db6-83c4-ea1be7337629-32b2f9c1" style="transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); opacity: 1; transform-style: preserve-3d;"  class="aside-content-left h-300vh">
             <div class="inner-container _222px _100---tablet" style="height: 100%">
               <div id="accordion">
                 <h3>Type</h3>
@@ -52,8 +52,6 @@
                     </div>
                   </div>
                 </div>
-
-                {{-- Category Filter start --}}
                 <h3 style="margin-top: 10px;">Category</h3>
                 <div>
                   @if ($categories->count())
@@ -75,87 +73,100 @@
             @endphp
 
             </div>
-          </div>
-          <div class="aside-content-rigth">
-            @php
-                $photos_setting = json_decode(gs()->photos_setting);
-                if($photos_setting){
-                    $photos_setting_image = $photos_setting->image;
-                }else{
-                    $photos_setting_image = "photos_default_banner.jpg";
-                }
-            @endphp
-              @php
-                  $defaultImageContent = getContent('default_images.content', true);
-                  $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
-              @endphp
-              <div class="grid">
-                <div class="grid-sizer"></div>
-                @foreach($images as $image)
-                    @php
-                        $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
-                        if($image->file_type == 'photo'){
-                          $detailPageUrl = route('image.detail', [slug($image->title), $image->id]);
-                        }else if($image->file_type == 'vector'){
-                          $detailPageUrl = route('vector.detail', [slug($image->title), $image->id]);
-                        }else{
-                          $detailPageUrl = route('video.detail', [slug($image->title), $image->id]);
-                        }
-                    @endphp
-                    <div class="grid-item1 {{ $image->imageOrientation }}">
-                      <a  href="{{ $detailPageUrl }}" class="resource-card-wrapper w-inline-block">
-                        
-                        @if($image->file_type == 'video')
-                          @php
-                            $url = $image->video_url;
-                            $firstParam = '';
-                            if (strpos($url, 'youtu.be') !== false) {
-                                // For 'youtu.be' URLs
-                                $parts = explode('/', $url);
-                                $firstParam = end($parts);
-                            } else if (strpos($url, 'youtube.com') !== false) {
-                                // For 'youtube.com' URLs
-                                $query = parse_url($url, PHP_URL_QUERY);
-                                parse_str($query, $queryParams);
-                                $firstParam = isset($queryParams['v']) ? $queryParams['v'] : '';
-                            }
-                            $video_url = "https://www.youtube.com/embed/".$firstParam;
-                          @endphp
-                          <object data="{{$video_url}}" height="250"></object>
-                        @else
-                          <img src="{{ $imageUrl }}">
-                        @endif
-                        <div class="resource-card---video-button w-condition-invisible">
+          </div> --}}
+          <div class="aside-content-rigth" style="display: inline-block !important;">
+            <div class="width-100">
+                @php
+                    $photos_setting = json_decode(gs()->photos_setting);
+                    if($photos_setting){
+                        $photos_setting_image = $photos_setting->image;
+                    }else{
+                        $photos_setting_image = "photos_default_banner.jpg";
+                    }
+                @endphp
+                @php
+                    $defaultImageContent = getContent('default_images.content', true);
+                    $defaultImage = getImage('assets/images/frontend/default_images/' . @$defaultImageContent->data_values->loading_image);
+                @endphp
+
+                <div class="row" style="margin-bottom: 20px;">
+                  @if ($categories->count())
+                      @foreach ($categories as $category)
+                      <div class="col-3 categoryFilter" style="margin-bottom: 5px;">
+                          <a href="{{ route('photos', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }} | </a>
+                      </div>
+                      @endforeach
+                  @endif
+                </div>
+
+                <div class="grid">
+                  <div class="grid-sizer"></div>
+                  @foreach($images as $image)
+                      @php
+                          $imageUrl = imageUrl(getFilePath('stockImage'), $image->thumb);
+                          if($image->file_type == 'photo'){
+                            $detailPageUrl = route('image.detail', [slug($image->title), $image->id]);
+                          }else if($image->file_type == 'vector'){
+                            $detailPageUrl = route('vector.detail', [slug($image->title), $image->id]);
+                          }else{
+                            $detailPageUrl = route('video.detail', [slug($image->title), $image->id]);
+                          }
+                      @endphp
+                      <div class="grid-item1 {{ $image->imageOrientation }}">
+                        <a  href="{{ $detailPageUrl }}" class="resource-card-wrapper w-inline-block">
                           
-                        </div>
-                        <div class="resource-card-content v2">
-                          <div class="text-200 color-neutral-100 mg-bottom-24px">
-                            #{{$image->track_id}}
+                          @if($image->file_type == 'video')
+                            @php
+                              $url = $image->video_url;
+                              $firstParam = '';
+                              if (strpos($url, 'youtu.be') !== false) {
+                                  // For 'youtu.be' URLs
+                                  $parts = explode('/', $url);
+                                  $firstParam = end($parts);
+                              } else if (strpos($url, 'youtube.com') !== false) {
+                                  // For 'youtube.com' URLs
+                                  $query = parse_url($url, PHP_URL_QUERY);
+                                  parse_str($query, $queryParams);
+                                  $firstParam = isset($queryParams['v']) ? $queryParams['v'] : '';
+                              }
+                              $video_url = "https://www.youtube.com/embed/".$firstParam;
+                            @endphp
+                            <object data="{{$video_url}}" height="250"></object>
+                          @else
+                            <img src="{{ $imageUrl }}">
+                          @endif
+                          <div class="resource-card---video-button w-condition-invisible">
+                            
                           </div>
-                          <div class="mg-top-auto">
-                            <div class="flex-horizontal space-between gap-16px">
-                              <div  class="flex-horizontal start gap-12px flex-wrap">
-                                <div class="avatar-circle _02">
-                                  <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
-                                </div>
-                                <div>
-                                  <div class="heading-h6-size color-neutral-100">
-                                    {{$image->user->firstname}}
+                          <div class="resource-card-content v2">
+                            <div class="text-200 color-neutral-100 mg-bottom-24px">
+                              #{{$image->track_id}}
+                            </div>
+                            <div class="mg-top-auto">
+                              <div class="flex-horizontal space-between gap-16px">
+                                <div  class="flex-horizontal start gap-12px flex-wrap">
+                                  <div class="avatar-circle _02">
+                                    <img src="{{ getImage(getFilePath('userProfile') . '/' . $image->user->image, null, 'user') }}" alt="{{$image->user->firstname}}" />
                                   </div>
-                                  <div class="text-50 color-neutral-300">
-                                    {{date('d-M-Y', strtotime($image->upload_date))}}
+                                  <div>
+                                    <div class="heading-h6-size color-neutral-100">
+                                      {{$image->user->firstname}}
+                                    </div>
+                                    <div class="text-50 color-neutral-300">
+                                      {{date('d-M-Y', strtotime($image->upload_date))}}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div class="resource-card-arrow">
-                                <div class="line-square-icon"></div>
+                                <div class="resource-card-arrow">
+                                  <div class="line-square-icon"></div>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </a>
-                    </div>
-                @endforeach
+                        </a>
+                      </div>
+                  @endforeach
+                </div>
               </div>
             </div>
           </div>
@@ -170,6 +181,13 @@
 @endsection
 
 <style>
+  /* Base row class: creates a flex container */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
 span.search-param {
     margin-left: 5px;
     cursor: pointer;
@@ -189,6 +207,15 @@ nav.d-flex.justify-items-center.justify-content-between .d-flex.justify-content-
       border: 2px solid;
       text-decoration: none;
   }
+
+.categoryFilter{
+  margin-left: 5px;
+} 
+.categoryFilter :hover{
+  margin-left: 10px;
+  color: #689F38 !important;
+  font-size: 110%;
+} 
 
 .btn-btn{
   text-decoration: none;
