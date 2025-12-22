@@ -220,7 +220,7 @@
       </div>
       @if (count($vectors) > 0)
       <div style="margin-top: 30px;">
-        {{ $vectors->links('pagination::bootstrap-4') }}
+        {{ $vectors->links('vendor.pagination.simple-bootstrap-4') }}
       </div>
       @endif
 

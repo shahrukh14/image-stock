@@ -187,7 +187,7 @@
       </div>
       @if (count($videos) > 0)
       <div>
-        {{ $videos->links('pagination::bootstrap-5') }}
+        {{ $videos->links('vendor.pagination.simple-bootstrap-4') }}
       </div>
       @endif
 

@@ -179,7 +179,7 @@
       </div>
       @if (count($images) > 0)
       <div style="margin-top: 30px;">
-        {{ $images->links('pagination::bootstrap-4') }}
+        {{ $images->links('vendor.pagination.simple-bootstrap-4') }}
       </div>
       @endif
 

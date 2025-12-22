@@ -173,7 +173,7 @@
         </div>
       </div>
       @if (count($images) > 0)
-      {{ $images->links('pagination::bootstrap-4') }}
+      {{ $images->links('vendor.pagination.simple-bootstrap-4') }}
       @endif
 
     </section>
