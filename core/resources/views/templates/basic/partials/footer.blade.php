@@ -166,7 +166,7 @@
         </div>
         <div class="footer-bottom">
             <p class="mg-bottom-0">
-                Copyright © 2023. 
+                Copyright © {{date('Y')}}. 
                 <a href="#" target="_blank" class="text-link text-decoration-none">All Rights Reserved .</a>
                 <a href="{{ route('home') }}" target="_blank" class="text-link text-decoration-none">Greenstockpro.com</a>
             </p>

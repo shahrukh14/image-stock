@@ -126,12 +126,13 @@
             <div class="row" style="margin-bottom: 20px;">
                 @if ($categories->count())
                     @foreach ($categories as $category)
-                    <div class="col-3 categoryFilter" style="margin-bottom: 5px;">
+                    <div class="col-3 categoryFilter" style="margin-bottom: 5px; margin-right: 3px;">
                         <a href="{{ route('photos', ['category' , $category->slug]) }}" style="text-decoration:none;">{{ $category->name }} | </a>
                     </div>
                     @endforeach
                 @endif
             </div>
+            
             <div class="grid">
                 <div class="grid-sizer"></div>
                     @foreach($images as $image)
@@ -212,14 +213,17 @@
     }
 }
 
-.categoryFilter{
-    margin-left: 5px;
-} 
-.categoryFilter :hover{
-    margin-left: 10px;
+.categoryFilter a {
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.categoryFilter a:hover {
+    transform: translateX(5px);
     color: #689F38 !important;
     font-size: 110%;
 }
+
  
 .ui-accordion-content.ui-corner-bottom {
     height: auto !important;

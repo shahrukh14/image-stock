@@ -2,12 +2,14 @@
 data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="header-wrapper w-nav"
 style="opacity: 1">
 <div class="container-default w-container">
-    <div class="header-content-wrapper">
+    <div class="header-content-wrapper" style="position: relative;">
         <div class="header-left-side header-v1">
             <a href="{{ route('home') }}" class="header-logo-link w-nav-brand" aria-label="home">
                 <img src="{{ getImage(getFilePath('logoIcon') . '/logo.png') }}" alt="Logo - green Stock" class="header-logo" />
             </a>
         </div>
+        <!-- Overlay -->
+        <div class="w-nav-overlay"></div>
         <div class="header-right-side">
             <nav role="navigation" class="header-nav-menu-wrapper w-nav-menu">
                 <form action="https://stocktemplate.webflow.io/search" class="header-search-bar---mobile">
@@ -99,21 +101,16 @@ style="opacity: 1">
                     
                     <li class="header-nav-list-item show-in-mbl header-button">
                         <a href="https://stocktemplate.webflow.io/apply-as-author"
-                            class="btn-primary small width-100 w-button">Become an author</a>
+                            class="btn-primary small width-100 w-button" style="color: #fff !important;">Become an author</a>
                     </li>
                 </ul>
             </nav>
             <div  class="w-commerce-commercecartwrapper cart-button-wrapper">
-                <div data-node-type="commerce-cart-container-wrapper" style="display: none"
-                    class="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-modal cart-wrapper">
-                    <div data-node-type="commerce-cart-container" role="dialog"
-                        class="w-commerce-commercecartcontainer cart-container">
+                <div data-node-type="commerce-cart-container-wrapper" style="display: none" class="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-modal cart-wrapper">
+                    <div data-node-type="commerce-cart-container" role="dialog" class="w-commerce-commercecartcontainer cart-container">
                         <div class="w-commerce-commercecartheader cart-header">
                             <h4 class="w-commerce-commercecartheading">Your Cart</h4>
-                            <a href="https://stocktemplate.webflow.io/home#"
-                                data-node-type="commerce-cart-close-link"
-                                class="w-commerce-commercecartcloselink cart-close-button w-inline-block"
-                                role="button" aria-label="Close cart">
+                            <a href="https://stocktemplate.webflow.io/home#" data-node-type="commerce-cart-close-link" class="w-commerce-commercecartcloselink cart-close-button w-inline-block" role="button" aria-label="Close cart">
                                 <div class="line-square-icon"></div>
                             </a>
                         </div>
@@ -134,23 +131,12 @@ style="opacity: 1">
                                     <div>
                                         <div data-node-type="commerce-cart-quick-checkout-actions" style="display: none">
                                             <a role="button" tabindex="0" aria-haspopup="dialog"  aria-label="Apple Pay"  data-node-type="commerce-cart-apple-pay-button"
-                                                style="
-                      background-image: -webkit-named-image(
-                        apple-pay-logo-white
-                      );
-                      background-size: 100% 50%;
-                      background-position: 50% 50%;
-                      background-repeat: no-repeat;
-                    "
+                                                style="background-image: -webkit-named-image(apple-pay-logo-white); background-size: 100% 50%; background-position: 50% 50%; background-repeat: no-repeat;"
                                                 class="w-commerce-commercecartapplepaybutton pay-btn cart">
-                                            </a><a role="button" tabindex="0" aria-haspopup="dialog"
-                                                data-node-type="commerce-cart-quick-checkout-button"
-                                                style="display: none"
-                                                class="w-commerce-commercecartquickcheckoutbutton pay-btn cart"><svg
-                                                    class="w-commerce-commercequickcheckoutgoogleicon"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                    width="16" height="16" viewBox="0 0 16 16">
+                                            </a>
+                                            <a role="button" tabindex="0" aria-haspopup="dialog" data-node-type="commerce-cart-quick-checkout-button" style="display: none"
+                                                class="w-commerce-commercecartquickcheckoutbutton pay-btn cart">
+                                                <svg class="w-commerce-commercequickcheckoutgoogleicon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  width="16" height="16" viewBox="0 0 16 16">
                                                     <defs>
                                                         <polygon id="google-mark-a"
                                                             points="0 .329 3.494 .329 3.494 7.649 0 7.649">
@@ -170,21 +156,15 @@ style="opacity: 1">
                                                             <mask id="google-mark-b" fill="#fff">
                                                                 <use xlink:href="#google-mark-a"></use>
                                                             </mask>
-                                                            <path fill="#FBBC04"
-                                                                d="M3.4639,5.5337 C3.1369,4.5477 3.1359,3.4727 3.4609,2.4757 L3.4639,2.4777 C3.4679,2.4657 3.4749,2.4547 3.4789,2.4427 L3.4939,0.3287 L0.8939,0.3287 C0.8799,0.3577 0.8599,0.3827 0.8459,0.4117 C-0.2821,2.6667 -0.2821,5.3337 0.8459,7.5887 L0.8459,7.5997 C0.8549,7.6167 0.8659,7.6317 0.8749,7.6487 L3.4939,5.6057 C3.4849,5.5807 3.4729,5.5587 3.4639,5.5337"
-                                                                mask="url(#google-mark-b)"></path>
+                                                            <path fill="#FBBC04" d="M3.4639,5.5337 C3.1369,4.5477 3.1359,3.4727 3.4609,2.4757 L3.4639,2.4777 C3.4679,2.4657 3.4749,2.4547 3.4789,2.4427 L3.4939,0.3287 L0.8939,0.3287 C0.8799,0.3577 0.8599,0.3827 0.8459,0.4117 C-0.2821,2.6667 -0.2821,5.3337 0.8459,7.5887 L0.8459,7.5997 C0.8549,7.6167 0.8659,7.6317 0.8749,7.6487 L3.4939,5.6057 C3.4849,5.5807 3.4729,5.5587 3.4639,5.5337" mask="url(#google-mark-b)"></path>
                                                         </g>
                                                         <mask id="google-mark-d" fill="#fff">
                                                             <use xlink:href="#google-mark-c"></use>
                                                         </mask>
-                                                        <path fill="#EA4335"
-                                                            d="M0.894,4.3291 L3.478,6.4431 C4.113,4.5611 5.843,3.1671 7.889,3.1671 C9.018,3.1451 10.102,3.5781 10.912,4.3671 L13.169,2.0781 C11.733,0.7231 9.85,-0.0219 7.889,0.0001 C4.941,0.0001 2.245,1.6791 0.894,4.3291"
-                                                            mask="url(#google-mark-d)"></path>
+                                                        <path fill="#EA4335" d="M0.894,4.3291 L3.478,6.4431 C4.113,4.5611 5.843,3.1671 7.889,3.1671 C9.018,3.1451 10.102,3.5781 10.912,4.3671 L13.169,2.0781 C11.733,0.7231 9.85,-0.0219 7.889,0.0001 C4.941,0.0001 2.245,1.6791 0.894,4.3291"  mask="url(#google-mark-d)"></path>
                                                     </g>
-                                                </svg><svg
-                                                    class="w-commerce-commercequickcheckoutmicrosofticon"
-                                                    xmlns="http://www.w3.org/2000/svg" width="16"
-                                                    height="16" viewBox="0 0 16 16">
+                                                </svg>
+                                                <svg class="w-commerce-commercequickcheckoutmicrosofticon"  xmlns="http://www.w3.org/2000/svg" width="16"  height="16" viewBox="0 0 16 16">
                                                     <g fill="none" fill-rule="evenodd">
                                                         <polygon fill="#F05022" points="7 7 1 7 1 1 7 1">
                                                         </polygon>
@@ -202,22 +182,15 @@ style="opacity: 1">
                                                 <div>Pay with browser.</div>
                                             </a>
                                         </div>
-                                        <a href="https://stocktemplate.webflow.io/checkout"
-                                            value="Continue to Checkout"
-                                            data-node-type="cart-checkout-button"
-                                            class="w-commerce-commercecartcheckoutbutton btn-primary"
-                                            data-loading-text="Hang Tight...">Continue to Checkout</a>
+                                        <a href="https://stocktemplate.webflow.io/checkout" value="Continue to Checkout" data-node-type="cart-checkout-button" class="w-commerce-commercecartcheckoutbutton btn-primary" data-loading-text="Hang Tight...">Continue to Checkout</a>
                                     </div>
                                 </div>
                             </form>
                             <div class="w-commerce-commercecartemptystate empty-state cart-empty">
                                 <div class="mg-bottom-24px keep">No items found.</div>
-                                <a href="https://stocktemplate.webflow.io/resources"
-                                    class="btn-primary w-button">Browse resources</a>
+                                <a href="https://stocktemplate.webflow.io/resources" class="btn-primary w-button">Browse resources</a>
                             </div>
-                            <div aria-live="" style="display: none"
-                                data-node-type="commerce-cart-error"
-                                class="w-commerce-commercecarterrorstate error-message cart-error">
+                            <div aria-live="" style="display: none" data-node-type="commerce-cart-error" class="w-commerce-commercecarterrorstate error-message cart-error">
                                 <div class="w-cart-error-msg"
                                     data-w-cart-quantity-error="Product is not available in this quantity."
                                     data-w-cart-general-error="Something went wrong when adding this item to the cart."
@@ -231,26 +204,8 @@ style="opacity: 1">
                     </div>
                 </div>
             </div>
-            {{-- <a href="https://stocktemplate.webflow.io/apply-as-author"
-                class="btn-primary small header-btn-hidde-on-mb w-button">Become an author</a> --}}
-            <div class="hamburger-menu-wrapper w-nav-button" style="-webkit-user-select: text"
-                aria-label="menu" role="button" tabindex="0" aria-controls="w-nav-overlay-0"
-                aria-haspopup="menu" aria-expanded="false">
-                <div class="hamburger-menu-bar top"
-                    style="
-        transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-          rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-        transform-style: preserve-3d;
-      ">
-                </div>
-                <div class="hamburger-menu-bar bottom"
-                    style="
-        transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1)
-          rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
-        transform-style: preserve-3d;
-      ">
-                </div>
-            </div>
+            <!-- Bootstrap-like Hamburger Menu Button -->
+            <button class="navbar-toggler" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
         </div>
     </div>
 </div>
@@ -261,20 +216,80 @@ style="opacity: 1">
             <div class="line-rounded-icon header-search-bar-icon desktop-search-icon" ></div>
             <label for="search-2" class="hidden-on-desktop">Search</label>
             <input type="text" class="input small search-header w-input" name="filter" placeholder="Search for resources…" id="header-search" required="" />
-            {{-- <input type="submit" value="Search" class="hidden-on-desktop w-button" /> --}}
         </div>
     </form>
 </div>
 <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
 </div>
 
+@push('style')
+<style>
+/* Hide hamburger button on desktop (≥992px) */
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none !important;
+    }
+}
+/* Mobile menu styles */
+@media (max-width: 991px) {
+    .header-nav-menu-wrapper {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 9999;
+        padding: 20px 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-nav-menu-wrapper.active {
+        display: block !important;
+    }
+
+    .w-nav-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 9998;
+    }
+
+    .w-nav-overlay.active {
+        display: block;
+    }
+
+    .navbar-toggler {
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+    }
+    
+}
+</style>
+
+@endpush
+
 @push('script')
-    <script>
-        (function($) {
-            "use strict";
-            $(".langSel").on("change", function() {
-                window.location.href = "{{ route('home') }}/change/" + $(this).val();
-            });
-        })(jQuery);
-    </script>
+<script>
+    $(document).ready(function () {
+        $('.navbar-toggler').on('click', function () {
+            let expanded = $(this).attr('aria-expanded') === 'true';
+            $(this).attr('aria-expanded', !expanded);
+            $('.header-nav-menu-wrapper').toggleClass('active');
+            $('.w-nav-overlay').toggleClass('active');
+        });
+
+        $('.w-nav-overlay').on('click', function () {
+            $('.header-nav-menu-wrapper').removeClass('active');
+            $('.navbar-toggler').attr('aria-expanded', false);
+            $(this).removeClass('active');
+        });
+    });
+</script>
 @endpush
